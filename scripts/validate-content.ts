@@ -14,6 +14,7 @@ import {
   doodle as doodleSchema,
   pills as pillsSchema,
   prasangFrontMatter,
+  scenarioMoral as scenarioMoralSchema,
   story as storySchema,
   words as wordsSchema,
   type PrasangFrontMatter,
@@ -181,6 +182,24 @@ function checkStories(c: Collector, root: string, images: Set<string>, used: Set
     }
     checkTranslations(c, rel, raw)
   }
+}
+
+// ---------- The lesson the Yuvako scenarios share ----------
+
+function checkScenarioMoral(c: Collector, root: string, images: Set<string>, used: Set<string>) {
+  const rel = 'content/scenario-moral.json'
+  if (!existsSync(join(root, rel))) return
+  const raw = readJson(c, root, rel)
+  if (raw === undefined) return
+  c.checked++
+  const parsed = scenarioMoralSchema.safeParse(raw)
+  if (!parsed.success) return reportZod(c, rel, parsed.error)
+  const src = parsed.data.image?.src
+  if (src) {
+    used.add(src)
+    if (!images.has(src)) c.error(rel, `image "${src}" is not in content/images/`)
+  }
+  checkTranslations(c, rel, raw)
 }
 
 // ---------- Prasangs ----------
@@ -374,6 +393,7 @@ export function validateContent(root: string): Report {
   const used = new Set<string>()
   checkLocales(c, root)
   checkStories(c, root, images, used)
+  checkScenarioMoral(c, root, images, used)
   checkPrasangs(c, root, images, used, audio)
   checkPills(c, root)
   checkWords(c, root)

@@ -1,6 +1,7 @@
 {
   "id": "one-am-exam",
   "audience": "yuvako",
+  "order": 1,
   "title": {
     "en": "Placeholder: 1 a.m., Exam Tomorrow",
     "gu": "કામચલાઉ: રાતનો એક વાગ્યો, કાલે પરીક્ષા"

@@ -62,8 +62,8 @@ Every game, story and prasang is at most three taps from the intro page.
   [Shabd Khoj streak leaderboard](#shabd-khoj-streak-leaderboard)). The
   browser's local storage keeps only the language choice, today's word-game
   guesses, the doodle best score and the doodle player's name. Session
-  storage keeps only which Yuvako scenario endings were found, until the tab
-  is closed. Every link that leaves the site first shows "You are leaving
+  storage keeps only which Yuvako scenario endings were found and whether the
+  shared lesson was revealed, until the tab is closed. Every link that leaves the site first shows "You are leaving
   this site".
 - **Accessibility**: works by keyboard, skip link, visible focus, one main
   heading per page, colour is never the only signal (ticks, dots, dashes,
@@ -125,6 +125,8 @@ Stories are in `content/stories/`, one file per story.
 2. Change `"id"` to match (`"kind-words"`) and set `"audience"` to
    `"bhulkao"` or `"yuvako"`.
 3. Change `"title"`. Set `"startNode"` to the id of the first step.
+   Optionally set `"order"` (1, 2, 3…) to place the story in the list; stories
+   without one come after, sorted by id.
 4. Each step in `"nodes"` has an `"id"`, its `"text"`, an optional `"image"`,
    and **either** `"choices"` **or** an `"ending"`:
    - `"choices"`: a list of `{ "label": {…}, "next": "<id of the step it leads to>" }`
@@ -154,6 +156,21 @@ extra content needed:
   the rest shown as "Not found yet", so players know there is more to find.
   The count lasts until the browser tab is closed. It only appears when a
   scenario has two or more endings.
+- **The lesson they share**: see below.
+
+### The lesson the Yuvako scenarios share
+
+`content/scenario-moral.json` holds one lesson that every Yuvako scenario
+leads to. Write each scenario so its best ending shows that lesson. The file
+has `"title"` and `"text"` (each `{ "en": …, "gu": … }`), an optional
+`"image"` (as in a story step) and `"placeholder"`.
+
+The lesson stays hidden until a visitor has reached an ending, any ending, in
+every Yuvako scenario. Until then, the scenario list and each scenario ending
+show how many scenarios are finished, and a scenario ending links to the next
+unfinished one. Once all are finished, a "Reveal the lesson" button shows it.
+Progress lasts until the browser tab is closed. A new Yuvako scenario joins
+the count by itself. Delete the file to switch the lesson off.
 
 ### Add or change a prasang
 

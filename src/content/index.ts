@@ -5,8 +5,10 @@ import type { LocalizedText } from '../i18n/localized'
 import { parseFrontMatter, prasangFileName } from './frontmatter'
 import {
   prasangFrontMatter,
+  scenarioMoral as scenarioMoralSchema,
   story as storySchema,
   type PrasangFrontMatter,
+  type ScenarioMoral,
   type Story,
 } from './schemas'
 import { validateStory } from '../features/story/validate'
@@ -24,6 +26,10 @@ const storyFiles = import.meta.glob<unknown>('/content/stories/*.json', {
 const prasangFiles = import.meta.glob<string>('/content/prasangs/*.md', {
   eager: true,
   query: '?raw',
+  import: 'default',
+})
+const moralFiles = import.meta.glob<unknown>('/content/scenario-moral.json', {
+  eager: true,
   import: 'default',
 })
 const imageFiles = import.meta.glob<string>('/content/images/*', {
@@ -64,6 +70,8 @@ export interface StoryEntry {
   file: string
   id: string
   audience: string | null
+  /** Place in the list (see the story schema); null when not set. */
+  order: number | null
   title: LocalizedText | null
   placeholder: boolean
   /** The story, or null when it failed validation. */
@@ -80,6 +88,7 @@ function loadStory(file: string, raw: unknown): StoryEntry {
         ? loose.id
         : (file.split('/').pop() ?? file).replace(/\.json$/, ''),
     audience: typeof loose.audience === 'string' ? loose.audience : null,
+    order: typeof loose.order === 'number' ? loose.order : null,
     title: null as LocalizedText | null,
     placeholder: loose.placeholder === true,
   }
@@ -100,9 +109,16 @@ function loadStory(file: string, raw: unknown): StoryEntry {
   }
 }
 
+/** By order (stories without one last), then by id. */
+function byOrder(a: StoryEntry, b: StoryEntry): number {
+  const ao = a.order ?? Number.POSITIVE_INFINITY
+  const bo = b.order ?? Number.POSITIVE_INFINITY
+  return ao === bo ? a.id.localeCompare(b.id) : ao - bo
+}
+
 const STORIES: StoryEntry[] = Object.entries(storyFiles)
   .map(([file, raw]) => loadStory(file, raw))
-  .sort((a, b) => a.id.localeCompare(b.id))
+  .sort(byOrder)
 
 export function storiesFor(section: SectionId): ItemSummary[] {
   return STORIES.filter((s) => s.audience === section).map((s) => ({
@@ -114,6 +130,38 @@ export function storiesFor(section: SectionId): ItemSummary[] {
 
 export function getStory(section: SectionId, id: string): StoryEntry | undefined {
   return STORIES.find((s) => s.audience === section && s.id === id)
+}
+
+/** The stories of a section that passed validation, in list order. */
+export function playableStories(section: SectionId): Story[] {
+  return STORIES.filter((s) => s.audience === section && s.story).map((s) => s.story as Story)
+}
+
+// ---------- The lesson the Yuvako scenarios share ----------
+
+export interface MoralEntry {
+  /** The lesson, or null when the file failed validation. */
+  moral: ScenarioMoral | null
+  errors: string[]
+}
+
+function loadMoral(): MoralEntry | null {
+  const raw = Object.values(moralFiles)[0]
+  if (raw === undefined) return null
+  const parsed = scenarioMoralSchema.safeParse(raw)
+  if (!parsed.success) return { moral: null, errors: zodProblems(parsed.error) }
+  const src = parsed.data.image?.src
+  if (src && !imageUrl(src)) {
+    return { moral: null, errors: [`image "${src}" is not in content/images/`] }
+  }
+  return { moral: parsed.data, errors: [] }
+}
+
+const MORAL = loadMoral()
+
+/** The shared lesson of the Yuvako scenarios, or null when there is none (or it is broken). */
+export function scenarioMoral(): ScenarioMoral | null {
+  return MORAL?.moral ?? null
 }
 
 // ---------- Prasangs ----------
@@ -195,6 +243,7 @@ export function siteHasPlaceholders(): boolean {
   return (
     INTRO_COPY_IS_PLACEHOLDER ||
     STORIES.some((s) => s.placeholder) ||
+    MORAL?.moral?.placeholder === true ||
     PRASANGS.some((p) => p.placeholder) ||
     SECTION_LIST.some((s) => s.games.some(gameIsPlaceholder))
   )

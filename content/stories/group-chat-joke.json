@@ -1,0 +1,193 @@
+{
+  "id": "group-chat-joke",
+  "audience": "yuvako",
+  "order": 2,
+  "title": {
+    "en": "Placeholder: The Group Chat Joke",
+    "gu": "કામચલાઉ: ગ્રુપ ચેટની મજાક"
+  },
+  "placeholder": true,
+  "startNode": "start",
+  "nodes": [
+    {
+      "id": "start",
+      "text": {
+        "en": "It is 9 p.m. A friend posts an old photo of you in the class group chat, with a joke about it. The laughing faces pile up. Your face feels hot, and you have already typed a sharp reply about him.",
+        "gu": "રાતના નવ વાગ્યા છે. એક મિત્ર ક્લાસના ગ્રુપ ચેટમાં તમારો એક જૂનો ફોટો મજાક સાથે મૂકે છે. હસતા ચહેરા ઢગલાબંધ આવવા લાગે છે. તમારું મોં ગરમ થઈ જાય છે, અને તમે તેના વિશે એક તીખો જવાબ લખી પણ નાખ્યો છે."
+      },
+      "image": {
+        "src": "placeholder-chat-photo-joke.svg",
+        "alt": {
+          "en": "A young person with flushed cheeks and a frown holds a phone. On the screen, an old photo is followed by rows of laughing faces, and a reply typed in red waits beside the send button.",
+          "gu": "લાલ ગાલ અને ચડેલાં ભવાંવાળા એક યુવાનના હાથમાં ફોન છે. સ્ક્રીન પર એક જૂના ફોટા પછી હસતા ચહેરાઓની હાર છે, અને લાલ રંગમાં લખેલો જવાબ મોકલવાના બટન પાસે તૈયાર છે."
+        },
+        "source": "Original placeholder drawing made for this project"
+      },
+      "choices": [
+        {
+          "label": {
+            "en": "Send it now",
+            "gu": "હમણાં જ મોકલી દો"
+          },
+          "next": "sent"
+        },
+        {
+          "label": {
+            "en": "Put the phone face down for a minute",
+            "gu": "એક મિનિટ માટે ફોન ઊંધો મૂકી દો"
+          },
+          "next": "pause"
+        }
+      ]
+    },
+    {
+      "id": "sent",
+      "text": {
+        "en": "Your reply lands. The chat goes quiet, then splits: some laugh at him, some say you went too far. A minute later, he leaves the group.",
+        "gu": "તમારો જવાબ પહોંચી જાય છે. ચેટ થોડી વાર શાંત થઈ જાય છે, પછી બે ભાગ પડી જાય છે: કેટલાક તેના પર હસે છે, કેટલાક કહે છે કે તમે હદ વટાવી. એક મિનિટ પછી તે ગ્રુપ છોડી દે છે."
+      },
+      "image": {
+        "src": "placeholder-chat-reply-sent.svg",
+        "alt": {
+          "en": "The young person stares wide-eyed at the phone. The red reply has been sent, shocked faces follow it, and a grey line shows that someone has left the group.",
+          "gu": "યુવાન આંખો પહોળી કરીને ફોન જુએ છે. લાલ જવાબ મોકલાઈ ગયો છે, તેની નીચે ચોંકેલા ચહેરા છે, અને એક રાખોડી લીટી બતાવે છે કે કોઈએ ગ્રુપ છોડી દીધું છે."
+        },
+        "source": "Original placeholder drawing made for this project"
+      },
+      "choices": [
+        {
+          "label": {
+            "en": "He started it. Leave it there.",
+            "gu": "શરૂઆત તેણે કરી હતી. વાત ત્યાં જ છોડી દો."
+          },
+          "next": "silence"
+        },
+        {
+          "label": {
+            "en": "Message him privately to say sorry",
+            "gu": "તેને અલગથી મેસેજ કરીને માફી માગો"
+          },
+          "next": "sorry-late"
+        }
+      ]
+    },
+    {
+      "id": "pause",
+      "text": {
+        "en": "You put the phone face down and take a slow breath. The sting is still there, but it is smaller now. You delete the sharp reply.",
+        "gu": "તમે ફોન ઊંધો મૂકો છો અને એક ધીમો શ્વાસ લો છો. ચચરાટ હજી છે, પણ હવે થોડો ઓછો છે. તમે તીખો જવાબ ભૂંસી નાખો છો."
+      },
+      "image": {
+        "src": "placeholder-phone-face-down.svg",
+        "alt": {
+          "en": "The young person sits back with eyes closed, breathing slowly. The phone lies face down on the desk under a warm lamp.",
+          "gu": "યુવાન આંખો બંધ કરીને પાછળ ટેકો દઈને બેઠા છે અને ધીમા શ્વાસ લે છે. પીળા પ્રકાશવાળા લૅમ્પ નીચે ટેબલ પર ફોન ઊંધો પડ્યો છે."
+        },
+        "source": "Original placeholder drawing made for this project"
+      },
+      "choices": [
+        {
+          "label": {
+            "en": "Message him privately: \"That photo hurt. Can you take it down?\"",
+            "gu": "તેને અલગથી મેસેજ કરો: \"એ ફોટાથી મને ખોટું લાગ્યું. તું તેને હટાવી શકે?\""
+          },
+          "next": "straight"
+        },
+        {
+          "label": {
+            "en": "Type it all again and send it",
+            "gu": "બધું ફરી લખીને મોકલી દો"
+          },
+          "next": "sent"
+        }
+      ]
+    },
+    {
+      "id": "silence",
+      "text": {
+        "en": "At school the next day, you walk past each other without a word.",
+        "gu": "બીજા દિવસે સ્કૂલમાં તમે બંને એક શબ્દ બોલ્યા વગર એકબીજા પાસેથી પસાર થઈ જાઓ છો."
+      },
+      "image": {
+        "src": "placeholder-corridor-apart.svg",
+        "alt": {
+          "en": "In a school corridor, the two friends walk away from each other with their eyes down and a gap between them.",
+          "gu": "સ્કૂલની પરસાળમાં બંને મિત્રો નીચું જોઈને એકબીજાથી દૂર ચાલ્યા જાય છે, અને બંને વચ્ચે અંતર છે."
+        },
+        "source": "Original placeholder drawing made for this project"
+      },
+      "ending": {
+        "title": {
+          "en": "Cold silence",
+          "gu": "ઠંડું મૌન"
+        },
+        "outcome": {
+          "en": "Weeks later, nobody remembers the joke. Everyone remembers the reply, and the two of you are still not talking.",
+          "gu": "અઠવાડિયાં પછી કોઈને મજાક યાદ નથી. જવાબ બધાને યાદ છે, અને તમે બંને હજી એકબીજા સાથે બોલતા નથી."
+        },
+        "lesson": {
+          "en": "Placeholder reflection: words typed in anger take a second to send and much longer to take back. What do you do when a message makes you angry?",
+          "gu": "કામચલાઉ મનન: ગુસ્સામાં લખેલા શબ્દો મોકલતાં એક સેકન્ડ લાગે છે, પણ પાછા લેતાં ઘણો વધુ સમય લાગે છે. કોઈ મેસેજથી ગુસ્સો આવે ત્યારે તમે શું કરો છો?"
+        }
+      }
+    },
+    {
+      "id": "sorry-late",
+      "text": {
+        "en": "You write: \"I went too far. Sorry.\" An hour later he replies: \"Mine was dumb too.\"",
+        "gu": "તમે લખો છો: \"મેં હદ વટાવી. માફ કરજે.\" એક કલાક પછી તેનો જવાબ આવે છે: \"મારી મજાક પણ મૂર્ખામીભરી હતી.\""
+      },
+      "image": {
+        "src": "placeholder-chat-sorry.svg",
+        "alt": {
+          "en": "A private chat on a phone: a message saying sorry, a small clock showing that an hour has passed, then a reply with a smiling face.",
+          "gu": "ફોન પર ખાનગી ચેટ: માફીનો એક મેસેજ, એક કલાક વીતી ગયો તે બતાવતી નાની ઘડિયાળ, અને પછી હસતા ચહેરા સાથેનો જવાબ."
+        },
+        "source": "Original placeholder drawing made for this project"
+      },
+      "ending": {
+        "title": {
+          "en": "Sorry, said late",
+          "gu": "મોડી, પણ માગેલી માફી"
+        },
+        "outcome": {
+          "en": "It is awkward for a few days, then it passes. The group still brings it up sometimes, but the two of you are fine.",
+          "gu": "થોડા દિવસ અજુગતું લાગે છે, પછી બધું ઠીક થઈ જાય છે. ગ્રુપમાં હજી ક્યારેક એ વાત નીકળે છે, પણ તમારા બંને વચ્ચે બધું બરાબર છે."
+        },
+        "lesson": {
+          "en": "Placeholder reflection: saying sorry late is still saying sorry. What makes it hard to be the first to apologise?",
+          "gu": "કામચલાઉ મનન: મોડી માગેલી માફી પણ માફી જ છે. પહેલાં માફી માગવી કેમ અઘરી લાગે છે?"
+        }
+      }
+    },
+    {
+      "id": "straight",
+      "text": {
+        "en": "He replies within minutes: \"Sorry, I didn't think. Deleting it.\" The photo disappears.",
+        "gu": "થોડી જ મિનિટમાં તેનો જવાબ આવે છે: \"સૉરી, મેં વિચાર્યું નહીં. હમણાં કાઢી નાખું છું.\" ફોટો ગાયબ થઈ જાય છે."
+      },
+      "image": {
+        "src": "placeholder-friends-laughing.svg",
+        "alt": {
+          "en": "The two friends sit side by side outdoors in the sun, laughing together.",
+          "gu": "બંને મિત્રો તડકામાં બહાર બાજુબાજુમાં બેસીને સાથે હસે છે."
+        },
+        "source": "Original placeholder drawing made for this project"
+      },
+      "ending": {
+        "title": {
+          "en": "Said it straight",
+          "gu": "સીધી વાત"
+        },
+        "outcome": {
+          "en": "Nobody else even knew there was a problem. The next day, the two of you are laughing together about something else.",
+          "gu": "બીજા કોઈને ખબર પણ ન પડી કે કંઈ વાંધો હતો. બીજા દિવસે તમે બંને કોઈ બીજી વાત પર સાથે હસો છો."
+        },
+        "lesson": {
+          "en": "Placeholder reflection: one minute's pause turned a fight into a fix. What helps you cool down before you reply?",
+          "gu": "કામચલાઉ મનન: એક મિનિટ થોભવાથી ઝઘડો થવાને બદલે વાત ઉકલી ગઈ. જવાબ આપતાં પહેલાં શાંત થવા માટે તમને શું મદદ કરે છે?"
+        }
+      }
+    }
+  ]
+}

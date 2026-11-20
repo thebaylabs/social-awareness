@@ -1,0 +1,193 @@
+{
+  "id": "extra-change",
+  "audience": "yuvako",
+  "order": 3,
+  "title": {
+    "en": "Placeholder: The Extra Change",
+    "gu": "કામચલાઉ: વધારાના પૈસા"
+  },
+  "placeholder": true,
+  "startNode": "start",
+  "nodes": [
+    {
+      "id": "start",
+      "text": {
+        "en": "You buy snacks for ₹120 and pay with a ₹500 note. The shopkeeper is busy with a crowd and hands you back ₹880, which is ₹500 too much. Your friend sees it and whispers: \"Walk. Quick.\"",
+        "gu": "તમે ₹120નો નાસ્તો લો છો અને ₹500ની નોટ આપો છો. દુકાનદાર ભીડમાં વ્યસ્ત છે અને તમને ₹880 પાછા આપે છે, એટલે કે ₹500 વધારે. તમારો મિત્ર એ જોઈ લે છે અને ધીમેથી કહે છે: \"ચાલ. જલદી.\""
+      },
+      "image": {
+        "src": "placeholder-shop-counter.svg",
+        "alt": {
+          "en": "At a busy shop counter, the shopkeeper hands over a fan of notes while looking at the crowd. The young person reaches for them, and a friend leans in to whisper.",
+          "gu": "ભીડવાળી દુકાનના કાઉન્ટર પર દુકાનદાર ભીડ તરફ જોતાં જોતાં નોટો આપે છે. યુવાન તે લેવા હાથ લંબાવે છે, અને એક મિત્ર નજીક આવીને કાનમાં કંઈક કહે છે."
+        },
+        "source": "Original placeholder drawing made for this project"
+      },
+      "choices": [
+        {
+          "label": {
+            "en": "Walk out quickly",
+            "gu": "ઝડપથી બહાર નીકળી જાઓ"
+          },
+          "next": "walked"
+        },
+        {
+          "label": {
+            "en": "Stop and count it again",
+            "gu": "થોભો અને ફરી ગણો"
+          },
+          "next": "count"
+        }
+      ]
+    },
+    {
+      "id": "walked",
+      "text": {
+        "en": "Outside, your friend grins: \"Treats are on you!\" The extra note feels heavy in your pocket.",
+        "gu": "બહાર આવીને મિત્ર હસીને કહે છે: \"આજે નાસ્તો તારા તરફથી!\" ખિસ્સામાંની વધારાની નોટ ભારે લાગે છે."
+      },
+      "image": {
+        "src": "placeholder-street-pocket.svg",
+        "alt": {
+          "en": "Outside the shop, the young person walks with a frown and a note sticking out of a pocket, while the friend cheers with both arms up.",
+          "gu": "દુકાનની બહાર યુવાન મોં બગાડીને ચાલે છે અને ખિસ્સામાંથી નોટ ડોકિયું કરે છે, જ્યારે મિત્ર બંને હાથ ઊંચા કરીને ખુશ થાય છે."
+        },
+        "source": "Original placeholder drawing made for this project"
+      },
+      "choices": [
+        {
+          "label": {
+            "en": "Spend it on treats",
+            "gu": "તેનાથી નાસ્તો કરી લો"
+          },
+          "next": "spent"
+        },
+        {
+          "label": {
+            "en": "Turn around and go back in",
+            "gu": "પાછા વળો અને દુકાનમાં જાઓ"
+          },
+          "next": "came-back"
+        }
+      ]
+    },
+    {
+      "id": "count",
+      "text": {
+        "en": "You stop at the counter and count again. It really is ₹500 too much. Your friend rolls his eyes and tugs at your sleeve.",
+        "gu": "તમે કાઉન્ટર પાસે થોભીને ફરી ગણો છો. ખરેખર ₹500 વધારે છે. તમારો મિત્ર આંખો ફેરવે છે અને તમારી બાંય ખેંચે છે."
+      },
+      "image": {
+        "src": "placeholder-counting-notes.svg",
+        "alt": {
+          "en": "Notes lie in a row on the counter, and the last one is circled with a dashed line. The young person's hands count them while a friend tugs at a sleeve.",
+          "gu": "કાઉન્ટર પર નોટો હારમાં પડી છે, અને છેલ્લી નોટની આસપાસ તૂટક લીટીનું ચોકઠું છે. યુવાનના હાથ નોટો ગણે છે અને મિત્ર બાંય ખેંચે છે."
+        },
+        "source": "Original placeholder drawing made for this project"
+      },
+      "choices": [
+        {
+          "label": {
+            "en": "Hand the ₹500 back to the shopkeeper",
+            "gu": "₹500 દુકાનદારને પાછા આપો"
+          },
+          "next": "light"
+        },
+        {
+          "label": {
+            "en": "Pocket it and walk out",
+            "gu": "ખિસ્સામાં મૂકીને બહાર નીકળી જાઓ"
+          },
+          "next": "walked"
+        }
+      ]
+    },
+    {
+      "id": "spent",
+      "text": {
+        "en": "The treats are gone in ten minutes.",
+        "gu": "દસ મિનિટમાં નાસ્તો પૂરો થઈ જાય છે."
+      },
+      "image": {
+        "src": "placeholder-snack-wrappers.svg",
+        "alt": {
+          "en": "Empty snack wrappers lie on a bench in the evening. In the lit shop across the street, the shopkeeper frowns over his cash, and the young person looks on, worried.",
+          "gu": "સાંજે બાંકડા પર નાસ્તાનાં ખાલી પડીકાં પડ્યાં છે. સામે પ્રકાશવાળી દુકાનમાં દુકાનદાર ચિંતાથી પૈસા ગણે છે, અને યુવાન ચિંતાભરી નજરે જુએ છે."
+        },
+        "source": "Original placeholder drawing made for this project"
+      },
+      "ending": {
+        "title": {
+          "en": "Sweet, then sour",
+          "gu": "પહેલાં મીઠું, પછી કડવું"
+        },
+        "outcome": {
+          "en": "That evening you pass the shop. The shopkeeper is counting his cash again and again, frowning. The treats do not feel worth it any more.",
+          "gu": "સાંજે તમે દુકાન પાસેથી પસાર થાઓ છો. દુકાનદાર ચિંતામાં વારંવાર પૈસા ગણે છે. હવે એ નાસ્તો એટલો સારો નથી લાગતો."
+        },
+        "lesson": {
+          "en": "Placeholder reflection: nobody would have known. Does that make it any different? Why?",
+          "gu": "કામચલાઉ મનન: કોઈને ખબર પડવાની નહોતી. શું એનાથી કંઈ ફરક પડે છે? કેમ?"
+        }
+      }
+    },
+    {
+      "id": "came-back",
+      "text": {
+        "en": "You walk back in and hold out the note: \"You gave me too much.\"",
+        "gu": "તમે પાછા અંદર જઈને નોટ આગળ ધરો છો: \"તમે મને વધારે પૈસા આપી દીધા.\""
+      },
+      "image": {
+        "src": "placeholder-note-returned.svg",
+        "alt": {
+          "en": "Back at the counter, the young person holds out a note. The shopkeeper raises his eyebrows and smiles with relief, and the friend stands behind with arms crossed.",
+          "gu": "ફરી કાઉન્ટર પર યુવાન નોટ આગળ ધરે છે. દુકાનદાર ભવાં ઊંચાં કરીને રાહતભર્યું સ્મિત કરે છે, અને મિત્ર પાછળ હાથ બાંધીને ઊભો છે."
+        },
+        "source": "Original placeholder drawing made for this project"
+      },
+      "ending": {
+        "title": {
+          "en": "Came back",
+          "gu": "પાછા વળ્યા"
+        },
+        "outcome": {
+          "en": "The shopkeeper looks surprised, then relieved: his cash would have been short tonight. Your friend grumbles, then admits it was the right thing to do.",
+          "gu": "દુકાનદાર પહેલાં નવાઈ પામે છે, પછી રાહત અનુભવે છે: આજે રાત્રે તેના હિસાબમાં પૈસા ઓછા પડત. તમારો મિત્ર થોડો બબડે છે, પછી માને છે કે એ જ સાચું હતું."
+        },
+        "lesson": {
+          "en": "Placeholder reflection: turning back takes courage. What helped you turn around?",
+          "gu": "કામચલાઉ મનન: પાછા વળવા માટે હિંમત જોઈએ. તમને પાછા વળવામાં શાનાથી મદદ મળી?"
+        }
+      }
+    },
+    {
+      "id": "light",
+      "text": {
+        "en": "You hand the note back across the counter. The shopkeeper stops, counts and smiles.",
+        "gu": "તમે કાઉન્ટર પર નોટ પાછી આપો છો. દુકાનદાર અટકે છે, ગણે છે અને સ્મિત કરે છે."
+      },
+      "image": {
+        "src": "placeholder-shopkeeper-smiles.svg",
+        "alt": {
+          "en": "The shopkeeper smiles and waves from behind the counter as the young person, smiling too, walks out through the bright doorway.",
+          "gu": "દુકાનદાર કાઉન્ટર પાછળથી હસીને હાથ હલાવે છે, અને યુવાન પણ હસતાં હસતાં ઝળહળતા દરવાજેથી બહાર નીકળે છે."
+        },
+        "source": "Original placeholder drawing made for this project"
+      },
+      "ending": {
+        "title": {
+          "en": "Light pocket",
+          "gu": "હળવું ખિસ્સું"
+        },
+        "outcome": {
+          "en": "\"Not many would do that,\" he says. You walk out with exactly your change, and nothing heavy in your pocket.",
+          "gu": "\"બહુ ઓછા લોકો આવું કરે,\" તે કહે છે. તમે ફક્ત તમારા જ પૈસા લઈને બહાર નીકળો છો, ખિસ્સામાં કંઈ ભારે નથી."
+        },
+        "lesson": {
+          "en": "Placeholder reflection: one moment of checking made the right thing easy. What helps you stop and check before you act?",
+          "gu": "કામચલાઉ મનન: એક ક્ષણ તપાસ કરવાથી સાચું કરવું સહેલું બન્યું. કંઈ કરતાં પહેલાં થોભીને તપાસવા માટે તમને શું મદદ કરે છે?"
+        }
+      }
+    }
+  ]
+}

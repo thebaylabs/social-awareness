@@ -2,10 +2,15 @@ import { afterEach, describe, expect, it, vi } from 'vitest'
 import type { Story } from '../../content/schemas'
 import {
   ENDINGS_FOUND_KEY,
+  MORAL_REVEALED_KEY,
   choicesTaken,
+  isFinished,
   reachableEndings,
   readEndingsFound,
+  readFinished,
+  readMoralRevealed,
   writeEndingsFound,
+  writeMoralRevealed,
 } from './endings'
 
 const t = (en: string) => ({ en })
@@ -100,5 +105,35 @@ describe('endings found in this tab', () => {
 
     vi.stubGlobal('window', { sessionStorage: memoryStorage({ [ENDINGS_FOUND_KEY]: 'not json' }) })
     expect(readEndingsFound('s')).toEqual([])
+  })
+})
+
+describe('scenarios finished and the shared lesson', () => {
+  afterEach(() => vi.unstubAllGlobals())
+  const other: Story = { ...story, id: 'other' }
+
+  it('counts a scenario as finished once one of its reachable endings is found', () => {
+    expect(isFinished(story, [])).toBe(false)
+    expect(isFinished(story, ['orphan'])).toBe(false)
+    expect(isFinished(story, ['rested'])).toBe(true)
+  })
+
+  it('reads which scenarios are finished in this tab', () => {
+    vi.stubGlobal('window', { sessionStorage: memoryStorage() })
+    expect(readFinished([story, other])).toEqual(new Set())
+    writeEndingsFound('other', ['tired'])
+    expect(readFinished([story, other])).toEqual(new Set(['other']))
+  })
+
+  it('remembers that the lesson was revealed, and is safe without storage', () => {
+    expect(readMoralRevealed()).toBe(false)
+    expect(() => writeMoralRevealed()).not.toThrow()
+
+    const storage = memoryStorage()
+    vi.stubGlobal('window', { sessionStorage: storage })
+    expect(readMoralRevealed()).toBe(false)
+    writeMoralRevealed()
+    expect(readMoralRevealed()).toBe(true)
+    expect(storage.data.get(MORAL_REVEALED_KEY)).toBe('revealed')
   })
 })

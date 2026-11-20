@@ -9,10 +9,19 @@ import { focusElement } from '../../components/focus'
 import { usePrefersReducedMotion } from '../../components/motion'
 import type { Story, StoryNode } from '../../content/schemas'
 import type { SectionId } from '../../config/sections'
+import { playableStories, scenarioMoral } from '../../content'
 import { followedExpectedPath } from './expected'
-import { choicesTaken, reachableEndings, readEndingsFound, writeEndingsFound } from './endings'
+import {
+  choicesTaken,
+  isFinished,
+  reachableEndings,
+  readEndingsFound,
+  readFinished,
+  writeEndingsFound,
+} from './endings'
 import { FirecrackerReward } from './firecrackers/FirecrackerReward'
 import { EndingsFound, PathRecap } from './ScenarioEnding'
+import { SharedLesson } from './SharedLesson'
 import { storyReducer } from './state'
 import styles from './Story.module.css'
 
@@ -43,8 +52,9 @@ function NodeMedia({ node, placeholder }: { node: StoryNode; placeholder: boolea
 
 /**
  * Plays a validated story. Bhulkao leads with the picture; Yuvako leads with
- * the text, and its endings show the choices taken and which endings have been
- * found in this browser tab.
+ * the text, and its endings show the choices taken, which endings have been
+ * found in this browser tab and progress towards the lesson all the scenarios
+ * share.
  */
 export function StoryPlayer({ story, section }: { story: Story; section: SectionId }) {
   const { t, l, lang } = useI18n()
@@ -61,6 +71,15 @@ export function StoryPlayer({ story, section }: { story: Story; section: Section
   const [found, setFound] = useState<readonly string[]>(() =>
     tracksEndings ? readEndingsFound(story.id) : [],
   )
+  const moral = tracksEndings ? scenarioMoral() : null
+  const scenarios = useMemo(() => (moral ? playableStories(section) : []), [moral, section])
+
+  /** Scenarios with an ending found, counting this one from state in case storage is off. */
+  const finishedScenarios = () => {
+    const finished = readFinished(scenarios)
+    if (isFinished(story, found)) finished.add(story.id)
+    return finished
+  }
 
   const choose = (next: string) => {
     dispatch({ type: 'choose', next })
@@ -143,6 +162,15 @@ export function StoryPlayer({ story, section }: { story: Story; section: Section
             {section === 'bhulkao' && followedExpectedPath(story, history) && <FirecrackerReward />}
             {tracksEndings && endings.length > 1 && (
               <EndingsFound endings={endings} found={found} current={node.id} />
+            )}
+            {moral && (
+              <SharedLesson
+                section={section}
+                stories={scenarios}
+                moral={moral}
+                finished={finishedScenarios()}
+                current={story.id}
+              />
             )}
           </>
         )}

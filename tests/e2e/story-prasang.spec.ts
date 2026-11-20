@@ -122,6 +122,106 @@ test.describe('story player', () => {
     await expect(page.getByRole('heading', { name: 'How it ends' })).toBeFocused()
     await expect(page.getByTestId('choices-taken')).toHaveCount(0)
     await expect(page.getByRole('region', { name: /^Endings found/ })).toHaveCount(0)
+    await expect(page.getByTestId('shared-lesson')).toHaveCount(0)
+  })
+
+  test('the three Yuvako scenarios share a lesson, revealed after an ending in each', async ({
+    page,
+  }) => {
+    const shared = page.getByRole('region', { name: /^The lesson they share/ })
+    const picture = (name: RegExp) => page.getByTestId('story-node').getByRole('img', { name })
+    const cards = page.getByRole('main').getByRole('list').first().getByRole('link')
+
+    await page.goto('/yuvako/scenario')
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Scenarios')
+    await expect(cards).toHaveText([
+      /^Placeholder: 1 a\.m\., Exam Tomorrow\s*Not finished yet/,
+      /^Placeholder: The Group Chat Joke\s*Not finished yet/,
+      /^Placeholder: The Extra Change\s*Not finished yet/,
+    ])
+    await expect(shared).toHaveAccessibleName(/^The lesson they share\s*:\s*0 of 3 finished$/)
+    await expect(shared).toContainText('Reach an ending in every scenario')
+    await expect(shared.getByRole('button')).toHaveCount(0)
+
+    // 1. The 1 a.m. exam.
+    await cards.first().click()
+    await page.getByRole('button', { name: 'Put the phone away now' }).click()
+    await page.getByRole('button', { name: 'Sit quietly and take ten slow breaths' }).click()
+    await expect(shared).toHaveAccessibleName(/^The lesson they share\s*:\s*1 of 3 finished$/)
+    await expect(shared.getByRole('listitem')).toHaveText([
+      'Placeholder: 1 a.m., Exam Tomorrow, Finished',
+      'Placeholder: The Group Chat Joke, Not finished yet',
+      'Placeholder: The Extra Change, Not finished yet',
+    ])
+
+    // 2. The group chat joke, sent at once and apologised for later.
+    await shared
+      .getByRole('link', { name: /^Next scenario\s*:\s*Placeholder: The Group Chat Joke$/ })
+      .click()
+    await expect(page).toHaveURL(/\/yuvako\/scenario\/group-chat-joke$/)
+    await expect(page.getByRole('heading', { level: 1 })).toBeInViewport()
+    await expect(picture(/laughing faces/)).toBeVisible()
+    await page.getByRole('button', { name: 'Send it now' }).click()
+    await expect(picture(/someone has left the group/)).toBeVisible()
+    await page.getByRole('button', { name: 'Message him privately to say sorry' }).click()
+    await expect(
+      page.getByRole('heading', { name: /^How it ends\s*:\s*Sorry, said late$/ }),
+    ).toBeFocused()
+    await expect(picture(/an hour has passed/)).toBeVisible()
+    await expect(shared).toHaveAccessibleName(/^The lesson they share\s*:\s*2 of 3 finished$/)
+
+    // 3. The extra change, kept at first and then taken back.
+    await shared
+      .getByRole('link', { name: /^Next scenario\s*:\s*Placeholder: The Extra Change$/ })
+      .click()
+    await expect(page).toHaveURL(/\/yuvako\/scenario\/extra-change$/)
+    await expect(picture(/hands over a fan of notes/)).toBeVisible()
+    await page.getByRole('button', { name: 'Walk out quickly' }).click()
+    await page.getByRole('button', { name: 'Turn around and go back in' }).click()
+    await expect(page.getByRole('heading', { name: /^How it ends\s*:\s*Came back$/ })).toBeFocused()
+    await expect(shared).toHaveAccessibleName(/^The lesson they share\s*:\s*3 of 3 finished$/)
+    await expect(shared).toContainText('You have reached an ending in every scenario.')
+    await expect(shared.getByRole('link', { name: /^Next scenario/ })).toHaveCount(0)
+
+    await shared.getByRole('button', { name: 'Reveal the lesson' }).click()
+    await expect(
+      shared.getByRole('heading', { level: 3, name: 'Stop. Think. Then choose.' }),
+    ).toBeFocused()
+    await expect(shared.getByRole('img', { name: /glowing pause sign/ })).toBeVisible()
+    await expect(shared).toContainText('stopping late is still stopping')
+    await expect(shared.getByRole('button', { name: 'Reveal the lesson' })).toHaveCount(0)
+
+    // The list shows each scenario as finished, and the lesson stays revealed.
+    await page.goto('/yuvako/scenario')
+    await expect(cards).toHaveText([
+      /Finished · 1 of 3 endings found/,
+      /Finished · 1 of 3 endings found/,
+      /Finished · 1 of 3 endings found/,
+    ])
+    await expect(shared).toHaveAccessibleName(/^The lesson they share\s*:\s*3 of 3 finished$/)
+    await expect(shared.getByRole('heading', { name: 'Stop. Think. Then choose.' })).toBeVisible()
+    await expect(shared.getByRole('button')).toHaveCount(0)
+  })
+
+  test('reveals the shared lesson in Gujarati', async ({ page }) => {
+    await page.addInitScript(() => {
+      localStorage.setItem('outreach.lang', 'gu')
+      sessionStorage.setItem(
+        'outreach.scenario.endings',
+        JSON.stringify({
+          'one-am-exam': ['groggy'],
+          'group-chat-joke': ['straight'],
+          'extra-change': ['light'],
+        }),
+      )
+    })
+    await page.goto('/yuvako/scenario')
+    const shared = page.getByRole('region', { name: /^સહિયારો બોધ\s*:\s*3માંથી 3 પૂરી$/ })
+    await expect(shared).toContainText('તમે દરેક પરિસ્થિતિમાં એક અંત સુધી પહોંચી ગયા છો.')
+    await shared.getByRole('button', { name: 'બોધ જુઓ' }).click()
+    await expect(
+      shared.getByRole('heading', { level: 3, name: 'થોભો. વિચારો. પછી પસંદ કરો.' }),
+    ).toBeFocused()
   })
 
   test('shows the scenario in Gujarati', async ({ page }) => {

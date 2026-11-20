@@ -34,9 +34,12 @@ export function choicesTaken(story: Story, history: StoryHistory): LocalizedText
 /**
  * sessionStorage key for the scenario endings found in this browser tab, as
  * { "<story id>": ["<ending node id>", …] }. It is cleared when the tab
- * closes. This is the only thing the site keeps in sessionStorage.
+ * closes. With MORAL_REVEALED_KEY, this is all the site keeps in sessionStorage.
  */
 export const ENDINGS_FOUND_KEY = 'outreach.scenario.endings'
+
+/** sessionStorage key set to "revealed" once the shared lesson has been revealed in this tab. */
+export const MORAL_REVEALED_KEY = 'outreach.scenario.moral'
 
 function readAll(): Record<string, unknown> {
   try {
@@ -63,5 +66,31 @@ export function writeEndingsFound(storyId: string, ids: readonly string[]): void
     window.sessionStorage.setItem(ENDINGS_FOUND_KEY, JSON.stringify(all))
   } catch {
     // Ignore: the count is a convenience only.
+  }
+}
+
+/** True when at least one ending of the story has been found in this tab. */
+export function isFinished(story: Story, found: readonly string[]): boolean {
+  return reachableEndings(story).some((ending) => found.includes(ending.id))
+}
+
+/** The stories, of those given, with at least one ending found in this tab. */
+export function readFinished(stories: readonly Story[]): Set<string> {
+  return new Set(stories.filter((s) => isFinished(s, readEndingsFound(s.id))).map((s) => s.id))
+}
+
+export function readMoralRevealed(): boolean {
+  try {
+    return window.sessionStorage.getItem(MORAL_REVEALED_KEY) === 'revealed'
+  } catch {
+    return false
+  }
+}
+
+export function writeMoralRevealed(): void {
+  try {
+    window.sessionStorage.setItem(MORAL_REVEALED_KEY, 'revealed')
+  } catch {
+    // Ignore: without storage the lesson is simply revealed again next time.
   }
 }

@@ -277,3 +277,81 @@
   margin: var(--space-3) 0 0;
   font-weight: 700;
 }
+
+/* The lesson all the Yuvako scenarios share: progress, then the reveal. */
+.shared {
+  margin: var(--space-5) 0;
+  padding: var(--space-4);
+  border: 2px solid var(--color-lesson-border);
+  border-radius: var(--radius);
+  background: var(--color-lesson-bg);
+}
+
+.shared > * + * {
+  margin-top: var(--space-3);
+}
+
+.badgeStatus {
+  color: var(--color-muted);
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+
+.sharedHint {
+  margin-bottom: 0;
+}
+
+.nextLink {
+  text-decoration: none;
+}
+
+.nextText {
+  display: flex;
+  flex-direction: column;
+}
+
+.nextLabel {
+  color: var(--color-muted);
+  font-size: 0.875rem;
+}
+
+.moral {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.moralTag {
+  margin: 0;
+}
+
+.moralTitle {
+  margin: 0;
+  color: var(--color-heading);
+  font-size: var(--font-size-h2);
+  line-height: 1.2;
+}
+
+.moralTitle:lang(en) {
+  font-family: var(--font-serif);
+  font-size: calc(var(--font-size-h2) * 1.25);
+  font-weight: 500;
+  letter-spacing: -0.015em;
+}
+
+.moralText {
+  margin: 0;
+  font-size: var(--font-size-lead);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .moral[data-just-revealed] {
+    animation: moral-reveal 700ms ease-out both;
+  }
+}
+
+@keyframes moral-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(0.75rem);
+  }
+}

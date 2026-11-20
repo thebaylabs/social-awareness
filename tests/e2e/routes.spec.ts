@@ -23,6 +23,8 @@ const ROUTES = [
   '/yuvako/prasang',
   '/bhulkao/story/homework-time',
   '/yuvako/scenario/one-am-exam',
+  '/yuvako/scenario/group-chat-joke',
+  '/yuvako/scenario/extra-change',
   '/bhulkao/prasang/sparrows-and-the-sea',
   '/yuvako/prasang/lamp-by-the-window',
   '/bhulkao/story/no-such-story',

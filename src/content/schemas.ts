@@ -78,6 +78,8 @@ export const storyNode = z.strictObject({
 export const story = z.strictObject({
   id: contentId,
   audience,
+  /** Place in the list of stories: lower numbers first, then stories without one, by id. */
+  order: z.number().int().optional(),
   title: localizedText,
   startNode: z.string().min(1),
   nodes: z.array(storyNode).min(1),
@@ -85,6 +87,18 @@ export const story = z.strictObject({
 })
 export type Story = z.infer<typeof story>
 export type StoryNode = z.infer<typeof storyNode>
+
+/**
+ * content/scenario-moral.json: the lesson every Yuvako scenario shares. It is
+ * revealed once a visitor has reached an ending in each scenario.
+ */
+export const scenarioMoral = z.strictObject({
+  title: localizedText,
+  text: localizedText,
+  image: storyImage.optional(),
+  placeholder: z.boolean().default(false),
+})
+export type ScenarioMoral = z.infer<typeof scenarioMoral>
 
 /** Front matter of a prasang file (one file per language). */
 export const prasangFrontMatter = z.strictObject({

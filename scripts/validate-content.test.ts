@@ -59,6 +59,28 @@ describe('validateContent', () => {
     expect(errorsOf(dir).join('\n')).toMatch(/source/)
   })
 
+  it('fails a shared scenario lesson whose picture is missing', () => {
+    const dir = fixture()
+    edit(dir, 'content/scenario-moral.json', (s) =>
+      s.replace('placeholder-pause-moral.svg', 'no-such-picture.svg'),
+    )
+    expect(errorsOf(dir).join('\n')).toMatch(
+      /scenario-moral\.json: image "no-such-picture\.svg" is not in content\/images\//,
+    )
+  })
+
+  it('reports a shared scenario lesson with no Gujarati as a missing translation', () => {
+    const dir = fixture()
+    edit(dir, 'content/scenario-moral.json', (s) => s.replace(/,\s*"gu": "થોભો[^"]*"/, ''))
+    const { problems } = validateContent(dir)
+    expect(problems.filter((p) => p.severity === 'error')).toEqual([])
+    expect(problems).toContainEqual({
+      severity: 'translation',
+      file: 'content/scenario-moral.json',
+      message: 'title: missing Gujarati (gu)',
+    })
+  })
+
   it('fails a prasang picture with no alt text', () => {
     const dir = fixture()
     edit(dir, 'content/prasangs/lamp-by-the-window.en.md', (s) =>

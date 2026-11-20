@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="400" height="300">
+  <!-- Original placeholder drawing made for this project. -->
+  <rect width="400" height="300" fill="#33426a"/>
+  <rect x="0" y="16" width="400" height="6" fill="#2c3a5c"/>
+  <rect x="8" y="0" width="14" height="16" rx="2" fill="#d9725f" opacity=".8"/>
+  <rect x="28" y="-5" width="21" height="21" rx="2" fill="#f2c14e" opacity=".8"/>
+  <rect x="55" y="-10" width="16" height="26" rx="2" fill="#8cc4a0" opacity=".8"/>
+  <rect x="77" y="-3" width="23" height="19" rx="2" fill="#7aa2d6" opacity=".8"/>
+  <rect x="106" y="-8" width="18" height="24" rx="2" fill="#f2efe6" opacity=".8"/>
+  <rect x="130" y="-1" width="25" height="17" rx="2" fill="#d9725f" opacity=".8"/>
+  <rect x="161" y="-6" width="20" height="22" rx="2" fill="#7aa2d6" opacity=".8"/>
+  <rect x="187" y="-11" width="15" height="27" rx="2" fill="#f2c14e" opacity=".8"/>
+  <rect x="208" y="-4" width="22" height="20" rx="2" fill="#8cc4a0" opacity=".8"/>
+  <rect x="236" y="-9" width="17" height="25" rx="2" fill="#d9725f" opacity=".8"/>
+  <rect x="259" y="-2" width="24" height="18" rx="2" fill="#f2c14e" opacity=".8"/>
+  <rect x="289" y="-7" width="19" height="23" rx="2" fill="#8cc4a0" opacity=".8"/>
+  <rect x="314" y="0" width="14" height="16" rx="2" fill="#7aa2d6" opacity=".8"/>
+  <rect x="334" y="-5" width="21" height="21" rx="2" fill="#f2efe6" opacity=".8"/>
+  <rect x="361" y="-10" width="16" height="26" rx="2" fill="#d9725f" opacity=".8"/>
+  <rect x="0" y="60" width="400" height="6" fill="#2c3a5c"/>
+  <rect x="8" y="39" width="21" height="21" rx="2" fill="#f2c14e" opacity=".8"/>
+  <rect x="35" y="34" width="16" height="26" rx="2" fill="#8cc4a0" opacity=".8"/>
+  <rect x="57" y="41" width="23" height="19" rx="2" fill="#7aa2d6" opacity=".8"/>
+  <rect x="86" y="36" width="18" height="24" rx="2" fill="#f2efe6" opacity=".8"/>
+  <rect x="110" y="43" width="25" height="17" rx="2" fill="#d9725f" opacity=".8"/>
+  <rect x="141" y="38" width="20" height="22" rx="2" fill="#7aa2d6" opacity=".8"/>
+  <rect x="167" y="33" width="15" height="27" rx="2" fill="#f2c14e" opacity=".8"/>
+  <rect x="188" y="40" width="22" height="20" rx="2" fill="#8cc4a0" opacity=".8"/>
+  <rect x="216" y="35" width="17" height="25" rx="2" fill="#d9725f" opacity=".8"/>
+  <rect x="239" y="42" width="24" height="18" rx="2" fill="#f2c14e" opacity=".8"/>
+  <rect x="269" y="37" width="19" height="23" rx="2" fill="#8cc4a0" opacity=".8"/>
+  <rect x="294" y="44" width="14" height="16" rx="2" fill="#7aa2d6" opacity=".8"/>
+  <rect x="314" y="39" width="21" height="21" rx="2" fill="#f2efe6" opacity=".8"/>
+  <rect x="341" y="34" width="16" height="26" rx="2" fill="#d9725f" opacity=".8"/>
+  <rect x="363" y="41" width="23" height="19" rx="2" fill="#7aa2d6" opacity=".8"/>
+  <path d="M294 156c0-27 14-40 36-40s36 13 36 40z" fill="#b98c4e"/>
+  <circle cx="330" cy="92" r="24" fill="#8a5a3c"/>
+  <path d="M307 96c-3-12 0-20 6-24M353 96c3-12 0-20-6-24" fill="none" stroke="#d8d2c4" stroke-width="7" stroke-linecap="round"/>
+  <circle cx="330" cy="94" r="3" fill="#1c2230"/><circle cx="348" cy="94" r="3" fill="#1c2230"/>
+  <path d="M328 106q5-5 11-1q6-4 11 1q-5 4-11 1q-6 3-11-1z" fill="#d8d2c4"/>
+  <path d="M333 111h12" stroke="#1c2230" stroke-width="2.4" stroke-linecap="round"/>
+  <rect y="140" width="400" height="160" fill="#5a4636"/>
+  <rect y="140" width="400" height="10" fill="#6e5642"/>
+  <g><rect x="98" y="168" width="56" height="30" rx="3" fill="#8cc4a0" stroke="#4f8a68" stroke-width="2"/><circle cx="136.08" cy="183.0" r="7.8" fill="none" stroke="#4f8a68" stroke-width="2"/><path d="M104 180.0h17M104 186.0h11" stroke="#4f8a68" stroke-width="2"/></g>
+  <g><rect x="166" y="168" width="56" height="30" rx="3" fill="#8cc4a0" stroke="#4f8a68" stroke-width="2"/><circle cx="204.08" cy="183.0" r="7.8" fill="none" stroke="#4f8a68" stroke-width="2"/><path d="M172 180.0h17M172 186.0h11" stroke="#4f8a68" stroke-width="2"/></g>
+  <g><rect x="234" y="168" width="56" height="30" rx="3" fill="#b9b1d6" stroke="#4f8a68" stroke-width="2"/><circle cx="272.08" cy="183.0" r="7.8" fill="none" stroke="#4f8a68" stroke-width="2"/><path d="M240 180.0h17M240 186.0h11" stroke="#4f8a68" stroke-width="2"/></g>
+  <rect x="229" y="163" width="66" height="40" rx="6" fill="none" stroke="#d9725f" stroke-width="2.5" stroke-dasharray="6 4"/>
+  <rect x="98" y="210" width="40" height="6" rx="3" fill="#f2efe6" opacity=".6"/>
+  <rect x="166" y="210" width="24" height="6" rx="3" fill="#f2efe6" opacity=".6"/>
+  <path d="M120 310L176 212" stroke="#41557f" stroke-width="22" stroke-linecap="round"/>
+  <circle cx="180" cy="204" r="13" fill="#9c6b4a"/>
+  <path d="M330 310L262 212" stroke="#41557f" stroke-width="22" stroke-linecap="round"/>
+  <circle cx="258" cy="204" r="13" fill="#9c6b4a"/>
+  <path d="M0 236L132 262" stroke="#6d8b5a" stroke-width="18" stroke-linecap="round"/>
+  <circle cx="140" cy="262" r="12" fill="#c48f62"/>
+  <path d="M120 236l-6-10M136 232l0-12M152 236l6-10" stroke="#f2efe6" stroke-width="2.5" stroke-linecap="round" opacity=".7"/>
+</svg>

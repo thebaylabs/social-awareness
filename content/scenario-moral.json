@@ -1,0 +1,19 @@
+{
+  "placeholder": true,
+  "title": {
+    "en": "Stop. Think. Then choose.",
+    "gu": "થોભો. વિચારો. પછી પસંદ કરો."
+  },
+  "text": {
+    "en": "In each scenario something pulled at you: one more video, a sharp reply, a note that was not yours. And each best ending began the same way: you stopped for a moment before you chose. That pause is always yours to take. And if you miss it, stopping late is still stopping.",
+    "gu": "દરેક પરિસ્થિતિમાં કંઈક તમને ખેંચતું હતું: એક વધુ વીડિયો, તીખો જવાબ, એવી નોટ જે તમારી નહોતી. અને દરેક સૌથી સારો અંત એક જ રીતે શરૂ થયો: પસંદ કરતાં પહેલાં તમે એક ક્ષણ થોભ્યા. એ ક્ષણ હંમેશાં તમારા હાથમાં છે. અને જો ચૂકી જાઓ, તો મોડું અટકવું પણ અટકવું જ છે."
+  },
+  "image": {
+    "src": "placeholder-pause-moral.svg",
+    "alt": {
+      "en": "A phone, a chat bubble and a banknote each send a dotted path into one glowing pause sign, and a single arrow leads on from it towards a rising sun.",
+      "gu": "એક ફોન, એક ચેટ બબલ અને એક નોટમાંથી ટપકાંવાળી લીટીઓ એક ઝળહળતા વિરામ-ચિહ્નમાં ભળે છે, અને ત્યાંથી એક તીર ઊગતા સૂરજ તરફ આગળ જાય છે."
+    },
+    "source": "Original placeholder drawing made for this project"
+  }
+}
