@@ -148,13 +148,8 @@ test.describe('no accessibility violations in game and story states', () => {
     await page.getByRole('button', { name: 'Exit' }).first().click()
     await expectNoAxeViolations(page)
     await page.getByRole('button', { name: /Blue pill/ }).click()
-    await expect(page.getByTestId('blackout')).toBeVisible()
-    await page.waitForTimeout(800) // past the fade in
-    await expectNoAxeViolations(page)
-    await page.getByTestId('blackout').getByRole('button', { name: 'Continue' }).click()
-    await expect(
-      page.getByRole('heading', { name: 'There is no Blue Pill for reality' }),
-    ).toBeVisible()
+    await expect(page.getByRole('heading', { name: /^Nice try!/ })).toBeVisible()
+    await page.waitForTimeout(2600) // past the toss and the green pill's landing
     await expectNoAxeViolations(page)
     await page.getByRole('button', { name: /Green pill/ }).click()
     await expectNoAxeViolations(page)

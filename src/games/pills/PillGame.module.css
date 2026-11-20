@@ -13,74 +13,162 @@
   font-size: var(--font-size-h2);
 }
 
-.choices {
-  display: grid;
-  gap: var(--space-4);
-  margin-top: var(--space-2);
+/* The landing prompt, as the guide's speech bubble. It pops in by scale only,
+   so the text is always at full contrast. */
+.screen .bubble {
+  position: relative;
+  align-self: center;
+  max-width: 24rem;
+  margin: var(--space-2) auto var(--space-4);
+  padding: var(--space-3) var(--space-5);
+  border: 2px solid var(--color-border);
+  border-radius: 1.5rem;
+  background: var(--color-surface-alt);
+  box-shadow: var(--shadow);
+  text-align: center;
+  transform-origin: 50% 100%;
+  animation: bubble-in 500ms cubic-bezier(0.3, 1.5, 0.5, 1) 200ms both;
 }
 
-@media (min-width: 36rem) {
-  .choices {
-    grid-template-columns: 1fr 1fr;
+.screen .bubble::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  width: 18px;
+  height: 18px;
+  border: solid var(--color-border);
+  border-width: 0 2px 2px 0;
+  background: var(--color-surface-alt);
+  transform: translateX(-50%) rotate(45deg);
+}
+
+/* The guide's line after the blue pill: longer, so a little smaller, and it
+   pops in as he grins rather than after a pause. */
+.screen .bubbleLong {
+  max-width: 26rem;
+  font-size: 1.25rem;
+  line-height: 1.3;
+  animation-delay: 0ms;
+}
+
+@keyframes bubble-in {
+  from {
+    transform: scale(0.6);
+  }
+
+  to {
+    transform: none;
   }
 }
 
-/* Pills: capsule-shaped buttons. Each carries its name and a hint in text, so colour is never the only signal. */
+@media (prefers-reduced-motion: reduce) {
+  .screen .bubble {
+    animation: none;
+  }
+}
+
+/* The landing screen: the guide's line and the guide himself, in the middle of the screen. */
+.landing {
+  justify-content: center;
+  min-height: min(72svh, 44rem);
+}
+
+/* The pills in his hands are the buttons: a round target over each palm. Each
+   carries its name and a hint in text, so colour is never the only signal. */
 .pill {
-  display: flex;
-  align-items: center;
-  gap: var(--space-3);
-  min-height: 72px;
-  padding: var(--space-3) var(--space-5);
-  border: 3px solid transparent;
-  border-radius: 999px;
+  position: relative;
+  display: block;
+  width: 64px;
+  height: 64px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
   color: var(--pill-on);
   font: inherit;
-  text-align: start;
-  text-decoration: none;
   cursor: pointer;
-  box-shadow: var(--shadow);
-  transition: transform var(--transition);
-}
-
-.pill:hover {
-  transform: translateY(-1px);
-}
-
-.pill:active {
-  transform: scale(0.98);
+  -webkit-tap-highlight-color: transparent;
 }
 
 .red {
-  background: var(--pill-red);
+  --pill: var(--pill-red);
 }
 
 .blue {
-  background: var(--pill-blue);
+  --pill: var(--pill-blue);
 }
 
 .green {
-  background: var(--pill-green);
+  --pill: var(--pill-green);
 }
 
-.capsule {
-  flex: none;
-  width: 48px;
-  height: 24px;
-}
-
-.pillText {
+/* The label, under the pill and opening towards the middle of the screen.
+   Hidden until the pill is hovered or focused. */
+.tip {
+  position: absolute;
+  top: calc(100% + var(--space-1));
   display: flex;
   flex-direction: column;
+  width: max-content;
+  max-width: 8.75rem;
+  padding: var(--space-2) var(--space-3);
+  border-radius: 1rem;
+  background: var(--pill);
+  box-shadow: var(--shadow);
+  line-height: 1.25;
+  text-align: start;
+  opacity: 0;
+  transform: translateY(-6px);
+  pointer-events: none;
+  transition:
+    opacity 180ms ease,
+    transform 180ms ease,
+    background-color 600ms ease;
+}
+
+@media (min-width: 36rem) {
+  .tip {
+    max-width: 11rem;
+  }
+}
+
+.pill[data-side='left'] .tip {
+  left: 0;
+}
+
+.pill[data-side='right'] .tip {
+  right: 0;
+}
+
+.pill:hover .tip,
+.pill:focus-visible .tip {
+  opacity: 1;
+  transform: none;
+}
+
+/* Touch screens cannot hover, so the labels stay out. */
+@media (hover: none) {
+  .tip {
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tip {
+    transform: none;
+  }
 }
 
 .pillName {
-  font-size: 1.125rem;
+  font-size: 1rem;
   font-weight: 700;
 }
 
 .pillHint {
-  font-size: 0.9375rem;
+  font-size: 0.875rem;
 }
 
 .eyebrow {
@@ -170,61 +258,6 @@
   color: var(--color-primary-strong);
 }
 
-/* The "look away" screen: soft and calm, then it dissolves. */
-.bliss {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: var(--space-4);
-  min-height: 16rem;
-  padding: var(--space-6) var(--space-4);
-  border: 0;
-  border-radius: var(--radius);
-  background: radial-gradient(circle at 30% 30%, #e8f0ff, #c9daf8 60%, #b8cdf2);
-  color: #102a57;
-  text-align: center;
-}
-
-.blissButton {
-  width: 100%;
-  cursor: pointer;
-  transition:
-    opacity 900ms ease,
-    filter 900ms ease;
-}
-
-.blissText {
-  font-size: 1.375rem;
-  font-weight: 700;
-}
-
-.blissHint {
-  font-size: 0.9375rem;
-  text-decoration: underline;
-}
-
-.fading {
-  opacity: 0;
-  filter: blur(6px);
-}
-
-.message {
-  padding: var(--space-3) var(--space-4);
-  border-inline-start: 6px solid var(--pill-blue);
-  background: var(--color-surface);
-  font-size: var(--font-size-lead);
-  font-weight: 700;
-}
-
-.greenRow {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: var(--space-3);
-  margin-bottom: var(--space-3);
-}
-
 /* Card number on the left, Back and Next at the top right. */
 .cardHead {
   display: flex;
@@ -281,18 +314,4 @@
 
 .greenCard {
   border-inline-start-color: var(--pill-green);
-}
-
-.points {
-  margin: 0 0 var(--space-4);
-  padding: 0;
-  list-style: none;
-}
-
-.points li {
-  display: flex;
-  align-items: flex-start;
-  gap: var(--space-2);
-  margin-bottom: var(--space-2);
-  font-weight: 700;
 }

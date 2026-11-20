@@ -22,7 +22,7 @@ describe('pill game machine: red pill', () => {
   it('lets the red pill be replayed, or the blue pill chosen, after finishing', () => {
     const finished = run([red, next, next, next])
     expect(run([red], finished)).toEqual({ screen: 'red', index: 0 })
-    expect(run([blue], finished)).toEqual({ screen: 'blueBlackout' })
+    expect(run([blue], finished)).toEqual({ screen: 'blueSwap' })
   })
 
   it('goes back one card, and from the first card back to the landing screen', () => {
@@ -36,25 +36,29 @@ describe('pill game machine: red pill', () => {
 })
 
 describe('pill game machine: blue pill', () => {
-  it('goes blackout, then the reality screen, then the green pill', () => {
-    expect(run([blue])).toEqual({ screen: 'blueBlackout' })
-    expect(run([blue, { type: 'blackoutDone' }])).toEqual({ screen: 'blueReality' })
-    expect(run([blue, { type: 'blackoutDone' }, { type: 'takeGreen' }])).toEqual({
-      screen: 'green',
-      index: 0,
-    })
+  it('swaps the blue pill for a green one on the landing screen, then goes to the green pages', () => {
+    expect(run([blue])).toEqual({ screen: 'blueSwap' })
+    expect(run([blue, { type: 'takeGreen' }])).toEqual({ screen: 'green', index: 0 })
   })
 
-  it('cannot skip the blackout or the reality screen', () => {
-    expect(run([blue, next])).toEqual({ screen: 'blueBlackout' })
-    expect(run([blue, { type: 'takeGreen' }])).toEqual({ screen: 'blueBlackout' })
+  it('still lets the red pill be taken after the swap', () => {
+    expect(run([blue, red])).toEqual({ screen: 'red', index: 0 })
+  })
+
+  it('offers the green pill only after the blue one is tossed', () => {
     expect(run([{ type: 'takeGreen' }])).toEqual(START)
-    expect(run([{ type: 'blackoutDone' }])).toEqual(START)
+    expect(run([red, { type: 'takeGreen' }])).toEqual({ screen: 'red', index: 0 })
+    expect(run([blue, next])).toEqual({ screen: 'blueSwap' })
+    expect(run([blue, back])).toEqual({ screen: 'blueSwap' })
+  })
+
+  it('stays on the swap when there are no green pages', () => {
+    expect(run([blue, { type: 'takeGreen' }], START, 3, 0)).toEqual({ screen: 'blueSwap' })
   })
 })
 
 describe('pill game machine: green pill', () => {
-  const toGreen: PillAction[] = [blue, { type: 'blackoutDone' }, { type: 'takeGreen' }]
+  const toGreen: PillAction[] = [blue, { type: 'takeGreen' }]
 
   it('walks the green pages with Next and Back', () => {
     expect(run([...toGreen, next])).toEqual({ screen: 'green', index: 1 })
@@ -62,8 +66,8 @@ describe('pill game machine: green pill', () => {
     expect(run([...toGreen, next, back])).toEqual({ screen: 'green', index: 0 })
   })
 
-  it('goes back from the first green page to the reality screen', () => {
-    expect(run([...toGreen, back])).toEqual({ screen: 'blueReality' })
+  it('goes back from the first green page to the swap', () => {
+    expect(run([...toGreen, back])).toEqual({ screen: 'blueSwap' })
   })
 
   it('has no Next after the last page; Exit returns to the landing screen', () => {
@@ -78,7 +82,7 @@ describe('pill game machine: green pill', () => {
   it('lets both pills be chosen again after exiting', () => {
     const exited = run([...toGreen, next, next, { type: 'exit' }])
     expect(run([red], exited)).toEqual({ screen: 'red', index: 0 })
-    expect(run([blue], exited)).toEqual({ screen: 'blueBlackout' })
+    expect(run([blue], exited)).toEqual({ screen: 'blueSwap' })
   })
 })
 
@@ -86,8 +90,7 @@ describe('pill game machine: start over', () => {
   it('returns to the landing screen from every state', () => {
     const states: PillState[] = [
       { screen: 'red', index: 2 },
-      { screen: 'blueBlackout' },
-      { screen: 'blueReality' },
+      { screen: 'blueSwap' },
       { screen: 'green', index: 1 },
     ]
     for (const s of states) expect(run([{ type: 'startOver' }], s)).toEqual(START)

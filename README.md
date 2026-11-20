@@ -249,16 +249,21 @@ submit a false one; preventing that fully would need a server.
 
 ### Change the pill game
 
-The red cards, the blue pill's messages and the green pill pages are in
-`content/pills.json`.
+The red cards, the guide's line for the blue pill and the green pill pages
+are in `content/pills.json`.
 
-- The flow: the landing screen offers the red and blue pills. After the last
-  red card it returns to the landing screen. The blue pill shows a dark
-  blackout for about three seconds, then a "no escape" screen, then the green
-  pill: two or three solution pages, ending with **Exit**, which returns to the
-  landing screen. Start over works from every screen.
-- `"blue"`: `blackout.message` and `blackout.note` (shown during the
-  blackout), and `reality` (`title`, `text`, `points`) for the screen after it.
+- The flow: on the landing screen a cartoon guide (an original drawing) holds
+  out the red and blue pills, and asks which one you will take. The pills in
+  his hands are the buttons; each shows its name and hint on hover or keyboard
+  focus, and always on touch screens. After the last red card it returns to
+  the landing screen. Choosing the blue pill keeps you on the same screen: the
+  guide grins, tosses the blue pill away, and a green pill comes down into his
+  hand, so the choice becomes **Red pill** or **Green pill**. The green pill opens two or three solution pages, ending
+  with **Exit**, which returns to the landing screen. Start over works from
+  every red card and green page; there is no way back to the blue pill once
+  it is tossed.
+- `"blue"`: `message`, the guide's speech bubble as he tosses the blue pill.
+  Keep it short (it must fit a phone screen) and light-hearted.
 - `"green"`: `pages` (two or three). Each page has `title`, `text`, `action`
   ("What you can do"), `why` ("Why it helps"), an optional `visual`, and a
   `source` (plus `moreSources`) written like the red cards' sources below.
@@ -323,7 +328,7 @@ From section 2 of the build plan, with their status after this build.
 | #   | Question                                             | Status                                                                                                                                                                                                                                                                                                                                                         |
 | --- | ---------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | 1   | Commit to the default branch, or a branch with a PR? | **Answered.** Work happens on `claude/webapp-build-plan-initial-0ecfpc`. When the owner asked for the site to go live, they approved fast-forwarding `main` to it, so `main` matches the build branch. No pull request has been opened.                                                                                                                        |
-| 2   | What does the green pill open?                       | **Answered.** An on-site set of three solution pages (reconnect with people, digital boundaries, move and be present), reached from the blue pill's "no escape" screen. Nothing leaves the site except the cited sources, which ask first.                                                                                                                     |
+| 2   | What does the green pill open?                       | **Answered.** An on-site set of three solution pages (reconnect with people, digital boundaries, move and be present), reached from the green pill the guide offers after tossing the blue one. Nothing leaves the site except the cited sources, which ask first.                                                                                             |
 | 3   | Word list spellings and length rule                  | **Partly answered.** Owner-confirmed words: `seva`, `swadharma`, `prarthna` (native forms included); their meanings and reflections are placeholders. The other nine words (daya, satya, shanti, dhyan, bhakti, kshama, santosh, vinay, sanyam) are placeholders. The length rule (a–z, 3 to 10 letters) is the plan's default and **still needs confirming**. |
 | 4   | Who translates and reviews Gujarati?                 | **Open.** All Gujarati text is a draft written by the builder, flagged unreviewed, with a note in the footer. Hindi was dropped.                                                                                                                                                                                                                               |
 | 5   | Native-script play in the word game?                 | **Open (default applied).** Played in Latin transliteration in all languages; meaning, reflection and native-script forms are shown in the chosen language.                                                                                                                                                                                                    |
@@ -378,8 +383,7 @@ Before this site is presented as final:
    first `images` entry therefore takes an `alt` line.
 7. **Story videos record a `source`** as pictures do (none are shipped).
 8. **Pill content details** the plan left open: a source is `{ text, url? }`
-   or `null`; the first blue card is the look-away screen and later blue cards
-   are the message after it.
+   or `null`.
 9. **Word-game keys are narrower than 44px.** At 360px wide, a ten-key keyboard
    row leaves about 30px per key. Keys are 52px tall and meet the WCAG 2.2 AA
    minimum target size (24px), but not the plan's 44px Yuvako guideline in
@@ -387,6 +391,13 @@ Before this site is presented as final:
    guideline, checked by a test.
 10. **Story and prasang pages load on demand**, to keep the first download
     smaller on phones (not required by the plan).
+11. **The pill game has a guide, and the blue pill no longer goes dark.** At
+    the owner's request, an animated cartoon guide (an original character, not
+    from any film) offers the pills on the landing screen. Choosing the blue
+    pill no longer shows the plan's "blissful ignorance" screen, the blackout
+    or the "no escape" screen: the guide tosses the blue pill away with a short,
+    light-hearted line and offers a green pill instead, on the same screen.
+    With reduced motion the guide is shown still, holding the pills.
 
 ## Known gaps and follow-ups
 

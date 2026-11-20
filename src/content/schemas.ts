@@ -210,15 +210,13 @@ export const pillCard = z
     )
   })
 
-/** The blue pill: a short blackout with a message, then a "no escape" screen that leads to the green pill. */
+/**
+ * The blue pill: the guide tosses it away and offers a green pill instead.
+ * `message` is his speech bubble as he does it: brief, light-hearted, and the
+ * point that ignoring reality does not make it go away.
+ */
 export const pillBlue = z.strictObject({
-  blackout: z.strictObject({ message: localizedText, note: localizedText }),
-  reality: z.strictObject({
-    title: localizedText,
-    text: localizedText,
-    /** Short points shown as a list under the paragraph. */
-    points: z.array(localizedText).min(1),
-  }),
+  message: localizedText,
   placeholder: z.boolean().default(false),
 })
 

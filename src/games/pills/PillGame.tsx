@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useReducer, useRef } from 'react'
+import { useEffect, useMemo, useReducer, useRef, useState, type HTMLAttributes } from 'react'
 import { useI18n } from '../../i18n/context'
 import { localizedLang } from '../../i18n/localized'
 import { Icon } from '../../components/Icon'
@@ -9,53 +9,57 @@ import { focusElement } from '../../components/focus'
 import { useGameHeading } from '../../components/game-heading'
 import { PILLS, pillsArePlaceholder } from '../../content/games'
 import type { PillCard, Pills } from '../../content/schemas'
-import { BlackoutScreen } from './BlackoutScreen'
 import { GreenPillPage } from './GreenPillPage'
-import { Loc } from './Loc'
+import { PillGuide, type GuidePill } from './PillGuide'
 import { RedPillInsight } from './RedPillInsight'
-import { START, pillReducer, type PillPath } from './machine'
+import { START, pillReducer } from './machine'
 import styles from './PillGame.module.css'
 
-type PillColour = 'red' | 'blue' | 'green'
+type PillColour = GuidePill
 
-function Capsule() {
-  return (
-    <svg className={styles.capsule} viewBox="0 0 48 24" aria-hidden="true" focusable="false">
-      <rect
-        x="1.5"
-        y="1.5"
-        width="45"
-        height="21"
-        rx="10.5"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="3"
-      />
-      <path d="M12 1.5h12v21H12a10.5 10.5 0 010-21z" fill="currentColor" />
-    </svg>
-  )
-}
-
+/** The pill's name and hint: shown beside the pill on hover or focus, and always on touch screens. */
 function PillLabel({ colour }: { colour: PillColour }) {
   const { t } = useI18n()
   return (
-    <>
-      <Capsule />
-      <span className={styles.pillText}>
-        <span className={styles.pillName}>{t(`pills.${colour}.name`)}</span>
-        <span className={styles.pillHint}>{t(`pills.${colour}.hint`)}</span>
-      </span>
-    </>
+    <span className={styles.tip}>
+      <span className={styles.pillName}>{t(`pills.${colour}.name`)}</span>
+      <span className={styles.pillHint}>{t(`pills.${colour}.hint`)}</span>
+    </span>
+  )
+}
+
+/**
+ * A pill in the guide's hand, as a button. Its label opens towards the middle
+ * of the screen. The landing screen keeps the same right-hand button when the
+ * blue pill becomes the green one, so its colour changes instead of the button
+ * being replaced.
+ */
+function PillButton({
+  colour,
+  side = 'right',
+  onChoose,
+  ...rest
+}: { colour: PillColour; side?: 'left' | 'right'; onChoose: () => void } & Omit<
+  HTMLAttributes<HTMLButtonElement>,
+  'onClick' | 'className' | 'type'
+>) {
+  return (
+    <button
+      type="button"
+      className={`${styles.pill} ${styles[colour]}`}
+      onClick={onChoose}
+      data-pill={colour}
+      data-side={side}
+      {...rest}
+    >
+      <PillLabel colour={colour} />
+    </button>
   )
 }
 
 /** The green pill: an on-site button that opens the green pill pages. */
 export function GreenPill({ onChoose }: { onChoose: () => void }) {
-  return (
-    <button type="button" className={`${styles.pill} ${styles.green}`} onClick={onChoose}>
-      <PillLabel colour="green" />
-    </button>
-  )
+  return <PillButton colour="green" onChoose={onChoose} />
 }
 
 function CardSource({ card }: { card: PillCard }) {
@@ -121,7 +125,7 @@ export function PillGameView({ data }: { data: Pills }) {
   const headingRef = useRef<HTMLHeadingElement>(null)
   const isFirst = useRef(true)
 
-  // Move focus to each new screen's heading (a new card, the blackout, a green page...).
+  // Move focus to each new screen's heading (a new card, the guide's new line, a green page...).
   useEffect(() => {
     if (isFirst.current) {
       isFirst.current = false
@@ -132,21 +136,33 @@ export function PillGameView({ data }: { data: Pills }) {
     window.scrollTo(0, 0)
   }, [state])
 
-  // The page's main heading names the chosen pill (the default title shows only on the choice screen).
+  // The page's main heading names the chosen pill. The default title stays on the
+  // landing screen, including after the blue pill is tossed, as there is still a choice to make.
   useGameHeading(
     state.screen === 'red'
       ? t('pills.red.name')
-      : state.screen === 'blueBlackout' || state.screen === 'blueReality'
-        ? t('pills.blue.name')
-        : state.screen === 'green'
-          ? t('pills.green.name')
-          : undefined,
+      : state.screen === 'green'
+        ? t('pills.green.name')
+        : undefined,
   )
 
   const redCard = state.screen === 'red' ? reds[state.index] : undefined
   const greenPage = state.screen === 'green' ? greens[state.index] : undefined
-  const blackoutDone = useCallback(() => dispatch({ type: 'blackoutDone' }), [])
-  const choose = (path: PillPath) => dispatch({ type: 'choose', path })
+  // On the landing screen after the blue pill: the guide has tossed it and offers green instead.
+  const swapped = state.screen === 'blueSwap'
+  const offer = swapped ? 'green' : 'blue'
+  // The pill being hovered or focused on the landing screen; the guide lifts that hand.
+  const [lean, setLean] = useState<GuidePill | null>(null)
+  const take = (pill: GuidePill) => {
+    setLean(null)
+    dispatch(pill === 'green' ? { type: 'takeGreen' } : { type: 'choose', path: pill })
+  }
+  const leanOn = (pill: GuidePill) => ({
+    onPointerEnter: () => setLean(pill),
+    onPointerLeave: () => setLean(null),
+    onFocus: () => setLean(pill),
+    onBlur: () => setLean(null),
+  })
   const back = () => dispatch({ type: 'back' })
   const startOver = (
     <div className={styles.actions}>
@@ -165,25 +181,37 @@ export function PillGameView({ data }: { data: Pills }) {
     <div className={styles.game} data-testid="pill-game" data-screen={state.screen}>
       {pillsArePlaceholder(data) && <PlaceholderNotice />}
 
-      {state.screen === 'start' && (
-        <section className={styles.screen}>
-          <h2 ref={headingRef}>{t('pills.prompt')}</h2>
-          <div className={styles.choices}>
-            <button
-              type="button"
-              className={`${styles.pill} ${styles.red}`}
-              onClick={() => choose('red')}
+      {/* One landing section for both the first choice and the swap, so the guide
+          stays on screen and plays the swap where he stands. */}
+      {(state.screen === 'start' || swapped) && (
+        <section className={`${styles.screen} ${styles.landing}`}>
+          {swapped ? (
+            <h2
+              key="swap"
+              ref={headingRef}
+              className={`${styles.bubble} ${styles.bubbleLong}`}
+              lang={localizedLang(data.blue.message, lang)}
             >
-              <PillLabel colour="red" />
-            </button>
-            <button
-              type="button"
-              className={`${styles.pill} ${styles.blue}`}
-              onClick={() => choose('blue')}
-            >
-              <PillLabel colour="blue" />
-            </button>
-          </div>
+              {l(data.blue.message)}
+            </h2>
+          ) : (
+            <h2 key="prompt" ref={headingRef} className={styles.bubble}>
+              {t('pills.prompt')}
+            </h2>
+          )}
+          <PillGuide
+            offer={offer}
+            lean={lean}
+            left={
+              <PillButton
+                colour="red"
+                side="left"
+                onChoose={() => take('red')}
+                {...leanOn('red')}
+              />
+            }
+            right={<PillButton colour={offer} onChoose={() => take(offer)} {...leanOn(offer)} />}
+          />
         </section>
       )}
 
@@ -225,34 +253,6 @@ export function PillGameView({ data }: { data: Pills }) {
             onBack={back}
             onNext={() => dispatch({ type: 'next' })}
           />
-        </section>
-      )}
-
-      {state.screen === 'blueBlackout' && (
-        <BlackoutScreen
-          content={data.blue.blackout}
-          headingRef={headingRef}
-          onDone={blackoutDone}
-        />
-      )}
-
-      {state.screen === 'blueReality' && (
-        <section className={styles.screen}>
-          <h2 ref={headingRef} lang={localizedLang(data.blue.reality.title, lang)}>
-            {l(data.blue.reality.title)}
-          </h2>
-          <Loc field={data.blue.reality.text} as="p" />
-          <ul className={styles.points}>
-            {data.blue.reality.points.map((point, i) => (
-              <li key={i}>
-                <Icon name="check" size={20} />
-                <Loc field={point} />
-              </li>
-            ))}
-          </ul>
-          <div className={styles.greenRow}>
-            <GreenPill onChoose={() => dispatch({ type: 'takeGreen' })} />
-          </div>
         </section>
       )}
 

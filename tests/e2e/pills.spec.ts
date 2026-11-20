@@ -15,17 +15,16 @@ async function finishRed(page: Page, go: (l: Locator) => Promise<void>) {
   await go(page.getByRole('button', { name: 'Exit' }).first())
 }
 
-/** The Continue button inside the blackout. */
-const blackoutContinue = (page: Page, name: string | RegExp = 'Continue') =>
-  page.getByTestId('blackout').getByRole('button', { name })
+/** The guide's line after he tosses the blue pill away. */
+const SWAP_LINE = /^Nice try! Looking away doesn’t make reality disappear\. Try this one instead\.$/
 
-/** Blue pill, continue past the blackout, then take the green pill. */
+/** Long enough for the toss and the green pill's landing to finish. */
+const SWAP_MS = 2600
+
+/** Blue pill (the guide tosses it and offers green), then take the green pill. */
 async function toGreen(page: Page, go: (l: Locator) => Promise<void>) {
   await go(page.getByRole('button', { name: /Blue pill/ }))
-  await go(blackoutContinue(page))
-  await expect(
-    page.getByRole('heading', { name: 'There is no Blue Pill for reality' }),
-  ).toBeVisible()
+  await expect(page.getByRole('heading', { name: SWAP_LINE })).toBeFocused()
   await go(page.getByRole('button', { name: /Green pill/ }))
 }
 
@@ -51,9 +50,10 @@ test('the page heading is "Choose your reality", then names the chosen pill', as
   await go(page.getByRole('button', { name: 'Back' }).first())
   await expect(h1).toHaveText('Choose your reality')
 
+  // The guide tosses the blue pill and offers green: still a choice, so the title stays.
   await go(page.getByRole('button', { name: /Blue pill/ }))
-  await go(blackoutContinue(page))
-  await expect(h1).toHaveText('Blue pill')
+  await expect(page.getByRole('heading', { name: SWAP_LINE })).toBeFocused()
+  await expect(h1).toHaveText('Choose your reality')
   await expect(page.getByText('You took the blue pill')).toHaveCount(0)
 
   await go(page.getByRole('button', { name: /Green pill/ }))
@@ -131,7 +131,7 @@ test.describe('pill game: red pill', () => {
     await expect(page.getByRole('heading', { name: LANDING })).toBeFocused()
     await finishRed(page, go)
     await go(page.getByRole('button', { name: /Blue pill/ }))
-    await expect(page.getByTestId('blackout')).toBeVisible()
+    await expect(page.getByRole('heading', { name: SWAP_LINE })).toBeFocused()
   })
 
   test('plays the whole red flow by keyboard', async ({ page }) => {
@@ -231,88 +231,104 @@ test.describe('pill game: red pill', () => {
 })
 
 test.describe('pill game: blue pill', () => {
-  test('goes dark with a message, has no time limit, and tapping does not skip it', async ({
+  test('the guide tosses the blue pill away and offers a green one, on the same screen', async ({
     page,
   }, info) => {
     const go = press(info.project.name === 'phone')
     await page.goto('/yuvako/activity/pills')
+    const game = page.getByTestId('pill-game')
+    const guide = page.getByTestId('pill-guide')
+    await expect(guide).toHaveAttribute('data-offer', 'blue')
     await go(page.getByRole('button', { name: /Blue pill/ }))
-    const dark = page.getByTestId('blackout')
-    await expect(dark).toBeVisible()
-    await expect(page.getByRole('heading', { name: 'You took the blue pill' })).toBeFocused()
-    const message = dark.getByRole('status')
-    await expect(message).toContainText('You cannot escape a harsh reality by choosing ignorance.')
-    await expect(message).toContainText('Ignoring reality does not make it disappear.')
-    // Fills the screen and is dark with light text.
-    const box = await dark.boundingBox()
-    const view = page.viewportSize()!
-    expect(box!.width).toBeGreaterThanOrEqual(view.width - 1)
-    expect(box!.height).toBeGreaterThanOrEqual(view.height - 1)
-    expect(await dark.evaluate((el) => getComputedStyle(el).backgroundColor)).toBe('rgb(5, 7, 11)')
-    expect(await dark.evaluate((el) => getComputedStyle(el).color)).toBe('rgb(255, 255, 255)')
+
+    // His line replaces the question and is read out first.
+    await expect(page.getByRole('heading', { name: SWAP_LINE })).toBeFocused()
+    await expect(page.getByRole('heading', { name: LANDING })).toHaveCount(0)
+    await expect(game).toHaveAttribute('data-screen', 'blueSwap')
+    await expect(guide).toHaveAttribute('data-offer', 'green')
+    // No blackout and no separate "no escape" screen any more.
+    await expect(page.locator('dialog')).toHaveCount(0)
+
+    // The blue pill is gone; the red one stays and the green one is offered instead.
+    await expect(game.getByRole('button', { name: /Blue pill/ })).toHaveCount(0)
+    await expect(game.getByRole('button', { name: /Red pill/ })).toBeVisible()
+    await expect(game.getByRole('button', { name: /Green pill/ })).toBeVisible()
+    // No way back to the blue pill from here.
+    await expect(game.getByRole('button', { name: 'Start over' })).toHaveCount(0)
+    await expectNoHorizontalOverflow(page)
+    await page.waitForTimeout(SWAP_MS)
     await expectNoHorizontalOverflow(page)
 
-    // Tapping the message does not skip it, and nothing moves it on by itself.
-    await go(message)
-    await page.waitForTimeout(5000)
-    await expect(dark).toBeVisible()
-    await expect(message).toContainText('choosing ignorance')
-
-    await go(blackoutContinue(page))
-    await expect(
-      page.getByRole('heading', { name: 'There is no Blue Pill for reality' }),
-    ).toBeFocused()
-    await expect(dark).toHaveCount(0)
+    await go(page.getByRole('button', { name: /Green pill/ }))
+    await expect(page.getByRole('heading', { name: 'Solution 1 of 3' })).toBeFocused()
   })
 
-  test('with reduced motion it also waits for the Continue button', async ({ browser }) => {
+  test('the red pill can still be taken after the blue one is tossed', async ({ page }, info) => {
+    const go = press(info.project.name === 'phone')
+    await page.goto('/yuvako/activity/pills')
+    await go(page.getByRole('button', { name: /Blue pill/ }))
+    await expect(page.getByRole('heading', { name: SWAP_LINE })).toBeFocused()
+    await go(page.getByRole('button', { name: /Red pill/ }))
+    await expect(page.getByRole('heading', { name: 'Card 1 of 5' })).toBeFocused()
+  })
+
+  test('the pills in his hands are the buttons, labelled on hover or focus', async ({ page }) => {
+    await page.goto('/yuvako/activity/pills')
+    const guide = page.getByTestId('pill-guide')
+    const red = page.getByRole('button', { name: /Red pill/ })
+    const blue = page.getByRole('button', { name: /Blue pill/ })
+    const tip = (button: Locator) => button.locator('span').first()
+
+    // Each button sits on the palm holding that pill (44 and 276 across the
+    // 320-wide drawing, 153 down its 222), and is big enough to tap.
+    const art = (await guide.boundingBox())!
+    for (const [button, x] of [
+      [red, 44],
+      [blue, 276],
+    ] as const) {
+      const b = (await button.boundingBox())!
+      expect(Math.abs(b.x + b.width / 2 - (art.x + (art.width * x) / 320))).toBeLessThan(3)
+      expect(Math.abs(b.y + b.height / 2 - (art.y + (art.height * 153) / 222))).toBeLessThan(3)
+      expect(Math.min(b.width, b.height)).toBeGreaterThanOrEqual(44)
+    }
+
+    if (await page.evaluate(() => matchMedia('(hover: none)').matches)) {
+      // A touch screen cannot hover, so both labels are always out, side by side.
+      await expect(tip(red)).toHaveCSS('opacity', '1')
+      await expect(tip(blue)).toHaveCSS('opacity', '1')
+      const r = (await tip(red).boundingBox())!
+      const b = (await tip(blue).boundingBox())!
+      expect(r.x + r.width).toBeLessThan(b.x)
+    } else {
+      await expect(tip(red)).toHaveCSS('opacity', '0')
+      await expect(tip(blue)).toHaveCSS('opacity', '0')
+      await red.hover()
+      await expect(tip(red)).toHaveCSS('opacity', '1')
+      await expect(guide).toHaveAttribute('data-lean', 'left')
+      await page.mouse.move(0, 0)
+      await expect(tip(red)).toHaveCSS('opacity', '0')
+      // From the keyboard too.
+      await red.focus()
+      await page.keyboard.press('Tab')
+      await expect(blue).toBeFocused()
+      await expect(tip(blue)).toHaveCSS('opacity', '1')
+      await expect(guide).toHaveAttribute('data-lean', 'right')
+    }
+    await expectNoHorizontalOverflow(page)
+  })
+
+  test('with reduced motion the guide is shown still, holding the green pill', async ({
+    browser,
+  }) => {
     const context = await browser.newContext({ reducedMotion: 'reduce' })
     const page = await context.newPage()
     await page.goto('/yuvako/activity/pills')
     await page.getByRole('button', { name: /Blue pill/ }).click()
-    await expect(page.getByTestId('blackout')).toBeVisible()
-    await expect(page.getByRole('status')).toContainText('choosing ignorance')
-    await page.waitForTimeout(4000)
-    await expect(page.getByTestId('blackout')).toBeVisible()
-    await blackoutContinue(page).click()
-    await expect(
-      page.getByRole('heading', { name: 'There is no Blue Pill for reality' }),
-    ).toBeFocused()
+    await expect(page.getByRole('heading', { name: SWAP_LINE })).toBeFocused()
+    const guide = page.getByTestId('pill-guide')
+    await expect(guide).toHaveAttribute('data-offer', 'green')
+    expect(await guide.evaluate((el) => el.getAnimations({ subtree: true }).length)).toBe(0)
     await context.close()
-  })
-
-  test('Continue and Escape also move on from the blackout, by keyboard', async ({ page }) => {
-    await page.goto('/yuvako/activity/pills')
-    await page.getByRole('button', { name: /Blue pill/ }).focus()
-    await page.keyboard.press('Enter')
-    await expect(page.getByTestId('blackout')).toBeVisible()
-    await page.keyboard.press('Escape')
-    await expect(
-      page.getByRole('heading', { name: 'There is no Blue Pill for reality' }),
-    ).toBeFocused()
-  })
-
-  test('the reality screen explains there is no ignorance pill and leads to the green pill', async ({
-    page,
-  }, info) => {
-    const go = press(info.project.name === 'phone')
-    await page.goto('/yuvako/activity/pills')
-    await go(page.getByRole('button', { name: /Blue pill/ }))
-    await go(blackoutContinue(page))
-    const heading = page.getByRole('heading', { name: 'There is no Blue Pill for reality' })
-    await expect(heading).toBeFocused()
-    const game = page.getByTestId('pill-game')
-    await expect(game).toContainText(
-      'Looking away may feel easier for a moment, but the problem remains.',
-    )
-    await expect(game).toContainText('The Green Pill is a choice to understand what is happening')
-    await expect(game).toContainText('There is no true')
-    await expect(game).toContainText('Avoiding a problem does not remove it.')
-    // No Start over button after the blackout.
-    await expect(game.getByRole('button', { name: 'Start over' })).toHaveCount(0)
-    await expectNoHorizontalOverflow(page)
-    await go(page.getByRole('button', { name: /Green pill/ }))
-    await expect(page.getByRole('heading', { name: 'Solution 1 of 3' })).toBeFocused()
   })
 })
 
@@ -368,14 +384,17 @@ test.describe('pill game: green pill', () => {
     expect(new URL(page.url()).pathname).toBe('/yuvako/activity/pills')
   })
 
-  test('Back from the first green page returns to the reality screen', async ({ page }, info) => {
+  test('Back from the first green page returns to the guide offering the green pill', async ({
+    page,
+  }, info) => {
     const go = press(info.project.name === 'phone')
     await page.goto('/yuvako/activity/pills')
     await toGreen(page, go)
     await go(page.getByRole('button', { name: 'Back' }).first())
-    await expect(
-      page.getByRole('heading', { name: 'There is no Blue Pill for reality' }),
-    ).toBeFocused()
+    await expect(page.getByRole('heading', { name: SWAP_LINE })).toBeFocused()
+    await expect(page.getByTestId('pill-guide')).toHaveAttribute('data-offer', 'green')
+    await expect(page.getByRole('button', { name: /Green pill/ })).toBeVisible()
+    await expect(page.getByRole('button', { name: /Blue pill/ })).toHaveCount(0)
   })
 
   test('Start over works from the first and last green pages', async ({ page }, info) => {
@@ -395,16 +414,13 @@ test.describe('pill game: green pill', () => {
     await expect(page.getByRole('heading', { name: LANDING })).toBeFocused()
   })
 
-  test('plays blue, reality and green by keyboard', async ({ page }) => {
+  test('plays blue, the swap and green by keyboard', async ({ page }) => {
     await page.goto('/yuvako/activity/pills')
     await page.getByRole('button', { name: /Blue pill/ }).focus()
     await page.keyboard.press('Enter')
+    await expect(page.getByRole('heading', { name: SWAP_LINE })).toBeFocused()
     await page.keyboard.press('Tab')
-    await expect(blackoutContinue(page)).toBeFocused()
-    await page.keyboard.press('Enter')
-    await expect(
-      page.getByRole('heading', { name: 'There is no Blue Pill for reality' }),
-    ).toBeFocused()
+    await expect(page.getByRole('button', { name: /Red pill/ })).toBeFocused()
     await page.keyboard.press('Tab')
     await expect(page.getByRole('button', { name: /Green pill/ })).toBeFocused()
     await page.keyboard.press('Enter')
@@ -424,13 +440,12 @@ test.describe('pill game: green pill', () => {
     await useLanguage(page, 'gu')
     await page.goto('/yuvako/activity/pills')
     await page.getByRole('button', { name: /વાદળી ગોળી/ }).click()
-    await expect(page.getByRole('status')).toContainText(
-      'અજ્ઞાનતા પસંદ કરવાથી કઠોર વાસ્તવિકતામાંથી બચી શકાતું નથી.',
-    )
-    await blackoutContinue(page, 'આગળ વધો').click()
-    await expect(
-      page.getByRole('heading', { name: 'વાસ્તવિકતા માટે કોઈ વાદળી ગોળી નથી' }),
-    ).toBeVisible()
+    const line = page.getByRole('heading', {
+      name: 'વાહ, સરસ પ્રયાસ! નજર ફેરવવાથી વાસ્તવિકતા ગાયબ નથી થતી. એના બદલે આ લઈ જુઓ.',
+    })
+    await expect(line).toBeFocused()
+    await expect(line).toHaveAttribute('lang', 'gu')
+    await expectNoHorizontalOverflow(page)
     await page.getByRole('button', { name: /લીલી ગોળી/ }).click()
     await expect(page.getByRole('heading', { name: 'ઉકેલ 1 / 3' })).toBeFocused()
     await expectNoHorizontalOverflow(page)
@@ -440,18 +455,19 @@ test.describe('pill game: green pill', () => {
     await expectNoHorizontalOverflow(page)
   })
 
-  test('360px wide: every green page, the reality screen and the blackout fit', async ({
+  test('360px wide: the swap and every green page fit, with both pill buttons on the first screen', async ({
     page,
   }) => {
     await page.setViewportSize({ width: 360, height: 740 })
     await page.goto('/yuvako/activity/pills')
     await page.getByRole('button', { name: /Blue pill/ }).click()
+    await expect(page.getByRole('heading', { name: SWAP_LINE })).toBeVisible()
     await expectNoHorizontalOverflow(page)
-    await blackoutContinue(page).click()
-    await expect(
-      page.getByRole('heading', { name: 'There is no Blue Pill for reality' }),
-    ).toBeVisible()
+    await page.waitForTimeout(SWAP_MS)
     await expectNoHorizontalOverflow(page)
+    await page.evaluate(() => window.scrollTo(0, 0))
+    await expect(page.getByRole('button', { name: /Red pill/ })).toBeInViewport()
+    await expect(page.getByRole('button', { name: /Green pill/ })).toBeInViewport()
     await page.getByRole('button', { name: /Green pill/ }).click()
     for (let n = 1; n <= 3; n++) {
       await expect(page.getByRole('heading', { name: `Solution ${n} of 3` })).toBeVisible()

@@ -309,39 +309,9 @@
   ],
   "blue": {
     "placeholder": false,
-    "blackout": {
-      "message": {
-        "en": "You cannot escape a harsh reality by choosing ignorance.",
-        "gu": "અજ્ઞાનતા પસંદ કરવાથી કઠોર વાસ્તવિકતામાંથી બચી શકાતું નથી."
-      },
-      "note": {
-        "en": "Ignoring reality does not make it disappear. Some realities still need to be faced.",
-        "gu": "વાસ્તવિકતાને અવગણવાથી તે અદૃશ્ય થઈ જતી નથી. કેટલીક વાસ્તવિકતાનો સામનો કરવો જ પડે છે."
-      }
-    },
-    "reality": {
-      "title": {
-        "en": "There is no Blue Pill for reality",
-        "gu": "વાસ્તવિકતા માટે કોઈ વાદળી ગોળી નથી"
-      },
-      "text": {
-        "en": "Looking away may feel easier for a moment, but the problem remains. The Green Pill is a choice to understand what is happening and look for a healthier path.",
-        "gu": "નજર ફેરવી લેવી ક્ષણભર સહેલી લાગી શકે, પણ સમસ્યા ત્યાં જ રહે છે. લીલી ગોળી એ સમજવાની પસંદગી છે કે શું થઈ રહ્યું છે અને વધુ સ્વસ્થ રસ્તો શોધવાની."
-      },
-      "points": [
-        {
-          "en": "There is no true “ignorance pill”.",
-          "gu": "સાચી “અજ્ઞાનતાની ગોળી” જેવું કંઈ નથી."
-        },
-        {
-          "en": "Avoiding a problem does not remove it.",
-          "gu": "સમસ્યાથી દૂર રહેવાથી તે દૂર થઈ જતી નથી."
-        },
-        {
-          "en": "The Green Pill stands for learning, awareness and constructive action.",
-          "gu": "લીલી ગોળી શીખવા, જાગૃતિ અને રચનાત્મક પગલાંનું પ્રતીક છે."
-        }
-      ]
+    "message": {
+      "en": "Nice try! Looking away doesn’t make reality disappear. Try this one instead.",
+      "gu": "વાહ, સરસ પ્રયાસ! નજર ફેરવવાથી વાસ્તવિકતા ગાયબ નથી થતી. એના બદલે આ લઈ જુઓ."
     }
   },
   "green": {
