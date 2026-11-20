@@ -95,8 +95,6 @@
   "pills.blue.hint": "નજર ફેરવી લો",
   "pills.green.name": "લીલી ગોળી",
   "pills.green.hint": "આગળનું પગલું ભરો",
-  "pills.blue.title": "તમે વાદળી ગોળી લીધી",
-  "pills.continue": "આગળ વધો",
   "pills.progress": "કાર્ડ {n} / {total}",
   "pills.next": "આગળ",
   "pills.back": "પાછળ",
@@ -187,6 +185,5 @@
   "pills.green.progress": "ઉકેલ {n} / {total}",
   "pills.green.action": "તમે શું કરી શકો",
   "pills.green.why": "તે કેમ મદદ કરે છે",
-  "pills.exit": "બહાર નીકળો",
-  "pills.blackout.label": "વિચારવાની એક ક્ષણ"
+  "pills.exit": "બહાર નીકળો"
 }

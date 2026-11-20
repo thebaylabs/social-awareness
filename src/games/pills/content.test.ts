@@ -23,8 +23,7 @@ describe('pill content', () => {
 
   it('has five red cards, a blue section and two or three green pages', () => {
     expect(reds).toHaveLength(5)
-    expect(PILLS.data?.blue.blackout.message.en).toBeTruthy()
-    expect(PILLS.data?.blue.reality.points.length).toBeGreaterThan(0)
+    expect(PILLS.data?.blue.message.en).toBeTruthy()
     expect(greens.length).toBeGreaterThanOrEqual(2)
     expect(greens.length).toBeLessThanOrEqual(3)
   })
@@ -122,9 +121,11 @@ describe('pill content', () => {
     expect(page?.why.en).not.toMatch(/\b(proves|causes|guarantees)\b/)
   })
 
-  it('writes the blue message in all three languages', () => {
-    const m = PILLS.data?.blue.blackout.message
-    expect(m?.en).toMatch(/cannot escape a harsh reality by choosing ignorance/)
+  it('gives the guide a short line about not escaping reality, in every language', () => {
+    const m = PILLS.data?.blue.message
+    expect(m?.en).toMatch(/reality/)
+    // It sits in a speech bubble on a phone, so it stays brief.
+    expect(m?.en.length).toBeLessThanOrEqual(100)
     expect(m?.gu?.length).toBeGreaterThan(10)
   })
 
