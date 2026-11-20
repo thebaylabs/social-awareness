@@ -50,13 +50,16 @@ Every game, story and prasang is at most three taps from the intro page.
   thin "This site is a preview" strip under the header while any placeholder
   content remains. The strip disappears by itself once nothing is marked
   placeholder.
-- **Privacy and safety**: no cookies and no requests to any other website
-  (fonts are bundled), except Firestore for the doodle leaderboard once
+- **Privacy and safety**: no requests to any other website (fonts are
+  bundled), except Firestore for the doodle and Shabd Khoj leaderboards once
   Firebase is set up. The Vercel deployment counts page views with Vercel Web
   Analytics, which runs through the site's own domain and sets no cookies (see
-  Hosting). The only free-text input in Bhulkao is the doodle
-  player's name: a first name or nickname, letters only, up to 12 letters,
-  with a basic rude-word filter. It is shown on that day's leaderboard. The
+  Hosting). The only free-text input in Bhulkao is the doodle player's name: a
+  first name or nickname, letters only, up to 12 letters, with a basic
+  rude-word filter. It is shown on that day's leaderboard. In Yuvako, the
+  Shabd Khoj streak leaderboard asks for a name with the same rules. The site
+  sets one cookie, only when a Shabd Khoj player saves that name (see
+  [Shabd Khoj streak leaderboard](#shabd-khoj-streak-leaderboard)). The
   browser's local storage keeps only the language choice, today's word-game
   guesses, the doodle best score and the doodle player's name. Every link that
   leaves the site first shows "You are leaving this site".
@@ -234,9 +237,11 @@ Scores are stored in Firebase Firestore, at
 `doodleLeaderboard/<YYYY-MM-DD>/players/<name>`. To connect a Firebase project:
 
 1. In the Firebase console, create a Firestore database and a web app.
-2. Publish the rules in `firestore.rules` (Firestore → Rules, or
-   `firebase deploy --only firestore:rules`). They let visitors save only a
-   valid name and a higher score for it, and lock everything else.
+2. Publish the rules in `firestore.rules` and the index in
+   `firestore.indexes.json` with `firebase deploy --only firestore` (or paste
+   the rules in Firestore → Rules). They let visitors save only a valid name
+   and a higher score for it, or a valid streak (see below), and lock
+   everything else.
 3. For your computer, copy `.env.example` to `.env.local` and fill in the web
    app's settings.
 4. For the live site, add the same four values as repository variables
@@ -248,6 +253,51 @@ Without these settings, the dev server keeps scores in memory until the page
 is reloaded, and a production build shows "The leaderboard is not set up yet".
 Scores are reported by the browser, so a technically skilled visitor could
 submit a false one; preventing that fully would need a server.
+
+### Shabd Khoj streak leaderboard
+
+When a daily word is finished, the result screen shows the **longest
+streaks**: the ten players who have solved the daily word the most days in a
+row. Practice words never count. A streak stays on the board while it can
+still grow, that is until the end of the day after the player's last win.
+Losing the daily word ends it at once. A day is the player's local date: the
+same day number that picks the daily word.
+
+The first time a player solves the daily word, a dialog asks for a name, with
+the same rules as the doodle name (letters only, up to 12, a basic rude-word
+filter, no manual approval). "Not now" or Escape skips it: the board then
+offers an "Add your name" button, and the dialog comes back after the next
+daily win. Once a name is saved, that browser is never asked again, and a
+"Change name" button changes the name without changing the streak.
+
+Where the data is stored:
+
+- **In the browser**: one first-party cookie, `outreach_words_player`,
+  holding a random 20-character player id and the name. It lasts 400 days
+  (the most browsers allow) and is renewed on every visit; it is `SameSite=Lax`,
+  `Secure` on https, and limited to the site's path. Clearing cookies starts a
+  new player with a new streak.
+- **In Firestore**: `wordStreaks/<player id>`, with `name`, `streak`,
+  `lastDay` (the local day number of the player's last daily game) and
+  `updatedAt`. Only players who saved a name are stored. It uses the same
+  Firebase project and settings as the doodle leaderboard (above). The board's
+  query needs the index in `firestore.indexes.json`; without it, the board
+  says it could not be loaded.
+
+Without Firebase settings, the dev server keeps streaks in memory until the
+page is reloaded, and a production build asks for no name and shows "The
+leaderboard is not set up yet".
+
+**Streaks can be faked.** The browser reports each result, and nothing proves
+that the player solved the word. `firestore.rules` limits this: a streak can
+only start at 0 or 1, grow by one on the day after the last one, or start
+again, and each day must be within a day of the server's date, so a false
+streak still has to be built one real day at a time. There is no sign-in, so
+someone technically skilled could also rename another player's entry or end
+their streak (entry ids are visible to anyone who reads the board). Preventing
+that fully would need a server, or sign-in with Firebase Authentication. The
+rules have no automated tests; try changes in the Firebase emulator before
+publishing them.
 
 ### Change the pill game
 
@@ -460,7 +510,7 @@ src/content/    schemas, loaders (import.meta.glob), front matter parser
 src/components/ layout, header, footer, cards, placeholder marking, lesson box, external link
 src/pages/      intro, section home, games list, item list, story, prasang, not found
 src/features/   story engine (validate, state, player), prasang reader
-src/games/      pills/, words/, doodle/ (each with pure logic and unit tests)
+src/games/      pills/, words/, doodle/ (each with pure logic and unit tests), firebase.ts
 tests/e2e/      Playwright tests
 ```
 
@@ -470,13 +520,15 @@ tests/e2e/      Playwright tests
   content text from `content/`. ESLint enforces this.
 - Game logic is pure and unit-tested (`games/*/machine.ts`, `logic.ts`,
   `sim.ts`); components only render and wire up input.
-- localStorage holds only the keys in `STORAGE_KEYS`.
+- localStorage holds only the keys in `STORAGE_KEYS`; the one cookie is in
+  `COOKIES` (`src/config/site.ts`).
 
 ### Tests
 
 - `npm test`: story validation and state, front matter, i18n, the pill
   machine, word scoring (two-pass, including the three a's in "swadharma") and
-  the daily word, doodle `step()` with a seeded random source, the content
+  the daily word, word streaks and the player cookie, doodle `step()` with a
+  seeded random source, the content
   validator against deliberately broken copies of the content, and a guard
   that the green pill's old stand-in link and wording appear nowhere.
 - `npm run test:e2e`, at 360px with touch and at desktop size: every route in
@@ -484,7 +536,12 @@ tests/e2e/      Playwright tests
   other site); language persistence; two story endings; a prasang to its
   lesson box; each game's main flow by touch and by keyboard; placeholder
   marking; tap-target sizes; three-tap reachability; the skip link; the CSP
-  tag; the "leaving this site" step.
+  tag; the "leaving this site" step; the Shabd Khoj streak leaderboard (name
+  dialog, cookie, board). The leaderboard tests use a second build with
+  made-up Firebase settings on port 4180 (or `E2E_FIREBASE_PORT`), whose
+  Firestore requests are answered inside the test by
+  `tests/e2e/fake-firestore.ts`. That server is never reused, so if the port
+  is busy the run stops with an error instead of testing another site.
 
 ## Hosting
 

@@ -51,6 +51,14 @@ export const STORAGE_KEYS = {
 } as const
 
 /**
+ * The only cookie this site sets: a Shabd Khoj player's random id and name,
+ * saved when they join the streak leaderboard (src/games/words/player.ts).
+ */
+export const COOKIES = {
+  wordsPlayer: 'outreach_words_player',
+} as const
+
+/**
  * Whether the intro page's welcome text (in locales/*.json, keys "site.*" and
  * "intro.*") is placeholder copy. While true, the intro page shows the
  * placeholder banner.

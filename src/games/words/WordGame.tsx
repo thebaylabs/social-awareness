@@ -28,6 +28,10 @@ import {
   type Mark,
 } from './logic'
 import { loadDaily, saveDaily } from './storage'
+import { newPlayerId, readPlayer, savePlayer, type Player } from './player'
+import { streakBoardAvailable } from './streakBoard'
+import { StreakPanel } from './StreakPanel'
+import { NameDialog, type NameDialogMode } from './NameDialog'
 import { Tile } from './Tile'
 import { MARK_ICON } from './marks'
 import styles from './WordGame.module.css'
@@ -77,6 +81,8 @@ export function WordGameView({ words }: { words: WordEntry[] }) {
     newBoard(daily.word, loadDaily(day, daily.word) ?? []),
   )
   const [announcement, setAnnouncement] = useState('')
+  const [player, setPlayer] = useState<Player | null>(readPlayer)
+  const [nameDialog, setNameDialog] = useState<NameDialogMode | null>(null)
   const status = statusOf(board.guesses, board.answer)
   const resultRef = useRef<HTMLHeadingElement>(null)
   const boardRef = useRef<HTMLOListElement>(null)
@@ -86,6 +92,11 @@ export function WordGameView({ words }: { words: WordEntry[] }) {
   useEffect(() => {
     if (mode === 'daily' && board.guesses.length > 0) saveDaily(day, daily.word, board.guesses)
   }, [mode, day, daily.word, board.guesses])
+
+  // The name cookie is renewed on every visit, so it stays for as long as the player keeps coming back.
+  useEffect(() => {
+    if (player) savePlayer(player)
+  }, [player])
 
   // When a game finishes, move focus to the result heading.
   useEffect(() => {
@@ -116,18 +127,24 @@ export function WordGameView({ words }: { words: WordEntry[] }) {
     if (status !== 'playing') return
     if (board.typed.length === board.answer.length) {
       setAnnouncement(describeRow(board.typed, board.guesses.length + 1))
+      // A first daily win asks for a name for the streak leaderboard (never again once one is saved).
+      if (mode === 'daily' && board.typed === board.answer && !player && streakBoardAvailable()) {
+        setNameDialog('ask')
+      }
     } else {
       setAnnouncement(t('words.tooShort', { n: board.answer.length }))
     }
     dispatch({ type: 'submit' })
-  }, [status, board, describeRow, t])
+  }, [status, board, describeRow, t, mode, player])
 
   // Physical keyboard: letters, Enter and Backspace.
   useEffect(() => {
     const onKey = (event: KeyboardEvent) => {
       if (event.ctrlKey || event.metaKey || event.altKey || event.defaultPrevented) return
       const target = event.target as HTMLElement | null
-      const onControl = !!target?.closest('button, a, input, textarea, select, summary, dialog')
+      // Typing in the name dialog (or any text field) is not a guess.
+      if (target?.closest('dialog, input, textarea, select')) return
+      const onControl = !!target?.closest('button, a, summary')
       if (event.key === 'Enter') {
         if (onControl) return // let the focused button do its own job
         event.preventDefault()
@@ -301,6 +318,24 @@ export function WordGameView({ words }: { words: WordEntry[] }) {
             {mode === 'daily' ? t('words.playPractice') : t('words.anotherPractice')}
           </button>
         </section>
+      )}
+
+      {mode === 'daily' && status !== 'playing' && (
+        <StreakPanel
+          day={day}
+          won={status === 'won'}
+          player={player}
+          onEditName={() => setNameDialog(player ? 'change' : 'join')}
+        />
+      )}
+      {nameDialog && (
+        <NameDialog
+          mode={nameDialog}
+          initialName={player?.name ?? ''}
+          returnFocus={nameDialog === 'ask' ? resultRef : undefined}
+          onSave={(name) => setPlayer({ id: player?.id ?? newPlayerId(), name })}
+          onClose={() => setNameDialog(null)}
+        />
       )}
     </div>
   )

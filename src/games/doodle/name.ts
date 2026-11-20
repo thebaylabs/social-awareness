@@ -1,8 +1,8 @@
 /**
- * Player names for the doodle leaderboard. Bhulkao players are young
- * children, so a name is a first name or nickname only: letters in any
- * script, single spaces, at most MAX_NAME_LENGTH letters, and not on the
- * blocked list.
+ * Player names for the doodle leaderboard and the Shabd Khoj streak
+ * leaderboard. Bhulkao players are young children, so a name is a first name
+ * or nickname only: letters in any script, single spaces, at most
+ * MAX_NAME_LENGTH letters, and not on the blocked list.
  */
 
 export const MAX_NAME_LENGTH = 12
