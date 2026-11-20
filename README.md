@@ -536,8 +536,10 @@ tests/e2e/      Playwright tests
   marking; tap-target sizes; three-tap reachability; the skip link; the CSP
   tag; the "leaving this site" step; the Shabd Khoj streak leaderboard (name
   dialog, cookie, board). The leaderboard tests use a second build with
-  made-up Firebase settings on port 4174, whose Firestore requests are
-  answered inside the test by `tests/e2e/fake-firestore.ts`.
+  made-up Firebase settings on port 4180 (or `E2E_FIREBASE_PORT`), whose
+  Firestore requests are answered inside the test by
+  `tests/e2e/fake-firestore.ts`. That server is never reused, so if the port
+  is busy the run stops with an error instead of testing another site.
 
 ## Hosting
 
