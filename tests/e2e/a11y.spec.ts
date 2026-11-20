@@ -159,6 +159,21 @@ test.describe('no accessibility violations in game and story states', () => {
     await expectNoAxeViolations(page)
   })
 
+  test('Yuvako scenario ending, with the choices taken and the endings found', async ({ page }) => {
+    await page.goto('/yuvako/scenario/one-am-exam')
+    await page.getByRole('button', { name: 'Put the phone away now' }).click()
+    await page.getByRole('button', { name: 'Check it one last time' }).click()
+    await page.getByRole('button', { name: 'Stop, even though sleep feels far away' }).click()
+    await expect(page.getByRole('region', { name: /^Endings found/ })).toBeVisible()
+    await expectNoAxeViolations(page)
+    await expectNoHorizontalOverflow(page)
+    await expectTapTargets(page, 44)
+    await page.getByRole('button', { name: 'ગુજરાતી' }).click()
+    await expect(page.getByRole('region', { name: /^મળેલા અંત/ })).toBeVisible()
+    await expectNoAxeViolations(page)
+    await expectNoHorizontalOverflow(page)
+  })
+
   test('word game result and doodle game over, in Gujarati', async ({ page }) => {
     test.setTimeout(60_000)
     await page.addInitScript(() => {

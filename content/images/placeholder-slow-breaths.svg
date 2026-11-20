@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="400" height="300">
+  <!-- Original placeholder drawing made for this project. -->
+  <rect width="400" height="300" fill="#19223a"/>
+  <circle cx="330" cy="62" r="26" fill="#f2efe6"/><circle cx="342" cy="54" r="24" fill="#19223a"/>
+  <circle cx="40" cy="70" r="2" fill="#f2efe6"/><circle cx="130" cy="36" r="2" fill="#f2efe6"/><circle cx="270" cy="30" r="2" fill="#f2efe6"/>
+  <path d="M58 172h40l-8-26h-24z" fill="#33405f"/>
+  <rect x="76" y="172" width="4" height="34" fill="#33405f"/>
+  <rect x="62" y="204" width="32" height="6" rx="3" fill="#33405f"/>
+  <rect x="316" y="150" width="64" height="8" rx="2" fill="#2c3a5c"/>
+  <rect x="330" y="140" width="34" height="10" rx="3" fill="#0f1526"/>
+  <circle cx="200" cy="138" r="96" fill="none" stroke="#7aa2d6" stroke-width="2" opacity="0.18"/>
+  <circle cx="200" cy="138" r="76" fill="none" stroke="#7aa2d6" stroke-width="2" opacity="0.3"/>
+  <circle cx="200" cy="138" r="56" fill="none" stroke="#7aa2d6" stroke-width="2" opacity="0.45"/>
+  <rect x="30" y="226" width="340" height="74" fill="#2c3a5c"/>
+  <rect x="30" y="214" width="340" height="18" rx="5" fill="#34466d"/>
+  <ellipse cx="200" cy="214" rx="66" ry="15" fill="#41557f"/>
+  <path d="M160 214c0-42 18-58 40-58s40 16 40 58z" fill="#41557f"/>
+  <circle cx="150" cy="206" r="8" fill="#9c6b4a"/>
+  <circle cx="250" cy="206" r="8" fill="#9c6b4a"/>
+  <circle cx="200" cy="128" r="30" fill="#9c6b4a"/>
+  <path d="M170 124c2-26 58-28 60 0-7-9-21-12-30-7-9-5-23-2-30 7z" fill="#20160f"/>
+  <path d="M185 131q6 5 12 0M203 131q6 5 12 0" fill="none" stroke="#1c2230" stroke-width="3" stroke-linecap="round"/>
+  <path d="M194 143q6 4 12 0" fill="none" stroke="#1c2230" stroke-width="2.5" stroke-linecap="round"/>
+</svg>
