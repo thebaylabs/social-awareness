@@ -55,6 +55,11 @@ export default defineConfig(({ mode }) => {
   return {
     base: basePath(),
     plugins: [react(), cspMeta(firestore)],
+    define: {
+      // Vercel Web Analytics is served by Vercel itself (/_vercel/insights), so
+      // it is only switched on for builds made there (Vercel sets VERCEL=1).
+      __VERCEL_ANALYTICS__: JSON.stringify(process.env.VERCEL === '1'),
+    },
     build: {
       // Keep every asset as a real file so the CSP never needs to allow data: URIs.
       assetsInlineLimit: 0,

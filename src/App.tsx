@@ -1,5 +1,6 @@
 import { lazy, Suspense } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router'
+import { Analytics } from '@vercel/analytics/react'
 import { I18nProvider } from './i18n/I18nProvider'
 import { Layout } from './components/Layout'
 import { GAMES, SECTION_LIST } from './config/sections'
@@ -66,6 +67,8 @@ export default function App() {
           </Route>
         </Routes>
       </BrowserRouter>
+      {/* Anonymous page-view counts, on the Vercel deployment only (see vite.config.ts). */}
+      {__VERCEL_ANALYTICS__ && <Analytics />}
     </I18nProvider>
   )
 }

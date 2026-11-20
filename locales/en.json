@@ -14,7 +14,7 @@
   "nav.home": "Home",
   "lang.label": "Language",
   "footer.translationNote": "This translation is a draft and has not been reviewed yet.",
-  "footer.privacy": "This site does not collect personal data, use cookies or track visits.",
+  "footer.rights": "All rights reserved.",
   "external.title": "You are leaving this site",
   "external.body": "This link opens {host} in a new tab. That site is not run by us.",
   "external.continue": "Continue",

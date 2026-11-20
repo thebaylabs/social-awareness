@@ -16,6 +16,9 @@ export const BRAND_NAME = 'Harisumiran SF'
 export const BRAND_LOGO_SUFFIX = 'SF'
 export const BRAND_LOGO_ALT = 'Harisumiran SF — A Hariprabodham Parivar Event'
 
+/** The copyright holder named at the foot of every page. Not translated. */
+export const COPYRIGHT_HOLDER = 'The Bay Labs'
+
 /**
  * Organisation name and contact for the footer. Left empty until branding is
  * confirmed by the owner (open question 8). Each is a localized text object,

@@ -1,5 +1,5 @@
 import { useI18n } from '../i18n/context'
-import { BRAND_NAME, ORGANISATION, TRANSLATION_REVIEWED } from '../config/site'
+import { BRAND_NAME, COPYRIGHT_HOLDER, ORGANISATION, TRANSLATION_REVIEWED } from '../config/site'
 import styles from './Footer.module.css'
 
 export function Footer() {
@@ -20,7 +20,10 @@ export function Footer() {
             {t('footer.translationNote')}
           </p>
         )}
-        <p>{t('footer.privacy')}</p>
+        <p data-testid="copyright">
+          © {new Date().getFullYear()} <span lang="en">{COPYRIGHT_HOLDER}</span>.{' '}
+          {t('footer.rights')}
+        </p>
       </div>
     </footer>
   )

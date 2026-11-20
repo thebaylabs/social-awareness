@@ -50,9 +50,11 @@ Every game, story and prasang is at most three taps from the intro page.
   thin "This site is a preview" strip under the header while any placeholder
   content remains. The strip disappears by itself once nothing is marked
   placeholder.
-- **Privacy and safety**: no analytics, no cookies, no requests to any other
-  website (fonts are bundled), except Firestore for the doodle leaderboard
-  once Firebase is set up. The only free-text input in Bhulkao is the doodle
+- **Privacy and safety**: no cookies and no requests to any other website
+  (fonts are bundled), except Firestore for the doodle leaderboard once
+  Firebase is set up. The Vercel deployment counts page views with Vercel Web
+  Analytics, which runs through the site's own domain and sets no cookies (see
+  Hosting). The only free-text input in Bhulkao is the doodle
   player's name: a first name or nickname, letters only, up to 12 letters,
   with a basic rude-word filter. It is shown on that day's leaderboard. The
   browser's local storage keeps only the language choice, today's word-game
@@ -500,3 +502,11 @@ The site is a static build and can be hosted anywhere. The owner chose
   `try_files $uri /index.html`).
 - Production builds include a Content-Security-Policy meta tag that limits
   every request to the site's own origin.
+- **Vercel** also deploys every push (live preview above, and a preview per
+  pull request). Builds made there turn on Vercel Web Analytics
+  (`@vercel/analytics`, mounted in `src/App.tsx`): anonymous page-view counts
+  with no cookies, loaded from `/_vercel/insights/` on the site's own domain,
+  so the Content-Security-Policy still holds. Builds anywhere else (GitHub
+  Pages, local, tests) leave it out; `vite.config.ts` checks for Vercel's
+  `VERCEL=1`. To see the numbers, turn on **Analytics** in the Vercel
+  project's dashboard.
