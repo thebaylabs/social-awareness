@@ -10,10 +10,10 @@
         "gu": "નિઃસ્વાર્થ સેવા: બદલાની આશા રાખ્યા વિના બીજાને મદદ કરવી."
       },
       "reflection": {
-        "en": "Placeholder reflection: what small act of seva could you do today, away from a screen?",
-        "gu": "કામચલાઉ મનન: આજે સ્ક્રીનથી દૂર રહીને તમે સેવાનું કયું નાનું કામ કરી શકો?"
+        "en": "What small act of seva could you do today, away from a screen?",
+        "gu": "આજે સ્ક્રીનથી દૂર રહીને તમે સેવાનું કયું નાનું કામ કરી શકો?"
       },
-      "placeholder": true
+      "placeholder": false
     },
     {
       "word": "swadharma",
@@ -25,10 +25,10 @@
         "gu": "પોતાનો ધર્મ: જીવનમાં પોતાની ભૂમિકા માટે જે યોગ્ય છે તે કરવું."
       },
       "reflection": {
-        "en": "Placeholder reflection: what is your duty today, as a student, a friend or a family member?",
-        "gu": "કામચલાઉ મનન: વિદ્યાર્થી, મિત્ર કે પરિવારના સભ્ય તરીકે આજે તમારી ફરજ શું છે?"
+        "en": "What is your duty today, as a student, a friend or a family member?",
+        "gu": "વિદ્યાર્થી, મિત્ર કે પરિવારના સભ્ય તરીકે આજે તમારી ફરજ શું છે?"
       },
-      "placeholder": true
+      "placeholder": false
     },
     {
       "word": "prarthna",
@@ -40,10 +40,10 @@
         "gu": "ભગવાન સાથે મનથી વાત કરવી."
       },
       "reflection": {
-        "en": "Placeholder reflection: when could you set aside a few quiet minutes for prayer, with your phone out of reach?",
-        "gu": "કામચલાઉ મનન: ફોન દૂર રાખીને પ્રાર્થના માટે થોડી શાંત મિનિટો તમે ક્યારે કાઢી શકો?"
+        "en": "When could you set aside a few quiet minutes for prayer, with your phone out of reach?",
+        "gu": "ફોન દૂર રાખીને પ્રાર્થના માટે થોડી શાંત મિનિટો તમે ક્યારે કાઢી શકો?"
       },
-      "placeholder": true
+      "placeholder": false
     },
     {
       "word": "daya",
@@ -55,10 +55,10 @@
         "gu": "કરુણા; બીજા પ્રત્યે માયાળુપણું."
       },
       "reflection": {
-        "en": "Placeholder reflection: how can you show daya in the way you write to others online?",
-        "gu": "કામચલાઉ મનન: ઑનલાઇન બીજાને લખતી વખતે તમે દયા કેવી રીતે બતાવી શકો?"
+        "en": "How can you show daya in the way you write to others online?",
+        "gu": "ઑનલાઇન બીજાને લખતી વખતે તમે દયા કેવી રીતે બતાવી શકો?"
       },
-      "placeholder": true
+      "placeholder": false
     },
     {
       "word": "satya",
@@ -70,10 +70,10 @@
         "gu": "સચ્ચાઈ; સાચું બોલવું."
       },
       "reflection": {
-        "en": "Placeholder reflection: is the picture you share of yourself online a truthful one?",
-        "gu": "કામચલાઉ મનન: ઑનલાઇન તમે પોતાની જે છબી બતાવો છો તે સાચી છે?"
+        "en": "Is the picture you share of yourself online a truthful one?",
+        "gu": "ઑનલાઇન તમે પોતાની જે છબી બતાવો છો તે સાચી છે?"
       },
-      "placeholder": true
+      "placeholder": false
     },
     {
       "word": "shanti",
@@ -85,10 +85,10 @@
         "gu": "મનની સ્થિરતા અને સુખ."
       },
       "reflection": {
-        "en": "Placeholder reflection: what helps your mind feel settled after a busy day?",
-        "gu": "કામચલાઉ મનન: વ્યસ્ત દિવસ પછી તમારા મનને શાંત થવામાં શું મદદ કરે છે?"
+        "en": "What helps your mind feel settled after a busy day?",
+        "gu": "વ્યસ્ત દિવસ પછી તમારા મનને શાંત થવામાં શું મદદ કરે છે?"
       },
-      "placeholder": true
+      "placeholder": false
     },
     {
       "word": "dhyan",
@@ -100,10 +100,10 @@
         "gu": "મનને એક જગ્યાએ સ્થિર રાખવું."
       },
       "reflection": {
-        "en": "Placeholder reflection: how long can you give one thing your full attention before reaching for your phone?",
-        "gu": "કામચલાઉ મનન: ફોન તરફ હાથ જાય તે પહેલાં તમે કોઈ એક કામ પર કેટલો સમય પૂરું ધ્યાન આપી શકો છો?"
+        "en": "How long can you give one thing your full attention before reaching for your phone?",
+        "gu": "ફોન તરફ હાથ જાય તે પહેલાં તમે કોઈ એક કામ પર કેટલો સમય પૂરું ધ્યાન આપી શકો છો?"
       },
-      "placeholder": true
+      "placeholder": false
     },
     {
       "word": "bhakti",
@@ -115,10 +115,10 @@
         "gu": "ભગવાન પ્રત્યે પ્રેમભરી શ્રદ્ધા."
       },
       "reflection": {
-        "en": "Placeholder reflection: what in your day do you give your heart to most?",
-        "gu": "કામચલાઉ મનન: તમારા દિવસમાં તમે સૌથી વધુ મન શેમાં પરોવો છો?"
+        "en": "What in your day do you give your heart to most?",
+        "gu": "તમારા દિવસમાં તમે સૌથી વધુ મન શેમાં પરોવો છો?"
       },
-      "placeholder": true
+      "placeholder": false
     },
     {
       "word": "kshama",
@@ -130,10 +130,10 @@
         "gu": "માફી આપવી; બીજાની ભૂલ માફ કરવી."
       },
       "reflection": {
-        "en": "Placeholder reflection: is there someone you could forgive today, even for a small thing?",
-        "gu": "કામચલાઉ મનન: શું કોઈ એવું છે જેને તમે આજે, ભલે નાની વાત માટે, માફ કરી શકો?"
+        "en": "Is there someone you could forgive today, even for a small thing?",
+        "gu": "શું કોઈ એવું છે જેને તમે આજે, ભલે નાની વાત માટે, માફ કરી શકો?"
       },
-      "placeholder": true
+      "placeholder": false
     },
     {
       "word": "santosh",
@@ -145,10 +145,10 @@
         "gu": "જે છે તેમાં રાજી રહેવું."
       },
       "reflection": {
-        "en": "Placeholder reflection: does scrolling through others' lives leave you feeling content, or wanting more?",
-        "gu": "કામચલાઉ મનન: બીજાના જીવન વિશે સ્ક્રોલ કર્યા પછી તમને સંતોષ થાય છે કે હજી વધુ જોઈએ એવું લાગે છે?"
+        "en": "Does scrolling through others' lives leave you feeling content, or wanting more?",
+        "gu": "બીજાના જીવન વિશે સ્ક્રોલ કર્યા પછી તમને સંતોષ થાય છે કે હજી વધુ જોઈએ એવું લાગે છે?"
       },
-      "placeholder": true
+      "placeholder": false
     },
     {
       "word": "vinay",
@@ -160,10 +160,10 @@
         "gu": "નમ્રતા; વિવેક."
       },
       "reflection": {
-        "en": "Placeholder reflection: what does humility look like in a comment or a reply?",
-        "gu": "કામચલાઉ મનન: કોઈ કોમેન્ટ કે જવાબમાં નમ્રતા કેવી દેખાય?"
+        "en": "What does humility look like in a comment or a reply?",
+        "gu": "કોઈ કોમેન્ટ કે જવાબમાં નમ્રતા કેવી દેખાય?"
       },
-      "placeholder": true
+      "placeholder": false
     },
     {
       "word": "sanyam",
@@ -175,10 +175,10 @@
         "gu": "પોતાના પર કાબૂ; આત્મસંયમ."
       },
       "reflection": {
-        "en": "Placeholder reflection: what is one limit you could set for yourself on screen time this week?",
-        "gu": "કામચલાઉ મનન: આ અઠવાડિયે સ્ક્રીન સમય માટે તમે પોતાના માટે કઈ એક મર્યાદા નક્કી કરી શકો?"
+        "en": "What is one limit you could set for yourself on screen time this week?",
+        "gu": "આ અઠવાડિયે સ્ક્રીન સમય માટે તમે પોતાના માટે કઈ એક મર્યાદા નક્કી કરી શકો?"
       },
-      "placeholder": true
+      "placeholder": false
     }
   ]
 }

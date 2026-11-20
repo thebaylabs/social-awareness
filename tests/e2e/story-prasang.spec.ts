@@ -108,4 +108,10 @@ test('placeholder content is marked unmistakably', async ({ page }) => {
   await page.goto('/yuvako')
   await expect(page.getByRole('link', { name: /Scenario.*Placeholder/ })).toBeVisible()
   await expect(page.getByRole('link', { name: /Prasang.*Placeholder/ })).toBeVisible()
+  // Both Yuvako games are final, so Activity and its game cards carry no badge.
+  await expect(page.getByRole('link', { name: /Activity/ })).toBeVisible()
+  await expect(page.getByRole('link', { name: /Activity.*Placeholder/ })).toHaveCount(0)
+  await page.goto('/yuvako/activity')
+  await expect(page.getByRole('link', { name: /Shabd Khoj/ })).toBeVisible()
+  await expect(page.getByRole('link', { name: /Placeholder/ })).toHaveCount(0)
 })

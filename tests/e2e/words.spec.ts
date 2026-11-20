@@ -65,7 +65,9 @@ test.describe('word game', () => {
     await expect(result.locator('[lang=gu]')).toHaveText('સેવા')
     await expect(result).toContainText('Solved in 2 of 6 tries.')
     await expect(result).toContainText('Selfless service')
-    await expect(result.getByTestId('placeholder-notice')).toBeVisible()
+    // The words are final for now, so the result is not marked as placeholder.
+    await expect(result.getByTestId('placeholder-notice')).toHaveCount(0)
+    await expect(result).not.toContainText('Placeholder')
 
     await page.reload()
     await expect(page.getByTestId('word-game')).toHaveAttribute('data-status', 'won')

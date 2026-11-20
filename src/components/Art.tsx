@@ -82,6 +82,103 @@ export function GameArt() {
   )
 }
 
+/**
+ * A capsule centred on (cx, cy), tilted by `angle` degrees: one half in the
+ * pill's colour (on the `side` given), the other cream, with a shine on top.
+ */
+function Capsule({
+  cx,
+  cy,
+  angle,
+  side,
+  colour,
+  shade,
+}: {
+  cx: number
+  cy: number
+  angle: number
+  side: 'left' | 'right'
+  colour: string
+  shade: string
+}) {
+  const left = side === 'left'
+  const shine = left ? cx - 17 : cx + 8
+  return (
+    <g transform={`rotate(${angle} ${cx} ${cy})`}>
+      <path
+        d={`M${cx} ${cy - 11} h-14 a11 11 0 0 0 0 22 h14 z`}
+        fill={left ? colour : '#fff1d2'}
+        stroke={left ? shade : '#e2c99c'}
+        strokeWidth="1.5"
+      />
+      <path
+        d={`M${cx} ${cy - 11} h14 a11 11 0 0 1 0 22 h-14 z`}
+        fill={left ? '#fff1d2' : colour}
+        stroke={left ? '#e2c99c' : shade}
+        strokeWidth="1.5"
+      />
+      <path
+        d={`M${shine} ${cy - 5} h9`}
+        stroke="#fff"
+        strokeWidth="3"
+        strokeLinecap="round"
+        opacity="0.55"
+      />
+    </g>
+  )
+}
+
+/** The pill game: a red pill and a blue pill leaning together, with a sparkle above them. */
+export function PillsArt() {
+  return (
+    <svg {...common}>
+      <Capsule cx={33} cy={52} angle={-28} side="left" colour="#e8574a" shade="#b3261e" />
+      <Capsule cx={87} cy={52} angle={28} side="right" colour="#4c8ef0" shade="#1557b0" />
+      <path d="M60 10 l3.5 8.5 8.5 3.5-8.5 3.5-3.5 8.5-3.5-8.5-8.5-3.5 8.5-3.5z" fill="#f4c552" />
+    </svg>
+  )
+}
+
+/** The word game: a row of marked letter tiles, with a magnifying glass searching the last one. */
+export function WordsArt() {
+  const tiles = [
+    { x: 4, letter: 'S', fill: '#1d5f7a', ink: '#fff' },
+    { x: 34, letter: 'E', fill: '#f4c552', ink: '#1c2230' },
+    { x: 64, letter: 'V', fill: '#d5d9e0', ink: '#1c2230' },
+  ]
+  return (
+    <svg {...common}>
+      {tiles.map((tile) => (
+        <g key={tile.letter}>
+          <rect x={tile.x} y="18" width="26" height="26" rx="5" fill={tile.fill} />
+          <text
+            x={tile.x + 13}
+            y="31.5"
+            fill={tile.ink}
+            fontFamily="inherit"
+            fontSize="17"
+            fontWeight="700"
+            textAnchor="middle"
+            dominantBaseline="central"
+          >
+            {tile.letter}
+          </text>
+        </g>
+      ))}
+      <circle
+        cx="93"
+        cy="50"
+        r="12"
+        fill="#fff"
+        fillOpacity="0.2"
+        stroke="currentColor"
+        strokeWidth="4.5"
+      />
+      <path d="M102 59 L112 69" stroke="currentColor" strokeWidth="7" strokeLinecap="round" />
+    </svg>
+  )
+}
+
 export function StoryArt() {
   return (
     <svg {...common}>
