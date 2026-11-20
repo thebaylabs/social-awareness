@@ -106,3 +106,174 @@
   background: var(--color-surface);
   color: var(--color-primary-strong);
 }
+
+/* A named ending, shown large under the small "How it ends" label. */
+.endingTitle {
+  display: block;
+  margin-top: var(--space-1);
+  color: var(--color-heading);
+  font-size: var(--font-size-h2);
+}
+
+/* The title carries its own lang, so it restates the heading font. */
+.endingTitle:lang(en) {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  letter-spacing: -0.015em;
+}
+
+/* Yuvako ending: "How you got here", the choices taken, numbered. */
+.path {
+  margin: 0 0 var(--space-5);
+}
+
+.subheading {
+  font-size: 1.25rem;
+}
+
+.pathList {
+  display: grid;
+  gap: var(--space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: path;
+}
+
+.pathList li {
+  position: relative;
+  min-height: 1.75rem;
+  padding-inline-start: 2.5rem;
+  counter-increment: path;
+}
+
+.pathList li::before {
+  content: counter(path);
+  position: absolute;
+  top: 0;
+  inset-inline-start: 0;
+  display: grid;
+  place-items: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  border: 2px solid var(--color-primary);
+  border-radius: 50%;
+  color: var(--color-primary-strong);
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+/* A dotted line joins each step to the next. */
+.pathList li:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  top: 1.75rem;
+  bottom: calc(-1 * var(--space-3));
+  inset-inline-start: calc(0.875rem - 1px);
+  border-inline-start: 2px dotted var(--color-border);
+}
+
+/* Yuvako ending: which endings have been found in this tab. */
+.endings {
+  margin: 0 0 var(--space-5);
+  padding: var(--space-4);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius);
+  background: var(--color-surface);
+}
+
+.endingsHeading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-2);
+  font-size: 1.25rem;
+}
+
+.endingsCount {
+  color: var(--color-primary-strong);
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: normal;
+}
+
+.badges {
+  display: grid;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Not found: dashed outline and "?". Found: solid outline and a tick. */
+.badge {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-2) var(--space-3);
+  border: 2px dashed var(--color-border);
+  border-radius: var(--radius);
+  color: var(--color-muted);
+}
+
+.badge[data-found] {
+  border-style: solid;
+  border-color: var(--color-primary);
+  color: var(--color-text);
+}
+
+.badge[data-current] {
+  background: var(--color-surface-alt);
+}
+
+.badgeMark {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  border: 2px dashed currentColor;
+  border-radius: 50%;
+  font-weight: 700;
+  line-height: 1;
+}
+
+/* Drawn by CSS so the "?" is not part of the badge's text. */
+.badge:not([data-found]) .badgeMark::before {
+  content: '?';
+}
+
+.badge[data-found] .badgeMark {
+  border: 2px solid var(--color-primary);
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+}
+
+.badgeText {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-1) var(--space-2);
+}
+
+.badge[data-found] .badgeText > span:first-child {
+  font-weight: 700;
+}
+
+.badgeNote {
+  padding: 0 var(--space-2);
+  border: 1px solid var(--color-primary);
+  border-radius: 999px;
+  color: var(--color-primary-strong);
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+
+.allFound {
+  margin: var(--space-3) 0 0;
+  font-weight: 700;
+}

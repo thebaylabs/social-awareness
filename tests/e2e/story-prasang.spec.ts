@@ -52,6 +52,78 @@ test.describe('story player', () => {
     await expect(page.getByRole('complementary', { name: 'Think about it' })).toBeVisible()
   })
 
+  test('a Yuvako ending names itself, recaps the choices and counts the endings found', async ({
+    page,
+  }) => {
+    const picture = (name: RegExp) => page.getByTestId('story-node').getByRole('img', { name })
+    const endings = page.getByRole('region', { name: /^Endings found/ })
+
+    await page.goto('/yuvako/scenario/one-am-exam')
+    await expect(picture(/clock showing 1:00/)).toBeVisible()
+    await page.getByRole('button', { name: 'Watch one more video' }).click()
+    await expect(picture(/2:00 by the clock/)).toBeVisible()
+    await page.getByRole('button', { name: 'Keep scrolling until you feel sleepy' }).click()
+    await expect(
+      page.getByRole('heading', { name: /^How it ends\s*:\s*Groggy morning$/ }),
+    ).toBeFocused()
+    await expect(picture(/clock shows 4:00/)).toBeVisible()
+    await expect(page.getByRole('heading', { name: 'How you got here' })).toBeVisible()
+    await expect(page.getByTestId('choices-taken').getByRole('listitem')).toHaveText([
+      'Watch one more video',
+      'Keep scrolling until you feel sleepy',
+    ])
+    await expect(endings).toHaveAccessibleName(/^Endings found\s*:\s*1 of 3$/)
+    await expect(endings.getByRole('listitem')).toHaveText([
+      'Groggy morning, This ending',
+      'Not found yet',
+      'Not found yet',
+    ])
+    await expect(endings).not.toContainText('You have found every ending.')
+
+    await page.getByRole('button', { name: 'Try a different choice' }).click()
+    await page.getByRole('button', { name: 'Put the phone away now' }).click()
+    await expect(picture(/phone charges on a shelf/)).toBeVisible()
+    await page.getByRole('button', { name: 'Sit quietly and take ten slow breaths' }).click()
+    await expect(
+      page.getByRole('heading', { name: /^How it ends\s*:\s*Clear head$/ }),
+    ).toBeFocused()
+    await expect(picture(/eyes closed, breathing slowly/)).toBeVisible()
+    await expect(endings).toHaveAccessibleName(/^Endings found\s*:\s*2 of 3$/)
+    await expect(endings.getByRole('listitem')).toHaveText([
+      'Groggy morning',
+      'Not found yet',
+      'Clear head, This ending',
+    ])
+
+    // The count lasts for the browser tab, so it survives a reload.
+    await page.reload()
+    await expect(page.getByRole('heading', { name: 'Step 1' })).toBeVisible()
+    await page.getByRole('button', { name: 'Put the phone away now' }).click()
+    await page.getByRole('button', { name: 'Check it one last time' }).click()
+    await page.getByRole('button', { name: 'Stop, even though sleep feels far away' }).click()
+    await expect(
+      page.getByRole('heading', { name: /^How it ends\s*:\s*Late, but stopped$/ }),
+    ).toBeFocused()
+    await expect(picture(/phone sits on a table in the next room/)).toBeVisible()
+    await expect(page.getByTestId('choices-taken').getByRole('listitem')).toHaveText([
+      'Put the phone away now',
+      'Check it one last time',
+      'Stop, even though sleep feels far away',
+    ])
+    await expect(endings).toHaveAccessibleName(/^Endings found\s*:\s*3 of 3$/)
+    await expect(endings).toContainText('You have found every ending.')
+  })
+
+  test('a Bhulkao story ending has no choice recap or endings count', async ({ page }) => {
+    await page.goto('/bhulkao/story/homework-time')
+    await page.getByRole('button', { name: 'Play the game now' }).click()
+    await page.getByRole('button', { name: 'Keep playing' }).click()
+    await page.getByRole('button', { name: 'Play until bedtime' }).click()
+    await expect(page.getByRole('heading', { name: 'How it ends' })).toBeFocused()
+    await expect(page.getByTestId('choices-taken')).toHaveCount(0)
+    await expect(page.getByRole('region', { name: /^Endings found/ })).toHaveCount(0)
+  })
+
   test('shows the scenario in Gujarati', async ({ page }) => {
     await page.goto('/')
     await page.getByRole('button', { name: 'ગુજરાતી' }).click()
@@ -59,7 +131,13 @@ test.describe('story player', () => {
     await expect(page.getByRole('heading', { level: 1 })).toHaveText(
       'કામચલાઉ: રાતનો એક વાગ્યો, કાલે પરીક્ષા',
     )
-    await expect(page.getByRole('button', { name: 'હમણાં જ ફોન બાજુ પર મૂકો' })).toBeVisible()
+    await page.getByRole('button', { name: 'હમણાં જ ફોન બાજુ પર મૂકો' }).click()
+    await page.getByRole('button', { name: 'શાંતિથી બેસો અને દસ ધીમા શ્વાસ લો' }).click()
+    await expect(page.getByRole('heading', { name: /^અંતે શું થયું\s*:\s*સ્પષ્ટ મન$/ })).toBeFocused()
+    await expect(page.getByRole('heading', { name: 'તમે અહીં કેવી રીતે પહોંચ્યા' })).toBeVisible()
+    await expect(page.getByRole('region', { name: /^મળેલા અંત\s*:\s*3માંથી 1$/ })).toContainText(
+      'આ અંત',
+    )
   })
 })
 

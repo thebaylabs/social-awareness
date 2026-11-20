@@ -96,6 +96,28 @@ describe('validateStory', () => {
     expect(warnings.join()).toMatch(/guideline is 3 to 5/)
   })
 
+  it('warns when a Yuvako ending has no title, and only for Yuvako', () => {
+    const titled = { ...end, title: t('Named') }
+    const nodes: Story['nodes'] = [
+      {
+        id: 'a',
+        text: t('a'),
+        choices: [
+          { label: t('x'), next: 'b' },
+          { label: t('y'), next: 'c' },
+        ],
+      },
+      { id: 'b', text: t('b'), choices: [{ label: t('x'), next: 'd' }] },
+      { id: 'c', text: t('c'), choices: [{ label: t('x'), next: 'e' }] },
+      { id: 'd', text: t('d'), ending: titled },
+      { id: 'e', text: t('e'), ending: end },
+    ]
+    expect(validateStory({ ...story(nodes), audience: 'yuvako' }).warnings).toEqual([
+      'ending "e" has no "title"; the list of endings found shows a number',
+    ])
+    expect(validateStory(story(nodes)).warnings).toEqual([])
+  })
+
   it('allows loops as long as an ending stays reachable', () => {
     const s = story([
       { id: 'a', text: t('a'), choices: [{ label: t('x'), next: 'b' }] },

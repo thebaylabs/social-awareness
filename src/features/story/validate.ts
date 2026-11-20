@@ -78,6 +78,17 @@ export function validateStory(story: Story): StoryCheck {
     if (!reachable.has(node.id)) warnings.push(`node "${node.id}" cannot be reached from the start`)
   }
 
+  // A Yuvako scenario lists its endings by title once they are found.
+  if (story.audience === 'yuvako') {
+    for (const node of story.nodes) {
+      if (node.ending && !node.ending.title) {
+        warnings.push(
+          `ending "${node.id}" has no "title"; the list of endings found shows a number`,
+        )
+      }
+    }
+  }
+
   const lengths: number[] = []
   const walk = (id: string, seen: string[]) => {
     const node = byId.get(id)

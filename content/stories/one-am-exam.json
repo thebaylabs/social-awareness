@@ -45,6 +45,14 @@
         "en": "One video becomes ten. It is now 2 a.m. You feel wide awake, and a little anxious about the morning.",
         "gu": "એક વીડિયોના દસ થઈ જાય છે. હવે રાતના બે વાગ્યા છે. તમને જરાય ઊંઘ નથી આવતી, અને સવારની થોડી ચિંતા થાય છે."
       },
+      "image": {
+        "src": "placeholder-two-am-awake.svg",
+        "alt": {
+          "en": "The same young person at 2:00 by the clock, eyes wide open, with a stack of videos floating above the phone.",
+          "gu": "ઘડિયાળમાં 2:00 વાગ્યા છે. એ જ યુવાન આંખો પહોળી કરીને ફોન જુએ છે, અને ફોન ઉપર વીડિયોનો ઢગલો તરતો દેખાય છે."
+        },
+        "source": "Original placeholder drawing made for this project"
+      },
       "choices": [
         {
           "label": {
@@ -68,7 +76,19 @@
         "en": "You finally fall asleep close to 4 a.m.",
         "gu": "આખરે લગભગ ચાર વાગ્યે તમને ઊંઘ આવે છે."
       },
+      "image": {
+        "src": "placeholder-four-am-asleep.svg",
+        "alt": {
+          "en": "The young person asleep with their head on the desk beside the still-lit phone. The clock shows 4:00 and the moon is low.",
+          "gu": "હજી ચાલુ ફોન પાસે ટેબલ પર માથું મૂકીને યુવાન ઊંઘી ગયા છે. ઘડિયાળ 4:00 બતાવે છે અને ચંદ્ર નીચે ઊતરી ગયો છે."
+        },
+        "source": "Original placeholder drawing made for this project"
+      },
       "ending": {
+        "title": {
+          "en": "Groggy morning",
+          "gu": "ઘેનભરી સવાર"
+        },
         "outcome": {
           "en": "You wake up groggy. In the exam, answers you knew feel just out of reach.",
           "gu": "તમે ઘેનમાં ઊઠો છો. પરીક્ષામાં જે જવાબ આવડતા હતા તે પણ યાદ આવતા નથી."
@@ -85,7 +105,19 @@
         "en": "You leave the phone in another room, read your notes once more and lie down.",
         "gu": "તમે ફોન બીજા ઓરડામાં મૂકી આવો છો, નોંધો એક વાર ફરી વાંચો છો અને સૂઈ જાઓ છો."
       },
+      "image": {
+        "src": "placeholder-phone-other-room.svg",
+        "alt": {
+          "en": "The young person lies in bed with exam notes on the blanket. The clock shows 2:30. Through the open door, the phone sits on a table in the next room.",
+          "gu": "પલંગમાં સૂતેલા યુવાનના ધાબળા પર પરીક્ષાની નોંધો છે. ઘડિયાળ 2:30 બતાવે છે. ખુલ્લા બારણામાંથી દેખાય છે કે ફોન બાજુના ઓરડામાં ટેબલ પર પડ્યો છે."
+        },
+        "source": "Original placeholder drawing made for this project"
+      },
       "ending": {
+        "title": {
+          "en": "Late, but stopped",
+          "gu": "મોડું, પણ અટક્યા"
+        },
         "outcome": {
           "en": "Sleep comes slowly, but it comes. You are tired in the morning, though steadier than you expected.",
           "gu": "ઊંઘ ધીમે ધીમે આવે છે, પણ આવે છે. સવારે થાક લાગે છે, છતાં ધાર્યા કરતાં મન વધુ સ્થિર છે."
@@ -101,6 +133,14 @@
       "text": {
         "en": "You put the phone on charge across the room. Your hand still reaches for it out of habit.",
         "gu": "તમે ફોનને ઓરડાની બીજી બાજુ ચાર્જિંગમાં મૂકો છો. આદતને કારણે હાથ હજી તેની તરફ જાય છે."
+      },
+      "image": {
+        "src": "placeholder-phone-across-room.svg",
+        "alt": {
+          "en": "The young person sits on the bed, one hand reaching out, while the phone charges on a shelf across the room.",
+          "gu": "પલંગ પર બેઠેલા યુવાનનો હાથ ફોન તરફ લંબાય છે; ફોન ઓરડાની બીજી બાજુ છાજલી પર ચાર્જ થાય છે."
+        },
+        "source": "Original placeholder drawing made for this project"
       },
       "choices": [
         {
@@ -125,7 +165,19 @@
         "en": "The urge fades a little with each breath. You switch off the light.",
         "gu": "દરેક શ્વાસ સાથે ફોન જોવાની ઇચ્છા થોડી ઓછી થાય છે. તમે લાઇટ બંધ કરો છો."
       },
+      "image": {
+        "src": "placeholder-slow-breaths.svg",
+        "alt": {
+          "en": "The young person sits cross-legged on the bed with eyes closed, breathing slowly. The light is off and the phone lies dark across the room.",
+          "gu": "યુવાન આંખો બંધ કરીને પલંગ પર પલાંઠી વાળીને બેઠા છે અને ધીમા શ્વાસ લે છે. લાઇટ બંધ છે અને ફોન ઓરડાની બીજી બાજુ અંધારામાં પડ્યો છે."
+        },
+        "source": "Original placeholder drawing made for this project"
+      },
       "ending": {
+        "title": {
+          "en": "Clear head",
+          "gu": "સ્પષ્ટ મન"
+        },
         "outcome": {
           "en": "You wake up rested and walk into the exam with a clear head.",
           "gu": "તમે તાજગી સાથે ઊઠો છો અને સ્પષ્ટ મન સાથે પરીક્ષા આપવા જાઓ છો."

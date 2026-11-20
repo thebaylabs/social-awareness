@@ -61,8 +61,10 @@ Every game, story and prasang is at most three taps from the intro page.
   sets one cookie, only when a Shabd Khoj player saves that name (see
   [Shabd Khoj streak leaderboard](#shabd-khoj-streak-leaderboard)). The
   browser's local storage keeps only the language choice, today's word-game
-  guesses, the doodle best score and the doodle player's name. Every link that
-  leaves the site first shows "You are leaving this site".
+  guesses, the doodle best score and the doodle player's name. Session
+  storage keeps only which Yuvako scenario endings were found, until the tab
+  is closed. Every link that leaves the site first shows "You are leaving
+  this site".
 - **Accessibility**: works by keyboard, skip link, visible focus, one main
   heading per page, colour is never the only signal (ticks, dots, dashes,
   shapes and text), reduced-motion support, and tap targets of 56px in
@@ -126,18 +128,32 @@ Stories are in `content/stories/`, one file per story.
 4. Each step in `"nodes"` has an `"id"`, its `"text"`, an optional `"image"`,
    and **either** `"choices"` **or** an `"ending"`:
    - `"choices"`: a list of `{ "label": {…}, "next": "<id of the step it leads to>" }`
-   - `"ending"`: `{ "outcome": {…}, "lesson": {…} }`. The lesson is shown in
-     the highlighted box.
+   - `"ending"`: `{ "title": {…}, "outcome": {…}, "lesson": {…} }`. The
+     title is a short name for the ending, for example "Groggy morning",
+     shown under "How it ends". The lesson is shown in the highlighted box.
+     The title is optional, but give every ending in a Yuvako scenario one:
+     the check warns when it is missing.
 5. Aim for three to five steps from the start to each ending. The check warns
    (but does not fail) if a path is shorter or longer, and fails if a choice
    points to a step that does not exist or a step can never reach an ending.
 6. A picture is `"image": { "src": "file-name.svg", "alt": {…}, "source": "where it comes from" }`.
    Put the file in `content/images/`. `alt` describes the picture for people
    who cannot see it; `source` records who made it or where it is licensed
-   from. Both are required.
+   from. Both are required. Give every step and every ending its own
+   picture where you can, so no screen is text alone.
 
 The story appears at `/bhulkao/story/<id>` or `/yuvako/scenario/<id>`. When a
 section has more than one story, a list page appears automatically.
+
+At the end of a Yuvako scenario, two things appear on their own, with no
+extra content needed:
+
+- **How you got here**: the labels of the choices taken, in order.
+- **Endings found**: every ending of the scenario, with the ones found so far
+  shown by their title (or "Ending 1", "Ending 2" if a title is missing) and
+  the rest shown as "Not found yet", so players know there is more to find.
+  The count lasts until the browser tab is closed. It only appears when a
+  scenario has two or more endings.
 
 ### Add or change a prasang
 

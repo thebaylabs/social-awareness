@@ -57,6 +57,11 @@ export const storyChoice = z.strictObject({
 })
 
 export const storyEnding = z.strictObject({
+  /**
+   * A short name for the ending, shown under "How it ends" and, in a Yuvako
+   * scenario, in the list of endings found.
+   */
+  title: localizedText.optional(),
   outcome: localizedText,
   lesson: localizedText,
 })
