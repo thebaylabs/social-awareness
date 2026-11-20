@@ -1,3 +1,4 @@
+import { connectFirestore, firebaseConfig, type FirebaseConfig } from '../firebase'
 import { nameKey } from './name'
 
 /**
@@ -26,18 +27,6 @@ export interface Leaderboard {
   read(): Promise<LeaderboardSnapshot>
 }
 
-export function firebaseConfig(env: Record<string, string | undefined>) {
-  const apiKey = env.VITE_FIREBASE_API_KEY?.trim()
-  const projectId = env.VITE_FIREBASE_PROJECT_ID?.trim()
-  if (!apiKey || !projectId) return null
-  return {
-    apiKey,
-    projectId,
-    authDomain: env.VITE_FIREBASE_AUTH_DOMAIN?.trim() || `${projectId}.firebaseapp.com`,
-    appId: env.VITE_FIREBASE_APP_ID?.trim() || undefined,
-  }
-}
-
 /** Keeps scores for this page visit only. Used by the dev server when Firebase is not set up. */
 export function memoryLeaderboard(): Leaderboard {
   const players = new Map<string, LeaderboardEntry>()
@@ -56,14 +45,8 @@ export function memoryLeaderboard(): Leaderboard {
   }
 }
 
-async function firestoreLeaderboard(
-  config: NonNullable<ReturnType<typeof firebaseConfig>>,
-): Promise<Leaderboard> {
-  const [{ initializeApp }, fs] = await Promise.all([
-    import('firebase/app'),
-    import('firebase/firestore/lite'),
-  ])
-  const db = fs.getFirestore(initializeApp(config))
+async function firestoreLeaderboard(config: FirebaseConfig): Promise<Leaderboard> {
+  const { db, fs } = await connectFirestore(config)
   const players = fs.collection(db, PLAYERS_COLLECTION)
 
   return {

@@ -1,0 +1,160 @@
+/* The streak leaderboard under a finished daily word, and the name dialog. */
+
+.board {
+  margin-top: var(--space-4);
+  padding: var(--space-4);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius);
+  background: var(--color-surface);
+}
+
+.board p {
+  margin: 0 0 var(--space-2);
+}
+
+.boardTitle {
+  margin: 0 0 var(--space-1);
+  font-size: 1.25rem;
+}
+
+.about {
+  color: var(--color-muted);
+  font-size: 0.9375rem;
+}
+
+.list {
+  display: grid;
+  gap: var(--space-1);
+  margin: 0 0 var(--space-3);
+  padding: 0;
+  list-style: none;
+}
+
+.list li {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-small);
+  overflow-wrap: anywhere;
+}
+
+.me {
+  background: rgb(237 189 116 / 16%);
+  font-weight: 700;
+}
+
+.rank {
+  display: inline-grid;
+  flex: none;
+  place-items: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 50%;
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  font-weight: 700;
+}
+
+.mine {
+  font-weight: 700;
+}
+
+.player {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-3);
+  margin-top: var(--space-3);
+}
+
+.player p {
+  margin: 0;
+}
+
+.nameButton,
+.save,
+.cancel {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: var(--tap);
+  min-height: var(--tap);
+  padding: 0 var(--space-4);
+  border: 2px solid var(--color-primary);
+  border-radius: var(--radius);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.nameButton,
+.cancel {
+  background: transparent;
+  color: var(--color-primary);
+}
+
+.save {
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+}
+
+.dialog {
+  width: min(28rem, calc(100vw - 2rem));
+  padding: var(--space-5);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius);
+  background: var(--color-surface);
+  color: var(--color-text);
+}
+
+.dialog::backdrop {
+  background: rgb(0 0 0 / 55%);
+}
+
+.dialog p {
+  margin: 0 0 var(--space-3);
+}
+
+.dialogTitle {
+  margin: 0 0 var(--space-2);
+  font-size: 1.375rem;
+}
+
+.label {
+  display: block;
+  margin-bottom: var(--space-1);
+  font-weight: 700;
+}
+
+.input {
+  width: 100%;
+  min-height: var(--tap);
+  padding: 0 var(--space-3);
+  border: 2px solid var(--color-primary);
+  border-radius: var(--radius-small);
+  background: var(--color-bg);
+  color: inherit;
+  font: inherit;
+  font-size: 1.125rem;
+}
+
+.input[aria-invalid='true'] {
+  border-color: var(--color-danger);
+}
+
+.dialog .hint {
+  margin-top: var(--space-1);
+  color: var(--color-muted);
+  font-size: 0.9375rem;
+}
+
+.dialog .error {
+  color: var(--color-danger);
+  font-weight: 700;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}

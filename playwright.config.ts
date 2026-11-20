@@ -13,6 +13,15 @@ const executablePath =
 
 const PORT = 4173
 
+/**
+ * A second build with made-up Firebase settings, for the Shabd Khoj streak
+ * leaderboard tests (tests/e2e/words.spec.ts). Its Firestore requests are
+ * answered inside the test by tests/e2e/fake-firestore.ts; nothing is sent.
+ */
+const FIREBASE_PORT = 4174
+const FIREBASE_OUT_DIR = 'node_modules/.e2e-firebase-dist'
+process.env.E2E_FIREBASE_URL ??= `http://localhost:${FIREBASE_PORT}`
+
 export default defineConfig({
   testDir: 'tests/e2e',
   fullyParallel: true,
@@ -34,10 +43,19 @@ export default defineConfig({
       use: { ...devices['Desktop Chrome'], viewport: { width: 1280, height: 800 } },
     },
   ],
-  webServer: {
-    command: `npx vite build && npx vite preview --port ${PORT} --strictPort`,
-    url: `http://localhost:${PORT}`,
-    reuseExistingServer: !process.env.CI,
-    timeout: 180_000,
-  },
+  webServer: [
+    {
+      command: `npx vite build && npx vite preview --port ${PORT} --strictPort`,
+      url: `http://localhost:${PORT}`,
+      reuseExistingServer: !process.env.CI,
+      timeout: 180_000,
+    },
+    {
+      command: `npx vite build --outDir ${FIREBASE_OUT_DIR} && npx vite preview --outDir ${FIREBASE_OUT_DIR} --port ${FIREBASE_PORT} --strictPort`,
+      url: `http://localhost:${FIREBASE_PORT}`,
+      reuseExistingServer: !process.env.CI,
+      timeout: 180_000,
+      env: { VITE_FIREBASE_API_KEY: 'e2e-not-a-real-key', VITE_FIREBASE_PROJECT_ID: 'e2e-streaks' },
+    },
+  ],
 })

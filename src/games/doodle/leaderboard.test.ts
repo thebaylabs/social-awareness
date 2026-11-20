@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import { firebaseConfig, memoryLeaderboard } from './leaderboard'
+import { firebaseConfig } from '../firebase'
+import { memoryLeaderboard } from './leaderboard'
 
 describe('firebaseConfig()', () => {
   it('needs an API key and a project id', () => {
