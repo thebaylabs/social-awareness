@@ -37,6 +37,49 @@ test('the preview strip is not shown on the pill game', async ({ page }) => {
   await expect(page.getByTestId('preview-strip')).toHaveCount(0)
 })
 
+test('the page heading is "Choose your reality", then names the chosen pill', async ({
+  page,
+}, info) => {
+  const go = press(info.project.name === 'phone')
+  const h1 = page.getByRole('heading', { level: 1 })
+  await page.goto('/yuvako/activity/pills')
+  await expect(h1).toHaveText('Choose your reality')
+
+  await go(page.getByRole('button', { name: /Red pill/ }))
+  await expect(h1).toHaveText('Red pill')
+  await expect(page.getByText('You took the red pill')).toHaveCount(0)
+  await go(page.getByRole('button', { name: 'Back' }).first())
+  await expect(h1).toHaveText('Choose your reality')
+
+  await go(page.getByRole('button', { name: /Blue pill/ }))
+  await go(blackoutContinue(page))
+  await expect(h1).toHaveText('Blue pill')
+  await expect(page.getByText('You took the blue pill')).toHaveCount(0)
+
+  await go(page.getByRole('button', { name: /Green pill/ }))
+  await expect(h1).toHaveText('Green pill')
+  await expect(page.getByText('You took the green pill')).toHaveCount(0)
+})
+
+test('Next and Back open each page at the top, even from the bottom of the page', async ({
+  page,
+}, info) => {
+  const go = press(info.project.name === 'phone')
+  const scrollY = () => page.evaluate(() => window.scrollY)
+  await page.goto('/yuvako/activity/pills')
+  await go(page.getByRole('button', { name: /Red pill/ }))
+  await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight))
+  expect(await scrollY()).toBeGreaterThan(0)
+  await go(page.getByRole('button', { name: 'Next' }).last())
+  await expect(page.getByRole('heading', { name: 'Card 2 of 5' })).toBeVisible()
+  await expect.poll(scrollY).toBe(0)
+
+  await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight))
+  await go(page.getByRole('button', { name: 'Back' }).last())
+  await expect(page.getByRole('heading', { name: 'Card 1 of 5' })).toBeVisible()
+  await expect.poll(scrollY).toBe(0)
+})
+
 test.describe('pill game: red pill', () => {
   test('every card, Back, and the landing screen again after the last card', async ({
     page,

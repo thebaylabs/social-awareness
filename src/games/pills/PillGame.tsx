@@ -6,6 +6,7 @@ import { ExternalLink } from '../../components/ExternalLink'
 import { ContentError } from '../../components/ContentError'
 import { PlaceholderNotice } from '../../components/Placeholder'
 import { focusElement } from '../../components/focus'
+import { useGameHeading } from '../../components/game-heading'
 import { PILLS, pillsArePlaceholder } from '../../content/games'
 import type { PillCard, Pills } from '../../content/schemas'
 import { BlackoutScreen } from './BlackoutScreen'
@@ -127,7 +128,20 @@ export function PillGameView({ data }: { data: Pills }) {
       return
     }
     focusElement(headingRef.current)
+    // Every new screen starts at the top of the page, even after pressing Next at the bottom.
+    window.scrollTo(0, 0)
   }, [state])
+
+  // The page's main heading names the chosen pill (the default title shows only on the choice screen).
+  useGameHeading(
+    state.screen === 'red'
+      ? t('pills.red.name')
+      : state.screen === 'blueBlackout' || state.screen === 'blueReality'
+        ? t('pills.blue.name')
+        : state.screen === 'green'
+          ? t('pills.green.name')
+          : undefined,
+  )
 
   const redCard = state.screen === 'red' ? reds[state.index] : undefined
   const greenPage = state.screen === 'green' ? greens[state.index] : undefined
@@ -177,7 +191,6 @@ export function PillGameView({ data }: { data: Pills }) {
         <section className={styles.screen}>
           <div className={styles.cardHead}>
             <div>
-              <p className={styles.eyebrow}>{t('pills.red.title')}</p>
               <h2 ref={headingRef}>
                 {t('pills.progress', { n: state.index + 1, total: reds.length })}
               </h2>
@@ -225,7 +238,6 @@ export function PillGameView({ data }: { data: Pills }) {
 
       {state.screen === 'blueReality' && (
         <section className={styles.screen}>
-          <p className={styles.eyebrow}>{t('pills.blue.title')}</p>
           <h2 ref={headingRef} lang={localizedLang(data.blue.reality.title, lang)}>
             {l(data.blue.reality.title)}
           </h2>
@@ -248,7 +260,6 @@ export function PillGameView({ data }: { data: Pills }) {
         <section className={styles.screen}>
           <div className={styles.cardHead}>
             <div>
-              <p className={styles.eyebrow}>{t('pills.green.title')}</p>
               <h2 ref={headingRef}>
                 {t('pills.green.progress', { n: state.index + 1, total: greens.length })}
               </h2>

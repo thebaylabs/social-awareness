@@ -57,7 +57,7 @@ test('every game, story and prasang is within three taps of the intro page', asy
     ['Bhulkao', 'Activity', 'Doodle Catcher', /\/bhulkao\/activity\/doodle$/],
     ['Bhulkao', 'Story', null, /\/bhulkao\/story\/homework-time$/],
     ['Bhulkao', 'Prasang', null, /\/bhulkao\/prasang\/sparrows-and-the-sea$/],
-    ['Yuvako', 'Activity', 'Two Pills', /\/yuvako\/activity\/pills$/],
+    ['Yuvako', 'Activity', 'Choose your reality', /\/yuvako\/activity\/pills$/],
     ['Yuvako', 'Activity', 'Shabd Khoj', /\/yuvako\/activity\/words$/],
     ['Yuvako', 'Scenario', null, /\/yuvako\/scenario\/one-am-exam$/],
     ['Yuvako', 'Prasang', null, /\/yuvako\/prasang\/lamp-by-the-window$/],
