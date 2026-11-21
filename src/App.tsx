@@ -4,6 +4,7 @@ import { I18nProvider } from './i18n/I18nProvider'
 import { Layout } from './components/Layout'
 import Intro from './pages/Intro'
 import NotFound from './pages/NotFound'
+import AdminControl from './pages/AdminControl'
 
 /** React Router wants the base path without a trailing slash. */
 const basename = import.meta.env.BASE_URL.replace(/\/+$/, '') || '/'
@@ -15,6 +16,8 @@ export default function App() {
         <Routes>
           <Route element={<Layout />}>
             <Route index element={<Intro />} />
+            {/* Manual progress control. Not linked from the header or footer. */}
+            <Route path="admin" element={<AdminControl />} />
             <Route path="*" element={<NotFound />} />
           </Route>
         </Routes>

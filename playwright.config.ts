@@ -39,9 +39,5 @@ export default defineConfig({
     url: `http://localhost:${PORT}`,
     reuseExistingServer: !process.env.CI,
     timeout: 180_000,
-    // Made-up Firebase settings, so the build has the shared count of lit
-    // diyas. Its Firestore requests are answered inside the tests by
-    // tests/e2e/fake-crowd.ts; nothing is sent.
-    env: { API_KEY: 'e2e-not-a-real-key', PROJECT_ID: 'e2e-diya' },
   },
 })

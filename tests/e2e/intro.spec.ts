@@ -7,11 +7,11 @@ import { expectNoAxeViolations } from './helpers'
  * (src/components/intro-motion.ts). These tests hide that flag, so the
  * lighting runs as it does for a visitor, fireworks included.
  *
- * `others` is how many other people have already lit their diya. The default
- * is the whole crowd, so lighting this one completes the count at once.
+ * `count` is the shared progress already set on `/admin`. The default is the
+ * whole goal, so lighting this one completes the bar at once.
  */
-async function visitAsAPerson(page: Page, others = 100): Promise<FakeCrowd> {
-  const crowd = await fakeCrowd(page, others)
+async function visitAsAPerson(page: Page, count = 100): Promise<FakeCrowd> {
+  const crowd = await fakeCrowd(page, count)
   await page.addInitScript(() => {
     Object.defineProperty(Navigator.prototype, 'webdriver', { get: () => false })
   })
@@ -45,12 +45,10 @@ function centre(box: { x: number; y: number; width: number; height: number } | n
 
 test.describe('lighting the intro diya', () => {
   test('the page opens on an unlit diya, with no bar and no fireworks yet', async ({ page }) => {
-    const crowd = await visitAsAPerson(page)
+    await visitAsAPerson(page)
     await expect(page.getByRole('button', { name: 'Light the diya' })).toBeVisible()
     await expect(page.getByTestId('fireworks')).toHaveCount(0)
     await expect(page.getByTestId('crowd')).toBeHidden()
-    // Nothing is counted, or even asked, before the diya is lit.
-    expect(crowd.requests).toEqual([])
     // The title, "Atmiyata" and the theme line are out of sight until it is lit.
     await expect(page.getByTestId('welcome')).toHaveCSS('opacity', '0')
     await expect(page.getByText('Digital Outreach')).toHaveCount(0)
@@ -118,7 +116,7 @@ test.describe('lighting the intro diya', () => {
   })
 
   test.describe('waiting for the others', () => {
-    test('the bar fills as people light their diyas; at 100 the welcome and fireworks come', async ({
+    test('the bar fills as the shared count rises; at 100 the welcome and fireworks come', async ({
       page,
     }) => {
       const crowd = await visitAsAPerson(page, 36)
@@ -128,58 +126,25 @@ test.describe('lighting the intro diya', () => {
         name: 'Let’s wait for others to light their diya',
       })
       await expect(bar).toBeVisible()
-      await expect(bar).toHaveAttribute('aria-valuenow', '37')
+      await expect(bar).toHaveAttribute('aria-valuenow', '36')
       await expect(bar).toHaveAttribute('aria-valuemax', '100')
-      await expect(page.getByTestId('crowd-count')).toHaveText('37 of 100 diyas lit')
+      await expect(page.getByTestId('crowd-count')).toHaveText('36 of 100 diyas lit')
       // Still waiting: no welcome and no fireworks.
       await expect(page.getByTestId('welcome')).toHaveCSS('opacity', '0')
       await expect(page.getByTestId('fireworks')).toHaveCount(0)
       await expectNoAxeViolations(page)
 
-      crowd.others = 60
+      crowd.count = 61
       await expect(bar).toHaveAttribute('aria-valuenow', '61', { timeout: 10_000 })
       await expect(page.getByTestId('fireworks')).toHaveCount(0)
 
-      crowd.others = 99
+      crowd.count = 100
       const full = page.getByRole('progressbar', {
         name: 'All 100 diyas are lit. Time to inaugurate Annakut Mahotsav!',
       })
       await expect(full).toHaveAttribute('aria-valuenow', '100', { timeout: 10_000 })
       await expect(page.getByTestId('crowd-count')).toHaveText('100 of 100 diyas lit')
       await expect(page.getByTestId('fireworks')).toBeVisible()
-      await expect(page.getByTestId('welcome')).toHaveCSS('opacity', '1')
-
-      // Once the count is complete, the page stops asking.
-      const asked = crowd.requests.length
-      await page.waitForTimeout(4000)
-      expect(crowd.requests.length).toBe(asked)
-    })
-
-    test('a device is counted once, however often it lights the diya', async ({ page }) => {
-      const crowd = await visitAsAPerson(page, 10)
-      await lightByKeyboard(page)
-      await expect(page.getByTestId('crowd-count')).toHaveText('11 of 100 diyas lit')
-
-      await page.reload()
-      await expect(page.getByTestId('crowd')).toBeHidden()
-      await lightByKeyboard(page)
-      await expect(page.getByTestId('crowd-count')).toHaveText('11 of 100 diyas lit')
-      expect(crowd.devices.size).toBe(1)
-    })
-
-    test('if the count cannot be reached, the page keeps waiting and tries again', async ({
-      page,
-    }) => {
-      const crowd = await visitAsAPerson(page, 100)
-      crowd.failing = true
-      await lightByKeyboard(page)
-      await expect(page.getByTestId('crowd')).toBeVisible()
-      await expect(page.getByTestId('crowd-count')).toHaveText('Counting the diyas…')
-      await expect(page.getByTestId('fireworks')).toHaveCount(0)
-      await expect(page.getByTestId('welcome')).toHaveCSS('opacity', '0')
-
-      crowd.failing = false
-      await expect(page.getByTestId('fireworks')).toBeVisible({ timeout: 10_000 })
       await expect(page.getByTestId('welcome')).toHaveCSS('opacity', '1')
     })
 
@@ -189,9 +154,19 @@ test.describe('lighting the intro diya', () => {
       await page.getByRole('button', { name: 'દીવો પ્રગટાવો' }).focus()
       await page.keyboard.press('Enter')
       await page.keyboard.press('Enter')
-      await expect(page.getByTestId('crowd-count')).toHaveText('100 માંથી 37 દીવા પ્રગટ્યા')
+      await expect(page.getByTestId('crowd-count')).toHaveText('100 માંથી 36 દીવા પ્રગટ્યા')
       await expect(page.getByText('ચાલો, બીજા લોકો પોતાનો દીવો પ્રગટાવે તેની રાહ જોઈએ')).toBeVisible()
       await expectNoAxeViolations(page)
+    })
+
+    test('the admin page can set the shared count', async ({ page }) => {
+      await fakeCrowd(page, 0)
+      await page.goto('/admin')
+      await expect(page.getByTestId('admin-control')).toBeVisible()
+      await page.getByRole('button', { name: '+5' }).click()
+      await expect(page.getByText('5 of 100')).toBeVisible()
+      await page.getByRole('button', { name: 'Jump to 100' }).click()
+      await expect(page.getByText('100 of 100')).toBeVisible()
     })
   })
 

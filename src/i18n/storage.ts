@@ -3,8 +3,8 @@
  * windows, blocked site data), so every access is guarded and failure is
  * silent: the site works the same, it just does not remember.
  *
- * localStorage holds only: the language choice and a random id for this
- * device (see src/crowd/crowd.ts). Nothing else may be stored.
+ * localStorage holds the language choice and the shared diya progress
+ * (see STORAGE_KEYS). Nothing else may be stored.
  */
 export function readStored(key: string): string | null {
   try {

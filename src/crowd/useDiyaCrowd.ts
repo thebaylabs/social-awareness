@@ -1,49 +1,37 @@
 import { useEffect, useState } from 'react'
 import { DIYA_GOAL } from '../config/site'
-import { deviceId, siteCrowd } from './crowd'
+import { siteCrowd } from './crowd'
 
-const crowd = siteCrowd(import.meta.env)
+const crowd = siteCrowd()
 
-/** How often to ask for the count: quickly at first, then more gently. */
-const FIRST_POLL_MS = 2500
-const SLOWEST_POLL_MS = 8000
-/** A tab nobody is looking at asks rarely. */
-const HIDDEN_POLL_MS = 20000
+/** How often to re-read the count while waiting. */
+const POLL_MS = 1000
 
 export interface DiyaCrowd {
-  /** False when this build has no shared count: lighting the diya is enough. */
+  /** Always true: progress is set from `/admin`. */
   enabled: boolean
-  /** Devices that have lit a diya, or null until the first answer arrives. */
+  /** Shared progress, or null until the first read after lighting. */
   count: number | null
   goal: number
-  /** True once the goal is reached (or at once, when there is no shared count). */
+  /** True once the goal is reached. */
   complete: boolean
 }
 
 /**
- * Once this device's diya is lit: count it, then keep asking how many devices
- * have lit theirs until the goal is reached. Nothing is sent before `lit`.
- * Failed requests are tried again on the next round.
+ * Once this device's diya is lit: read the shared progress (set on `/admin`)
+ * until the goal is reached. The bar stays hidden until `lit`.
  */
 export function useDiyaCrowd(lit: boolean): DiyaCrowd {
   const [count, setCount] = useState<number | null>(null)
 
   useEffect(() => {
-    if (!lit || !crowd) return
-    const shared = crowd
+    if (!lit) return
     let stopped = false
-    let registered = false
-    let delay = FIRST_POLL_MS
     let timer: number | undefined
 
     async function ask() {
-      window.clearTimeout(timer)
       try {
-        if (!registered) {
-          await shared.register(deviceId())
-          registered = true
-        }
-        const total = await shared.count(DIYA_GOAL)
+        const total = await crowd.readCount()
         if (stopped) return
         setCount(total)
         if (total >= DIYA_GOAL) {
@@ -51,27 +39,27 @@ export function useDiyaCrowd(lit: boolean): DiyaCrowd {
           return
         }
       } catch {
-        // Offline, or the service is busy: ask again on the next round.
+        // ignore and poll again
       }
-      if (stopped) return
-      timer = window.setTimeout(ask, document.hidden ? HIDDEN_POLL_MS : delay)
-      delay = Math.min(SLOWEST_POLL_MS, Math.round(delay * 1.15))
+      if (!stopped) timer = window.setTimeout(ask, POLL_MS)
     }
 
-    /** Coming back to the tab asks straight away. */
-    function onVisible() {
-      if (!document.hidden && !stopped) void ask()
-    }
+    const unsubscribe = crowd.subscribe((total) => {
+      if (stopped) return
+      setCount(total)
+      if (total >= DIYA_GOAL) {
+        stopped = true
+        window.clearTimeout(timer)
+      }
+    })
 
     void ask()
-    document.addEventListener('visibilitychange', onVisible)
     return () => {
       stopped = true
       window.clearTimeout(timer)
-      document.removeEventListener('visibilitychange', onVisible)
+      unsubscribe()
     }
   }, [lit])
 
-  if (!crowd) return { enabled: false, count: null, goal: DIYA_GOAL, complete: lit }
   return { enabled: true, count, goal: DIYA_GOAL, complete: count !== null && count >= DIYA_GOAL }
 }

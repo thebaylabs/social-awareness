@@ -10,8 +10,8 @@ import { useDiyaCrowd } from '../crowd/useDiyaCrowd'
 import styles from './pages.module.css'
 
 /**
- * The whole site. Each visitor lights their own diya; a bar then fills as
- * other people light theirs on their own devices. When enough have, the
+ * The whole site. Each visitor lights their own diya; a bar then shows the
+ * shared progress set from `/admin`. When that reaches the goal, the
  * fireworks begin and the welcome appears.
  */
 export default function Intro() {
