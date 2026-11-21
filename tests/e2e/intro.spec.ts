@@ -141,7 +141,9 @@ test.describe('lighting the intro diya', () => {
       await expect(page.getByTestId('fireworks')).toHaveCount(0)
 
       crowd.others = 99
-      const full = page.getByRole('progressbar', { name: 'All 100 diyas are lit.' })
+      const full = page.getByRole('progressbar', {
+        name: 'All 100 diyas are lit. Time to inaugurate Annakut Mahotsav!',
+      })
       await expect(full).toHaveAttribute('aria-valuenow', '100', { timeout: 10_000 })
       await expect(page.getByTestId('crowd-count')).toHaveText('100 of 100 diyas lit')
       await expect(page.getByTestId('fireworks')).toBeVisible()
