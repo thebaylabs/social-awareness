@@ -3,10 +3,10 @@
   "audience": "yuvako",
   "order": 3,
   "title": {
-    "en": "Placeholder: The Extra Change",
-    "gu": "કામચલાઉ: વધારાના પૈસા"
+    "en": "The Extra Change",
+    "gu": "વધારાના પૈસા"
   },
-  "placeholder": true,
+  "placeholder": false,
   "startNode": "start",
   "nodes": [
     {
@@ -126,8 +126,8 @@
           "gu": "સાંજે તમે દુકાન પાસેથી પસાર થાઓ છો. દુકાનદાર ચિંતામાં વારંવાર પૈસા ગણે છે. હવે એ નાસ્તો એટલો સારો નથી લાગતો."
         },
         "lesson": {
-          "en": "Placeholder reflection: nobody would have known. Does that make it any different? Why?",
-          "gu": "કામચલાઉ મનન: કોઈને ખબર પડવાની નહોતી. શું એનાથી કંઈ ફરક પડે છે? કેમ?"
+          "en": "Nobody would have known. Does that make it any different? Why?",
+          "gu": "કોઈને ખબર પડવાની નહોતી. શું એનાથી કંઈ ફરક પડે છે? કેમ?"
         }
       }
     },
@@ -155,8 +155,8 @@
           "gu": "દુકાનદાર પહેલાં નવાઈ પામે છે, પછી રાહત અનુભવે છે: આજે રાત્રે તેના હિસાબમાં પૈસા ઓછા પડત. તમારો મિત્ર થોડો બબડે છે, પછી માને છે કે એ જ સાચું હતું."
         },
         "lesson": {
-          "en": "Placeholder reflection: turning back takes courage. What helped you turn around?",
-          "gu": "કામચલાઉ મનન: પાછા વળવા માટે હિંમત જોઈએ. તમને પાછા વળવામાં શાનાથી મદદ મળી?"
+          "en": "Turning back takes courage. What helped you turn around?",
+          "gu": "પાછા વળવા માટે હિંમત જોઈએ. તમને પાછા વળવામાં શાનાથી મદદ મળી?"
         }
       }
     },
@@ -184,8 +184,8 @@
           "gu": "\"બહુ ઓછા લોકો આવું કરે,\" તે કહે છે. તમે ફક્ત તમારા જ પૈસા લઈને બહાર નીકળો છો, ખિસ્સામાં કંઈ ભારે નથી."
         },
         "lesson": {
-          "en": "Placeholder reflection: one moment of checking made the right thing easy. What helps you stop and check before you act?",
-          "gu": "કામચલાઉ મનન: એક ક્ષણ તપાસ કરવાથી સાચું કરવું સહેલું બન્યું. કંઈ કરતાં પહેલાં થોભીને તપાસવા માટે તમને શું મદદ કરે છે?"
+          "en": "One moment of checking made the right thing easy. What helps you stop and check before you act?",
+          "gu": "એક ક્ષણ તપાસ કરવાથી સાચું કરવું સહેલું બન્યું. કંઈ કરતાં પહેલાં થોભીને તપાસવા માટે તમને શું મદદ કરે છે?"
         }
       }
     }

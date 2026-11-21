@@ -8,9 +8,11 @@ Gujarati.
 - Live preview: <https://social-awareness-hp.vercel.app/>
 - Build plan: [`docs/BUILD_PLAN.md`](docs/BUILD_PLAN.md) (the owner-amended version)
 
-> **Everything on the site is placeholder content.** It is marked as such on
-> every page and will be replaced with final content from the content owners.
-> Gujarati text is an unreviewed draft.
+> **Most of the site is placeholder content.** It is marked as such on every
+> page and will be replaced with final content from the content owners. The
+> Yuvako scenarios and their shared lesson are no longer marked, at the owner's
+> request, but are still drafts awaiting review. Gujarati text is an
+> unreviewed draft.
 
 ## Contents
 
@@ -422,7 +424,7 @@ From section 2 of the build plan, with their status after this build.
 | 3   | Word list spellings and length rule                  | **Partly answered.** Owner-confirmed words: `seva`, `swadharma`, `prarthna` (native forms included). The other nine words (daya, satya, shanti, dhyan, bhakti, kshama, santosh, vinay, sanyam) and all meanings and reflections were drafted by the builder. At the owner's request they are no longer marked as placeholder (no badge, banner or "Placeholder reflection:" prefix), but they still need the owner's review. The length rule (a–z, 3 to 10 letters) is the plan's default and **still needs confirming**. |
 | 4   | Who translates and reviews Gujarati?                 | **Open.** All Gujarati text is a draft written by the builder, flagged unreviewed, with a note in the footer. Hindi was dropped.                                                                                                                                                                                                                                                                                                                                                                                          |
 | 5   | Native-script play in the word game?                 | **Open (default applied).** Played in Latin transliteration in all languages; meaning, reflection and native-script forms are shown in the chosen language.                                                                                                                                                                                                                                                                                                                                                               |
-| 6   | Who supplies and approves real content?              | **Open.** The owner asked for the placeholders to stay until real content arrives. All content is marked placeholder.                                                                                                                                                                                                                                                                                                                                                                                                     |
+| 6   | Who supplies and approves real content?              | **Open.** The owner asked for the placeholders to stay until real content arrives. At the owner's request the three Yuvako scenarios and the lesson they share are no longer marked as placeholder (no badge, banner, "Placeholder:" title or "Placeholder reflection:" prefix); the builder drafted them and they still need the owner's review.                                                                                                                                                                         |
 | 7   | Bhulkao age range                                    | **Open (default applied).** Primary-school age assumed: short sentences, slow starting speed in the doodle game.                                                                                                                                                                                                                                                                                                                                                                                                          |
 | 8   | Branding                                             | **Open (default applied).** Working title "Digital Outreach" (a locale string), no logo, placeholder palette in `src/styles/tokens.css`, empty organisation slots in the footer.                                                                                                                                                                                                                                                                                                                                          |
 | 9   | Hosting                                              | **Answered.** The owner chose to go live: GitHub Pages at <https://sanketsh4h.github.io/ak_outreach/>, deployed from `main` after CI passes. A custom domain is still possible.                                                                                                                                                                                                                                                                                                                                           |
@@ -439,6 +441,8 @@ Before this site is presented as final:
 2. **Real content**: stories, scenarios, prasangs, word meanings and
    reflections, doodle items and their explanations, pill cards, and the intro
    text, all approved by the content owners, with `placeholder` set to `false`.
+   The Yuvako scenarios and their shared lesson are already unmarked but still
+   need that approval.
 3. **Sources for every red-pill claim**: each red card needs a real, checked
    source. The placeholder cards say what will go there and carry no source;
    no statistics or findings were invented.

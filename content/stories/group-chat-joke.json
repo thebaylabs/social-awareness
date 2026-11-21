@@ -3,10 +3,10 @@
   "audience": "yuvako",
   "order": 2,
   "title": {
-    "en": "Placeholder: The Group Chat Joke",
-    "gu": "કામચલાઉ: ગ્રુપ ચેટની મજાક"
+    "en": "The Group Chat Joke",
+    "gu": "ગ્રુપ ચેટની મજાક"
   },
-  "placeholder": true,
+  "placeholder": false,
   "startNode": "start",
   "nodes": [
     {
@@ -126,8 +126,8 @@
           "gu": "અઠવાડિયાં પછી કોઈને મજાક યાદ નથી. જવાબ બધાને યાદ છે, અને તમે બંને હજી એકબીજા સાથે બોલતા નથી."
         },
         "lesson": {
-          "en": "Placeholder reflection: words typed in anger take a second to send and much longer to take back. What do you do when a message makes you angry?",
-          "gu": "કામચલાઉ મનન: ગુસ્સામાં લખેલા શબ્દો મોકલતાં એક સેકન્ડ લાગે છે, પણ પાછા લેતાં ઘણો વધુ સમય લાગે છે. કોઈ મેસેજથી ગુસ્સો આવે ત્યારે તમે શું કરો છો?"
+          "en": "Words typed in anger take a second to send and much longer to take back. What do you do when a message makes you angry?",
+          "gu": "ગુસ્સામાં લખેલા શબ્દો મોકલતાં એક સેકન્ડ લાગે છે, પણ પાછા લેતાં ઘણો વધુ સમય લાગે છે. કોઈ મેસેજથી ગુસ્સો આવે ત્યારે તમે શું કરો છો?"
         }
       }
     },
@@ -155,8 +155,8 @@
           "gu": "થોડા દિવસ અજુગતું લાગે છે, પછી બધું ઠીક થઈ જાય છે. ગ્રુપમાં હજી ક્યારેક એ વાત નીકળે છે, પણ તમારા બંને વચ્ચે બધું બરાબર છે."
         },
         "lesson": {
-          "en": "Placeholder reflection: saying sorry late is still saying sorry. What makes it hard to be the first to apologise?",
-          "gu": "કામચલાઉ મનન: મોડી માગેલી માફી પણ માફી જ છે. પહેલાં માફી માગવી કેમ અઘરી લાગે છે?"
+          "en": "Saying sorry late is still saying sorry. What makes it hard to be the first to apologise?",
+          "gu": "મોડી માગેલી માફી પણ માફી જ છે. પહેલાં માફી માગવી કેમ અઘરી લાગે છે?"
         }
       }
     },
@@ -184,8 +184,8 @@
           "gu": "બીજા કોઈને ખબર પણ ન પડી કે કંઈ વાંધો હતો. બીજા દિવસે તમે બંને કોઈ બીજી વાત પર સાથે હસો છો."
         },
         "lesson": {
-          "en": "Placeholder reflection: one minute's pause turned a fight into a fix. What helps you cool down before you reply?",
-          "gu": "કામચલાઉ મનન: એક મિનિટ થોભવાથી ઝઘડો થવાને બદલે વાત ઉકલી ગઈ. જવાબ આપતાં પહેલાં શાંત થવા માટે તમને શું મદદ કરે છે?"
+          "en": "One minute's pause turned a fight into a fix. What helps you cool down before you reply?",
+          "gu": "એક મિનિટ થોભવાથી ઝઘડો થવાને બદલે વાત ઉકલી ગઈ. જવાબ આપતાં પહેલાં શાંત થવા માટે તમને શું મદદ કરે છે?"
         }
       }
     }

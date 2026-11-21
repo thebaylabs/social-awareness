@@ -134,10 +134,12 @@ test.describe('story player', () => {
 
     await page.goto('/yuvako/scenario')
     await expect(page.getByRole('heading', { level: 1 })).toHaveText('Scenarios')
+    // The scenarios and their lesson are no longer marked as placeholder.
+    await expect(page.getByRole('main')).not.toContainText('Placeholder')
     await expect(cards).toHaveText([
-      /^Placeholder: 1 a\.m\., Exam Tomorrow\s*Not finished yet/,
-      /^Placeholder: The Group Chat Joke\s*Not finished yet/,
-      /^Placeholder: The Extra Change\s*Not finished yet/,
+      /^1 a\.m\., Exam Tomorrow\s*Not finished yet/,
+      /^The Group Chat Joke\s*Not finished yet/,
+      /^The Extra Change\s*Not finished yet/,
     ])
     await expect(shared).toHaveAccessibleName(/^The lesson they share\s*:\s*0 of 3 finished$/)
     await expect(shared).toContainText('Reach an ending in every scenario')
@@ -145,19 +147,18 @@ test.describe('story player', () => {
 
     // 1. The 1 a.m. exam.
     await cards.first().click()
+    await expect(page.getByTestId('placeholder-notice')).toHaveCount(0)
     await page.getByRole('button', { name: 'Put the phone away now' }).click()
     await page.getByRole('button', { name: 'Sit quietly and take ten slow breaths' }).click()
     await expect(shared).toHaveAccessibleName(/^The lesson they share\s*:\s*1 of 3 finished$/)
     await expect(shared.getByRole('listitem')).toHaveText([
-      'Placeholder: 1 a.m., Exam Tomorrow, Finished',
-      'Placeholder: The Group Chat Joke, Not finished yet',
-      'Placeholder: The Extra Change, Not finished yet',
+      '1 a.m., Exam Tomorrow, Finished',
+      'The Group Chat Joke, Not finished yet',
+      'The Extra Change, Not finished yet',
     ])
 
     // 2. The group chat joke, sent at once and apologised for later.
-    await shared
-      .getByRole('link', { name: /^Next scenario\s*:\s*Placeholder: The Group Chat Joke$/ })
-      .click()
+    await shared.getByRole('link', { name: /^Next scenario\s*:\s*The Group Chat Joke$/ }).click()
     await expect(page).toHaveURL(/\/yuvako\/scenario\/group-chat-joke$/)
     await expect(page.getByRole('heading', { level: 1 })).toBeInViewport()
     await expect(picture(/laughing faces/)).toBeVisible()
@@ -171,9 +172,7 @@ test.describe('story player', () => {
     await expect(shared).toHaveAccessibleName(/^The lesson they share\s*:\s*2 of 3 finished$/)
 
     // 3. The extra change, kept at first and then taken back.
-    await shared
-      .getByRole('link', { name: /^Next scenario\s*:\s*Placeholder: The Extra Change$/ })
-      .click()
+    await shared.getByRole('link', { name: /^Next scenario\s*:\s*The Extra Change$/ }).click()
     await expect(page).toHaveURL(/\/yuvako\/scenario\/extra-change$/)
     await expect(picture(/hands over a fan of notes/)).toBeVisible()
     await page.getByRole('button', { name: 'Walk out quickly' }).click()
@@ -195,6 +194,7 @@ test.describe('story player', () => {
     ])
     await expect(shared).toContainText('it is never too late to turn back')
     await expect(shared.getByRole('button', { name: 'Reveal the lesson' })).toHaveCount(0)
+    await expect(page.getByRole('main')).not.toContainText('Placeholder')
 
     // The list shows each scenario as finished, and the lesson stays revealed.
     await page.goto('/yuvako/scenario')
@@ -240,9 +240,7 @@ test.describe('story player', () => {
     await page.goto('/')
     await page.getByRole('button', { name: 'ગુજરાતી' }).click()
     await page.goto('/yuvako/scenario/one-am-exam')
-    await expect(page.getByRole('heading', { level: 1 })).toHaveText(
-      'કામચલાઉ: રાતનો એક વાગ્યો, કાલે પરીક્ષા',
-    )
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText('રાતનો એક વાગ્યો, કાલે પરીક્ષા')
     await page.getByRole('button', { name: 'હમણાં જ ફોન બાજુ પર મૂકો' }).click()
     await page.getByRole('button', { name: 'શાંતિથી બેસો અને દસ ધીમા શ્વાસ લો' }).click()
     await expect(page.getByRole('heading', { name: /^અંતે શું થયું\s*:\s*સ્પષ્ટ મન$/ })).toBeFocused()
@@ -296,11 +294,12 @@ test('placeholder content is marked unmistakably', async ({ page }) => {
   await expect(page.getByTestId('preview-strip')).toHaveCount(0)
   await expect(page.getByTestId('placeholder-notice')).toHaveCount(0)
   await page.goto('/yuvako')
-  await expect(page.getByRole('link', { name: /Scenario.*Placeholder/ })).toBeVisible()
   await expect(page.getByRole('link', { name: /Prasang.*Placeholder/ })).toBeVisible()
-  // Both Yuvako games are final, so Activity and its game cards carry no badge.
+  // Both Yuvako games and the scenarios are final, so Activity and Scenario carry no badge.
   await expect(page.getByRole('link', { name: /Activity/ })).toBeVisible()
   await expect(page.getByRole('link', { name: /Activity.*Placeholder/ })).toHaveCount(0)
+  await expect(page.getByRole('link', { name: /Scenario/ })).toBeVisible()
+  await expect(page.getByRole('link', { name: /Scenario.*Placeholder/ })).toHaveCount(0)
   await page.goto('/yuvako/activity')
   await expect(page.getByRole('link', { name: /Shabd Khoj/ })).toBeVisible()
   await expect(page.getByRole('link', { name: /Placeholder/ })).toHaveCount(0)

@@ -3,10 +3,10 @@
   "audience": "yuvako",
   "order": 1,
   "title": {
-    "en": "Placeholder: 1 a.m., Exam Tomorrow",
-    "gu": "કામચલાઉ: રાતનો એક વાગ્યો, કાલે પરીક્ષા"
+    "en": "1 a.m., Exam Tomorrow",
+    "gu": "રાતનો એક વાગ્યો, કાલે પરીક્ષા"
   },
-  "placeholder": true,
+  "placeholder": false,
   "startNode": "start",
   "nodes": [
     {
@@ -95,8 +95,8 @@
           "gu": "તમે ઘેનમાં ઊઠો છો. પરીક્ષામાં જે જવાબ આવડતા હતા તે પણ યાદ આવતા નથી."
         },
         "lesson": {
-          "en": "Placeholder reflection: when did \"five minutes\" last stay five minutes? What makes it hard to stop?",
-          "gu": "કામચલાઉ મનન: છેલ્લે ક્યારે \"પાંચ મિનિટ\" ખરેખર પાંચ મિનિટ રહી હતી? અટકવું કેમ અઘરું લાગે છે?"
+          "en": "When did \"five minutes\" last stay five minutes? What makes it hard to stop?",
+          "gu": "છેલ્લે ક્યારે \"પાંચ મિનિટ\" ખરેખર પાંચ મિનિટ રહી હતી? અટકવું કેમ અઘરું લાગે છે?"
         }
       }
     },
@@ -124,8 +124,8 @@
           "gu": "ઊંઘ ધીમે ધીમે આવે છે, પણ આવે છે. સવારે થાક લાગે છે, છતાં ધાર્યા કરતાં મન વધુ સ્થિર છે."
         },
         "lesson": {
-          "en": "Placeholder reflection: stopping late is still stopping. What would make it easier to stop earlier next time?",
-          "gu": "કામચલાઉ મનન: મોડું અટકવું પણ અટકવું જ છે. આવતી વખતે વહેલાં અટકવા માટે શું મદદ કરી શકે?"
+          "en": "Stopping late is still stopping. What would make it easier to stop earlier next time?",
+          "gu": "મોડું અટકવું પણ અટકવું જ છે. આવતી વખતે વહેલાં અટકવા માટે શું મદદ કરી શકે?"
         }
       }
     },
@@ -184,8 +184,8 @@
           "gu": "તમે તાજગી સાથે ઊઠો છો અને સ્પષ્ટ મન સાથે પરીક્ષા આપવા જાઓ છો."
         },
         "lesson": {
-          "en": "Placeholder reflection: the pull of the phone passes if we give it a moment. What helps you wait it out?",
-          "gu": "કામચલાઉ મનન: થોડી ક્ષણ આપીએ તો ફોનનું ખેંચાણ ઓસરી જાય છે. તેને પસાર થવા દેવા માટે તમને શું મદદ કરે છે?"
+          "en": "The pull of the phone passes if we give it a moment. What helps you wait it out?",
+          "gu": "થોડી ક્ષણ આપીએ તો ફોનનું ખેંચાણ ઓસરી જાય છે. તેને પસાર થવા દેવા માટે તમને શું મદદ કરે છે?"
         }
       }
     }

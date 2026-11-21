@@ -60,9 +60,9 @@ test('every game, story and prasang is within three taps of the intro page', asy
     ['Bhulkao', 'Prasang', null, /\/bhulkao\/prasang\/sparrows-and-the-sea$/],
     ['Yuvako', 'Activity', 'Choose your reality', /\/yuvako\/activity\/pills$/],
     ['Yuvako', 'Activity', 'Shabd Khoj', /\/yuvako\/activity\/words$/],
-    ['Yuvako', 'Scenario', 'Placeholder: 1 a.m.', /\/yuvako\/scenario\/one-am-exam$/],
-    ['Yuvako', 'Scenario', 'Placeholder: The Group Chat', /\/yuvako\/scenario\/group-chat-joke$/],
-    ['Yuvako', 'Scenario', 'Placeholder: The Extra Change', /\/yuvako\/scenario\/extra-change$/],
+    ['Yuvako', 'Scenario', '1 a.m.', /\/yuvako\/scenario\/one-am-exam$/],
+    ['Yuvako', 'Scenario', 'The Group Chat', /\/yuvako\/scenario\/group-chat-joke$/],
+    ['Yuvako', 'Scenario', 'The Extra Change', /\/yuvako\/scenario\/extra-change$/],
     ['Yuvako', 'Prasang', null, /\/yuvako\/prasang\/lamp-by-the-window$/],
   ]
   for (const [section, part, item, target] of journeys) {
