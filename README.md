@@ -162,8 +162,13 @@ extra content needed:
 
 `content/scenario-moral.json` holds one lesson that every Yuvako scenario
 leads to. Write each scenario so its best ending shows that lesson. The file
-has `"title"` and `"text"` (each `{ "en": …, "gu": … }`), an optional
-`"image"` (as in a story step) and `"placeholder"`.
+has `"title"` and `"text"` (the opening paragraph), each `{ "en": …, "gu": … }`,
+and optionally:
+
+- `"points"`: named points listed after the text, each `{ "title": {…}, "text": {…} }`,
+  for example one value per scenario (now Focus, Atmiyata and Seva).
+- `"closing"`: a last line after the points.
+- `"image"` (as in a story step) and `"placeholder"`.
 
 The lesson stays hidden until a visitor has reached an ending, any ending, in
 every Yuvako scenario. Until then, the scenario list and each scenario ending

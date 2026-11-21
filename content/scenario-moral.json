@@ -1,18 +1,45 @@
 {
   "placeholder": true,
   "title": {
-    "en": "Stop. Think. Then choose.",
-    "gu": "થોભો. વિચારો. પછી પસંદ કરો."
+    "en": "Pause, and remember what matters",
+    "gu": "થોભો, અને યાદ રાખો કે શું મહત્ત્વનું છે"
   },
   "text": {
-    "en": "In each scenario something pulled at you: one more video, a sharp reply, a note that was not yours. And each best ending began the same way: you stopped for a moment before you chose. That pause is always yours to take. And if you miss it, stopping late is still stopping.",
-    "gu": "દરેક પરિસ્થિતિમાં કંઈક તમને ખેંચતું હતું: એક વધુ વીડિયો, તીખો જવાબ, એવી નોટ જે તમારી નહોતી. અને દરેક સૌથી સારો અંત એક જ રીતે શરૂ થયો: પસંદ કરતાં પહેલાં તમે એક ક્ષણ થોભ્યા. એ ક્ષણ હંમેશાં તમારા હાથમાં છે. અને જો ચૂકી જાઓ, તો મોડું અટકવું પણ અટકવું જ છે."
+    "en": "In each scenario something pulled at you: one more video, a sharp reply, a note that was not yours. Each best ending began the same way, with a pause before you chose. In that pause, you remembered what matters.",
+    "gu": "દરેક પરિસ્થિતિમાં કંઈક તમને ખેંચતું હતું: એક વધુ વીડિયો, તીખો જવાબ, એવી નોટ જે તમારી નહોતી. દરેક સૌથી સારો અંત એક જ રીતે શરૂ થયો: પસંદ કરતાં પહેલાં એક ક્ષણ થોભવાથી. એ ક્ષણમાં તમને યાદ આવ્યું કે શું મહત્ત્વનું છે."
+  },
+  "points": [
+    {
+      "title": { "en": "Focus", "gu": "એકાગ્રતા" },
+      "text": {
+        "en": "Distractions are made to keep you scrolling. A pause brings your focus back to what needs you now, like sleep before an exam.",
+        "gu": "ધ્યાન ભટકાવતી વસ્તુઓ તમને સ્ક્રોલ કરતા રાખવા માટે જ બનેલી છે. એક ક્ષણ થોભવાથી તમારું ધ્યાન ફરી ત્યાં આવે છે જ્યાં અત્યારે તેની જરૂર છે, જેમ કે પરીક્ષા પહેલાંની ઊંઘ."
+      }
+    },
+    {
+      "title": { "en": "Atmiyata", "gu": "આત્મીયતા" },
+      "text": {
+        "en": "Seeing others as your own. Your friend's feelings matter as much as yours, so you mend things quietly instead of winning loudly.",
+        "gu": "બીજાને પોતાના ગણવા. તમારા મિત્રની લાગણી પણ તમારી લાગણી જેટલી જ મહત્ત્વની છે, એટલે તમે જાહેરમાં જીતવાને બદલે શાંતિથી સંબંધ સુધારો છો."
+      }
+    },
+    {
+      "title": { "en": "Seva", "gu": "સેવા" },
+      "text": {
+        "en": "Helping others without expecting anything back. Handing back money that was not yours saved the shopkeeper a loss: a small seva that nobody asked for.",
+        "gu": "બદલામાં કંઈ અપેક્ષા રાખ્યા વગર બીજાને મદદ કરવી. જે પૈસા તમારા નહોતા તે પાછા આપીને તમે દુકાનદારને નુકસાનથી બચાવ્યા: કોઈએ માગી નહોતી એવી એક નાનકડી સેવા."
+      }
+    }
+  ],
+  "closing": {
+    "en": "So pause, think of others as your own, and choose what helps. And if you miss the pause, it is never too late to turn back.",
+    "gu": "તો થોભો, બીજાને પોતાના ગણો, અને જે મદદરૂપ થાય તે પસંદ કરો. અને જો એ ક્ષણ ચૂકી જાઓ, તો પણ પાછા વળવામાં ક્યારેય મોડું નથી થતું."
   },
   "image": {
     "src": "placeholder-pause-moral.svg",
     "alt": {
-      "en": "A phone, a chat bubble and a banknote each send a dotted path into one glowing pause sign, and a single arrow leads on from it towards a rising sun.",
-      "gu": "એક ફોન, એક ચેટ બબલ અને એક નોટમાંથી ટપકાંવાળી લીટીઓ એક ઝળહળતા વિરામ-ચિહ્નમાં ભળે છે, અને ત્યાંથી એક તીર ઊગતા સૂરજ તરફ આગળ જાય છે."
+      "en": "A phone, a chat bubble and a banknote each send a dotted path into one glowing pause sign. From it, an arrow leads on to two friends standing together in front of a rising sun.",
+      "gu": "એક ફોન, એક ચેટ બબલ અને એક નોટમાંથી ટપકાંવાળી લીટીઓ એક ઝળહળતા વિરામ-ચિહ્નમાં ભળે છે. ત્યાંથી એક તીર ઊગતા સૂરજ સામે સાથે ઊભેલા બે મિત્રો તરફ જાય છે."
     },
     "source": "Original placeholder drawing made for this project"
   }

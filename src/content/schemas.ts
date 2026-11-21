@@ -94,7 +94,12 @@ export type StoryNode = z.infer<typeof storyNode>
  */
 export const scenarioMoral = z.strictObject({
   title: localizedText,
+  /** The opening paragraph. */
   text: localizedText,
+  /** Named points listed after the text, for example one value per scenario. */
+  points: z.array(z.strictObject({ title: localizedText, text: localizedText })).default([]),
+  /** A last line after the points. */
+  closing: localizedText.optional(),
   image: storyImage.optional(),
   placeholder: z.boolean().default(false),
 })

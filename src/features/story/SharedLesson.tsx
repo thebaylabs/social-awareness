@@ -128,6 +128,23 @@ export function SharedLesson({
           <p className={styles.moralText} lang={localizedLang(moral.text, lang)}>
             {l(moral.text)}
           </p>
+          {moral.points.length > 0 && (
+            <ul className={styles.moralPoints}>
+              {moral.points.map((point) => (
+                <li key={point.title.en}>
+                  <h4 className={styles.pointTitle} lang={localizedLang(point.title, lang)}>
+                    {l(point.title)}
+                  </h4>
+                  <p lang={localizedLang(point.text, lang)}>{l(point.text)}</p>
+                </li>
+              ))}
+            </ul>
+          )}
+          {moral.closing && (
+            <p className={styles.moralClosing} lang={localizedLang(moral.closing, lang)}>
+              {l(moral.closing)}
+            </p>
+          )}
         </div>
       )}
     </section>

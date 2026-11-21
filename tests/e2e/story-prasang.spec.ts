@@ -185,10 +185,15 @@ test.describe('story player', () => {
 
     await shared.getByRole('button', { name: 'Reveal the lesson' }).click()
     await expect(
-      shared.getByRole('heading', { level: 3, name: 'Stop. Think. Then choose.' }),
+      shared.getByRole('heading', { level: 3, name: 'Pause, and remember what matters' }),
     ).toBeFocused()
     await expect(shared.getByRole('img', { name: /glowing pause sign/ })).toBeVisible()
-    await expect(shared).toContainText('stopping late is still stopping')
+    await expect(shared.getByRole('heading', { level: 4 })).toHaveText([
+      'Focus',
+      'Atmiyata',
+      'Seva',
+    ])
+    await expect(shared).toContainText('it is never too late to turn back')
     await expect(shared.getByRole('button', { name: 'Reveal the lesson' })).toHaveCount(0)
 
     // The list shows each scenario as finished, and the lesson stays revealed.
@@ -199,7 +204,9 @@ test.describe('story player', () => {
       /Finished · 1 of 3 endings found/,
     ])
     await expect(shared).toHaveAccessibleName(/^The lesson they share\s*:\s*3 of 3 finished$/)
-    await expect(shared.getByRole('heading', { name: 'Stop. Think. Then choose.' })).toBeVisible()
+    await expect(
+      shared.getByRole('heading', { name: 'Pause, and remember what matters' }),
+    ).toBeVisible()
     await expect(shared.getByRole('button')).toHaveCount(0)
   })
 
@@ -220,8 +227,13 @@ test.describe('story player', () => {
     await expect(shared).toContainText('તમે દરેક પરિસ્થિતિમાં એક અંત સુધી પહોંચી ગયા છો.')
     await shared.getByRole('button', { name: 'બોધ જુઓ' }).click()
     await expect(
-      shared.getByRole('heading', { level: 3, name: 'થોભો. વિચારો. પછી પસંદ કરો.' }),
+      shared.getByRole('heading', { level: 3, name: 'થોભો, અને યાદ રાખો કે શું મહત્ત્વનું છે' }),
     ).toBeFocused()
+    await expect(shared.getByRole('heading', { level: 4 })).toHaveText([
+      'એકાગ્રતા',
+      'આત્મીયતા',
+      'સેવા',
+    ])
   })
 
   test('shows the scenario in Gujarati', async ({ page }) => {
