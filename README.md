@@ -284,10 +284,13 @@ Scores are stored in Firebase Firestore, at
    everything else.
 3. For your computer, copy `.env.example` to `.env.local` and fill in the web
    app's settings.
-4. For the live site, add the same four values as repository variables
-   (Settings → Secrets and variables → Actions → Variables):
-   `VITE_FIREBASE_API_KEY`, `VITE_FIREBASE_PROJECT_ID`,
-   `VITE_FIREBASE_AUTH_DOMAIN`, `VITE_FIREBASE_APP_ID`.
+4. For the live site on Vercel, add the same four values as Vercel
+   environment variables and redeploy: step-by-step in
+   [`docs/FIREBASE_ON_VERCEL.md`](docs/FIREBASE_ON_VERCEL.md). For the GitHub
+   Pages copy, add them as repository variables (Settings → Secrets and
+   variables → Actions → Variables): `VITE_FIREBASE_API_KEY`,
+   `VITE_FIREBASE_PROJECT_ID`, `VITE_FIREBASE_AUTH_DOMAIN`,
+   `VITE_FIREBASE_APP_ID`.
 
 Without these settings, the dev server keeps scores in memory until the page
 is reloaded, and a production build shows "The leaderboard is not set up yet".
@@ -609,3 +612,5 @@ The site is a static build and can be hosted anywhere. The owner chose
   Pages, local, tests) leave it out; `vite.config.ts` checks for Vercel's
   `VERCEL=1`. To see the numbers, turn on **Analytics** in the Vercel
   project's dashboard.
+- To connect the leaderboards to Firebase on Vercel, follow
+  [`docs/FIREBASE_ON_VERCEL.md`](docs/FIREBASE_ON_VERCEL.md).
