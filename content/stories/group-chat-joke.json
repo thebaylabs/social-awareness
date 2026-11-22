@@ -36,7 +36,8 @@
             "en": "Put the phone face down for a minute",
             "gu": "એક મિનિટ માટે ફોન ઊંધો મૂકી દો"
           },
-          "next": "pause"
+          "next": "pause",
+          "expected": true
         }
       ]
     },
@@ -91,7 +92,8 @@
             "en": "Message him privately: \"That photo hurt. Can you take it down?\"",
             "gu": "તેને અલગથી મેસેજ કરો: \"એ ફોટાથી મને ખોટું લાગ્યું. તું તેને હટાવી શકે?\""
           },
-          "next": "straight"
+          "next": "straight",
+          "expected": true
         },
         {
           "label": {

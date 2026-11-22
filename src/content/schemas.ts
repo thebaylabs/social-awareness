@@ -60,8 +60,10 @@ export const storyChoice = z.strictObject({
   label: localizedText,
   next: z.string().min(1),
   /**
-   * The decision we hope a child makes at this step. A Bhulkao story that
-   * follows every expected choice ends with the firecracker celebration.
+   * The decision we hope the visitor makes at this step. A story that follows
+   * every expected choice reaches its best ending: a Bhulkao story then offers
+   * the firecracker celebration, and a Yuvako scenario plays a short burst of
+   * fireworks with a message.
    */
   expected: z.boolean().optional(),
 })

@@ -13,7 +13,7 @@ import {
 } from './schemas'
 import { validateStory } from '../features/story/validate'
 import { gameIsPlaceholder } from './games'
-import { SECTION_LIST } from '../config/sections'
+import { AUDIENCE_SECTIONS, SECTION_LIST } from '../config/sections'
 
 /*
  * Content is loaded with import.meta.glob, so a new file dropped into
@@ -157,7 +157,7 @@ export function playableStories(section: SectionId): Story[] {
   return STORIES.filter((s) => s.audience === section && s.story).map((s) => s.story as Story)
 }
 
-// ---------- The lesson the Yuvako scenarios share ----------
+// ---------- The lesson the scenarios share ----------
 
 export interface MoralEntry {
   /** The lesson, or null when the file failed validation. */
@@ -179,9 +179,22 @@ function loadMoral(): MoralEntry | null {
 
 const MORAL = loadMoral()
 
-/** The shared lesson of the Yuvako scenarios, or null when there is none (or it is broken). */
+/** The lesson the scenarios share, or null when there is none (or it is broken). */
 export function scenarioMoral(): ScenarioMoral | null {
   return MORAL?.moral ?? null
+}
+
+/** A scenario that counts towards the shared lesson, with the section it opens under. */
+export interface LessonScenario {
+  section: SectionId
+  story: Story
+}
+
+/** Every playable scenario, in the order of the scenario hub. Each counts towards the shared lesson. */
+export function lessonScenarios(): LessonScenario[] {
+  return AUDIENCE_SECTIONS.flatMap((section) =>
+    playableStories(section).map((story) => ({ section, story })),
+  )
 }
 
 // ---------- Prasangs ----------

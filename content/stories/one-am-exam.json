@@ -36,7 +36,8 @@
             "en": "Put the phone away now",
             "gu": "હમણાં જ ફોન બાજુ પર મૂકો"
           },
-          "next": "away"
+          "next": "away",
+          "expected": true
         }
       ]
     },
@@ -149,7 +150,8 @@
             "en": "Sit quietly and take ten slow breaths",
             "gu": "શાંતિથી બેસો અને દસ ધીમા શ્વાસ લો"
           },
-          "next": "calm"
+          "next": "calm",
+          "expected": true
         },
         {
           "label": {

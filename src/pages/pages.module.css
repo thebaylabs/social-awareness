@@ -1,47 +1,85 @@
-/* Festival welcome on the intro page. */
-.hero {
+/* Festival welcome on the home page, and around the diya on the diya page. */
+.hero,
+.diyaHero {
   margin-bottom: var(--space-6);
   text-align: center;
 }
 
-/* The diya pops in when the page opens. */
-[data-intro='play'] .hero > :first-child {
+/* Each part of the welcome pops in after the last. */
+[data-intro='play'] .hero > * {
+  animation: pop-in 800ms cubic-bezier(0.2, 0.8, 0.25, 1.15) both;
+}
+
+[data-intro='play'] .hero > :nth-child(1) {
+  animation-delay: 250ms;
+}
+
+[data-intro='play'] .hero > :nth-child(2) {
+  animation-delay: 450ms;
+}
+
+[data-intro='play'] .hero > :nth-child(3) {
+  animation-delay: 650ms;
+}
+
+[data-intro='play'] .hero > :nth-child(4) {
+  animation-delay: 800ms;
+}
+
+[data-intro='play'] .hero > :nth-child(5) {
+  animation-delay: 900ms;
+}
+
+[data-intro='play'] .sections > li {
+  animation: pop-in 800ms cubic-bezier(0.2, 0.8, 0.25, 1.15) both;
+  animation-delay: 950ms;
+}
+
+[data-intro='play'] .sections > li:nth-child(2) {
+  animation-delay: 1100ms;
+}
+
+[data-intro='play'] .sections > li:nth-child(3) {
+  animation-delay: 1250ms;
+}
+
+[data-intro='play'] .sections > li:nth-child(4) {
+  animation-delay: 1400ms;
+}
+
+/* On the diya page only the diya pops in; the welcome waits to be revealed. */
+[data-intro='play'] .diyaHero > :first-child {
   animation: pop-in 800ms cubic-bezier(0.2, 0.8, 0.25, 1.15) 250ms both;
 }
 
 /*
- * Welcome lines and Explore hubs appear only once enough diyas are lit. They
+ * The diya page's welcome lines appear only once enough diyas are lit. They
  * keep their place in the layout while hidden, so nothing jumps when they fade in.
  */
-.welcome,
-.afterWelcome {
+.welcome {
   transition:
     opacity 900ms ease,
     transform 900ms ease;
 }
 
-.welcome[data-revealed='false'],
-.afterWelcome[data-revealed='false'] {
+.welcome[data-revealed='false'] {
   opacity: 0;
   transform: translateY(8px);
   user-select: none;
   pointer-events: none;
 }
 
-.welcome[data-revealed='true'],
-.afterWelcome[data-revealed='true'] {
+.welcome[data-revealed='true'] {
   opacity: 1;
   transform: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .welcome,
-  .afterWelcome {
+  .welcome {
     transition: opacity 200ms ease;
   }
 
-  .welcome[data-revealed='false'],
-  .afterWelcome[data-revealed='false'] {
+  .welcome[data-revealed='false'] {
     transform: none;
   }
 }
@@ -56,6 +94,12 @@
     opacity: 1;
     transform: none;
   }
+}
+
+.heroLamp {
+  width: auto;
+  height: clamp(150px, 30vw, 230px);
+  margin: 0 auto;
 }
 
 .heroValue {
@@ -91,7 +135,7 @@
   text-transform: none;
 }
 
-/* Home cards: Darshan full-width, then Games / Activities / Prasang in a row. */
+/* Home cards: Games / Activities / Prasang. */
 .sections {
   display: grid;
   gap: var(--space-4);
@@ -107,10 +151,6 @@
 @media (min-width: 40rem) {
   .sections {
     grid-template-columns: 1fr 1fr;
-  }
-
-  .sections > li:first-child {
-    grid-column: 1 / -1;
   }
 }
 

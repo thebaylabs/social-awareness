@@ -10,7 +10,7 @@ import {
 
 const ROUTES = [
   '/',
-  '/annakut-darshan',
+  '/diya',
   '/activity',
   '/scenario',
   '/prasang',

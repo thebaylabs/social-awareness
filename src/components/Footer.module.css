@@ -29,6 +29,11 @@
   font-style: italic;
 }
 
+/* The copyright line is the smallest text on the page. */
+.copyright {
+  font-size: 0.75rem;
+}
+
 .note:lang(gu) {
   font-style: normal;
 }

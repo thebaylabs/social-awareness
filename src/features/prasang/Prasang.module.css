@@ -44,6 +44,35 @@
   cursor: pointer;
 }
 
+/*
+ * Subtitles. They sit just above the bar (one tap target plus its padding), so
+ * the bar never covers them, and stay there when it fades out.
+ */
+.videoCue {
+  position: absolute;
+  right: 0.75rem;
+  bottom: calc(var(--tap) + 1.75rem);
+  left: 0.75rem;
+  z-index: 3;
+  margin: 0;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.5;
+  text-align: center;
+  text-wrap: balance;
+  pointer-events: none;
+}
+
+/* A dark strip behind each line of the words only. */
+.videoCue span {
+  padding: 0.15em 0.4em;
+  border-radius: 0.2rem;
+  background: rgb(0 0 0 / 78%);
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
 /* Custom bar — fades out while playing; tap the video to bring it back. */
 .videoBar {
   position: absolute;

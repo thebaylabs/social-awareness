@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState } from 'react'
 import { Outlet, useLocation } from 'react-router'
 import { useI18n } from '../i18n/context'
-import { sectionFromPath } from '../config/sections'
+import { paths, sectionFromPath } from '../config/sections'
 import { Header } from './Header'
 import { Footer } from './Footer'
+import { Fireworks } from './Fireworks'
 import { PageContext, type PageInfo } from './page-context'
 import { focusMainHeading } from './focus'
 import { introMotionAllowed } from './intro-motion'
@@ -18,6 +19,10 @@ export function Layout() {
   const section = sectionFromPath(location.pathname)
   const siteTitle = t('site.title')
   const [intro] = useState(introMotionAllowed)
+  /** The diya page keeps its fireworks for when the crowd's diyas are lit. */
+  const [welcomeShow] = useState(
+    () => intro && location.pathname.replace(/\/+$/, '') !== paths.diya(),
+  )
 
   useEffect(() => {
     document.title =
@@ -50,6 +55,8 @@ export function Layout() {
         </PageContext.Provider>
       </main>
       <Footer />
+      {/* A short welcome show, once per page load. */}
+      {welcomeShow && <Fireworks rockets={14} />}
     </div>
   )
 }

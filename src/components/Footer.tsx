@@ -20,7 +20,7 @@ export function Footer() {
             {t('footer.translationNote')}
           </p>
         )}
-        <p data-testid="copyright">
+        <p className={styles.copyright} data-testid="copyright">
           © {new Date().getFullYear()} <span lang="en">{COPYRIGHT_HOLDER}</span>.{' '}
           {t('footer.rights')}
         </p>
