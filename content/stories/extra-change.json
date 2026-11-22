@@ -36,7 +36,8 @@
             "en": "Stop and count it again",
             "gu": "થોભો અને ફરી ગણો"
           },
-          "next": "count"
+          "next": "count",
+          "expected": true
         }
       ]
     },
@@ -91,7 +92,8 @@
             "en": "Hand the ₹500 back to the shopkeeper",
             "gu": "₹500 દુકાનદારને પાછા આપો"
           },
-          "next": "light"
+          "next": "light",
+          "expected": true
         },
         {
           "label": {

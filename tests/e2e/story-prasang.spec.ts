@@ -253,6 +253,48 @@ test.describe('story player', () => {
     ).toBeVisible()
   })
 
+  test('the best ending of a Yuvako scenario plays fireworks with a short message', async ({
+    page,
+    browser,
+  }) => {
+    const best = page.getByTestId('best-outcome')
+    const fireworks = page.getByTestId('fireworks')
+
+    // A good ending reached the long way round is not the best one.
+    await page.goto('/yuvako/scenario/one-am-exam')
+    await page.getByRole('button', { name: 'Put the phone away now' }).click()
+    await page.getByRole('button', { name: 'Check it one last time' }).click()
+    await page.getByRole('button', { name: 'Stop, even though sleep feels far away' }).click()
+    await expect(
+      page.getByRole('heading', { name: /^How it ends\s*:\s*Late, but stopped$/ }),
+    ).toBeFocused()
+    await expect(best).toHaveCount(0)
+    await expect(fireworks).toHaveCount(0)
+
+    // Every right choice: the message, and a short show that ends by itself.
+    await page.goto('/yuvako/scenario/one-am-exam')
+    await page.getByRole('button', { name: 'Put the phone away now' }).click()
+    await expect(best).toHaveCount(0)
+    await page.getByRole('button', { name: 'Sit quietly and take ten slow breaths' }).click()
+    await expect(
+      page.getByRole('heading', { name: /^How it ends\s*:\s*Clear head$/ }),
+    ).toBeFocused()
+    await expect(best).toHaveText('You made all the right choices and reached the best outcome.')
+    await expect(fireworks).toHaveCount(1)
+    await expect(fireworks).toHaveCount(0, { timeout: 15_000 })
+    await expect(best).toBeVisible()
+
+    // With reduced motion: the message alone.
+    const context = await browser.newContext({ reducedMotion: 'reduce' })
+    const still = await context.newPage()
+    await still.goto('/yuvako/scenario/extra-change')
+    await still.getByRole('button', { name: 'Stop and count it again' }).click()
+    await still.getByRole('button', { name: 'Hand the ₹500 back to the shopkeeper' }).click()
+    await expect(still.getByTestId('best-outcome')).toBeVisible()
+    await expect(still.getByTestId('fireworks')).toHaveCount(0)
+    await context.close()
+  })
+
   test('the kids scenario can be one of the three that reveal the lesson', async ({ page }) => {
     // Two scenarios already finished in this tab, Homework Time among them.
     await page.addInitScript(() => {

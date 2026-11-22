@@ -19,6 +19,7 @@ export type IconName =
   | 'enter'
   | 'backspace'
   | 'lightbulb'
+  | 'star'
   | 'music'
   | 'music-off'
   | 'captions'
@@ -35,6 +36,7 @@ const PATHS: Record<IconName, string> = {
   prasang: 'M12 3c2 2.5 3 4.5 3 6.5a3 3 0 01-6 0C9 7.5 10 5.5 12 3zM5 15h14l-2 5H7z',
   external: 'M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 01-1 1H5a1 1 0 01-1-1V7a1 1 0 011-1h5',
   check: 'M5 12.5l4.5 4.5L19 7.5',
+  star: 'M12 3.5l2.6 5.4 5.9.8-4.3 4.1 1 5.9L12 16.9l-5.2 2.8 1-5.9-4.3-4.1 5.9-.8z',
   dot: 'M12 12h.01',
   dash: 'M6 12h12',
   pause: 'M9 6v12M15 6v12',

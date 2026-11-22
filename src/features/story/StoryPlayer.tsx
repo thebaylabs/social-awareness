@@ -1,6 +1,7 @@
 import { useEffect, useId, useMemo, useReducer, useRef, useState } from 'react'
 import { useI18n } from '../../i18n/context'
 import { localizedLang } from '../../i18n/localized'
+import { Fireworks } from '../../components/Fireworks'
 import { Icon } from '../../components/Icon'
 import { LessonBox } from '../../components/LessonBox'
 import { ContentImage } from '../../components/ContentImage'
@@ -54,7 +55,9 @@ function NodeMedia({ node, placeholder }: { node: StoryNode; placeholder: boolea
  * Plays a validated story. Bhulkao leads with the picture; Yuvako leads with
  * the text, and its endings show the choices taken and which endings have been
  * found in this browser tab. Every ending, in either section, shows progress
- * towards the lesson the scenarios share.
+ * towards the lesson the scenarios share. The best ending, reached by making
+ * every hoped-for choice, is celebrated: Bhulkao picks a firecracker, Yuvako
+ * gets a short burst of fireworks and a message.
  */
 export function StoryPlayer({ story, section }: { story: Story; section: SectionId }) {
   const { t, l, lang } = useI18n()
@@ -103,6 +106,8 @@ export function StoryPlayer({ story, section }: { story: Story; section: Section
   }, [history, reducedMotion])
 
   const media = <NodeMedia node={node} placeholder={story.placeholder} />
+  /** Every hoped-for choice was made, and this is where they lead. */
+  const bestEnding = followedExpectedPath(story, history)
 
   return (
     <div className={styles.story} data-audience={section}>
@@ -120,6 +125,16 @@ export function StoryPlayer({ story, section }: { story: Story; section: Section
             </>
           )}
         </h2>
+        {showsEndings && bestEnding && (
+          <>
+            {/* The same short show as the welcome. */}
+            {!reducedMotion && <Fireworks rockets={14} />}
+            <p className={styles.best} data-testid="best-outcome">
+              <Icon name="star" size={22} />
+              {t('story.best')}
+            </p>
+          </>
+        )}
         {pictureFirst && media}
         <p className={styles.text} lang={localizedLang(node.text, lang)}>
           {l(node.text)}
@@ -158,7 +173,7 @@ export function StoryPlayer({ story, section }: { story: Story; section: Section
             >
               <p lang={localizedLang(node.ending.lesson, lang)}>{l(node.ending.lesson)}</p>
             </LessonBox>
-            {section === 'bhulkao' && followedExpectedPath(story, history) && <FirecrackerReward />}
+            {section === 'bhulkao' && bestEnding && <FirecrackerReward />}
             {showsEndings && endings.length > 1 && (
               <EndingsFound endings={endings} found={found} current={node.id} />
             )}
