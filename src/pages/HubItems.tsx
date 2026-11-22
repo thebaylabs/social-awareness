@@ -4,7 +4,7 @@ import { usePage } from '../components/page-context'
 import { Card, CardItem, CardList } from '../components/Card'
 import { PrasangArt, StoryArt } from '../components/Art'
 import { AUDIENCE_SECTIONS, HUBS, paths } from '../config/sections'
-import { playableStories, prasangsFor, scenarioMoral, storiesFor } from '../content'
+import { lessonScenarios, prasangsFor, scenarioMoral, storiesFor } from '../content'
 import { isFinished, reachableEndings, readEndingsFound } from '../features/story/endings'
 import { SharedLesson } from '../features/story/SharedLesson'
 import styles from './pages.module.css'
@@ -26,11 +26,11 @@ export default function HubItems({ kind }: { kind: Kind }) {
   })
 
   const tracksScenarios = kind === 'story'
-  const yuvakoScenarios = tracksScenarios ? playableStories('yuvako') : []
+  const scenarios = tracksScenarios ? lessonScenarios() : []
   const moral = tracksScenarios ? scenarioMoral() : null
   const finished = new Set<string>()
   const status = new Map<string, string>()
-  for (const story of yuvakoScenarios) {
+  for (const { story } of scenarios) {
     const found = readEndingsFound(story.id)
     const endings = reachableEndings(story)
     if (isFinished(story, found)) {
@@ -67,13 +67,8 @@ export default function HubItems({ kind }: { kind: Kind }) {
           ))}
         </CardList>
       )}
-      {moral && yuvakoScenarios.length > 0 && (
-        <SharedLesson
-          section="yuvako"
-          stories={yuvakoScenarios}
-          moral={moral}
-          finished={finished}
-        />
+      {moral && scenarios.length > 0 && (
+        <SharedLesson scenarios={scenarios} moral={moral} finished={finished} />
       )}
     </>
   )

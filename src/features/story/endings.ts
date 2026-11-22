@@ -38,6 +38,14 @@ export function choicesTaken(story: Story, history: StoryHistory): LocalizedText
  */
 export const ENDINGS_FOUND_KEY = 'outreach.scenario.endings'
 
+/** Finishing this many scenarios, any of them, reveals the lesson they share. */
+export const LESSON_GOAL = 3
+
+/** Scenarios needed for the lesson: LESSON_GOAL, or all of them when there are fewer. */
+export function lessonGoal(total: number): number {
+  return Math.min(LESSON_GOAL, total)
+}
+
 /** sessionStorage key set to "revealed" once the shared lesson has been revealed in this tab. */
 export const MORAL_REVEALED_KEY = 'outreach.scenario.moral'
 

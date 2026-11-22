@@ -278,7 +278,7 @@
   font-weight: 700;
 }
 
-/* The lesson all the Yuvako scenarios share: progress, then the reveal. */
+/* The lesson the scenarios share: progress, then the reveal. */
 .shared {
   margin: var(--space-5) 0;
   padding: var(--space-4);
@@ -299,6 +299,28 @@
 
 .sharedHint {
   margin-bottom: 0;
+}
+
+/* The lesson counter: one marker for each scenario needed, ticked as they are finished. */
+.pips {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.pip {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  border: 2px dashed var(--color-muted);
+  border-radius: 50%;
+}
+
+.pip[data-filled] {
+  border: 2px solid var(--color-primary);
+  background: var(--color-primary);
+  color: var(--color-on-primary);
 }
 
 .nextLink {

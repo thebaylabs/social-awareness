@@ -5,7 +5,7 @@ import { usePage } from '../components/page-context'
 import { Card, CardItem, CardList } from '../components/Card'
 import { PrasangArt, StoryArt } from '../components/Art'
 import { SECTIONS, paths, type SectionId } from '../config/sections'
-import { playableStories, prasangsFor, scenarioMoral, storiesFor } from '../content'
+import { lessonScenarios, prasangsFor, scenarioMoral, storiesFor } from '../content'
 import { isFinished, reachableEndings, readEndingsFound } from '../features/story/endings'
 import { SharedLesson } from '../features/story/SharedLesson'
 import styles from './pages.module.css'
@@ -35,11 +35,11 @@ export default function ItemList({
   if (only) return <Navigate to={itemPath(only.id)} replace />
 
   const tracksScenarios = kind === 'story' && section === 'yuvako'
-  const scenarios = tracksScenarios ? playableStories(section) : []
+  const scenarios = tracksScenarios ? lessonScenarios() : []
   const moral = tracksScenarios ? scenarioMoral() : null
   const finished = new Set<string>()
   const status = new Map<string, string>()
-  for (const story of scenarios) {
+  for (const { story } of scenarios) {
     const found = readEndingsFound(story.id)
     const endings = reachableEndings(story)
     if (isFinished(story, found)) {
@@ -73,7 +73,7 @@ export default function ItemList({
         </CardList>
       )}
       {moral && scenarios.length > 0 && (
-        <SharedLesson section={section} stories={scenarios} moral={moral} finished={finished} />
+        <SharedLesson scenarios={scenarios} moral={moral} finished={finished} />
       )}
     </>
   )

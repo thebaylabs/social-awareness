@@ -6,27 +6,27 @@ import { Icon } from '../../components/Icon'
 import { ContentImage } from '../../components/ContentImage'
 import { PlaceholderTag } from '../../components/Placeholder'
 import { focusElement } from '../../components/focus'
-import { paths, type SectionId } from '../../config/sections'
-import type { ScenarioMoral, Story } from '../../content/schemas'
-import { readMoralRevealed, writeMoralRevealed } from './endings'
+import { paths } from '../../config/sections'
+import type { LessonScenario } from '../../content'
+import type { ScenarioMoral } from '../../content/schemas'
+import { lessonGoal, readMoralRevealed, writeMoralRevealed } from './endings'
 import styles from './Story.module.css'
 
 /**
- * The lesson every Yuvako scenario shares (content/scenario-moral.json). It
- * stays hidden until the visitor has reached an ending in each scenario; then
- * a button reveals it. On a scenario ending it also lists the scenarios and
- * links to the next one not finished yet.
+ * The lesson the scenarios share (content/scenario-moral.json). It stays
+ * hidden until the visitor has reached an ending in enough of them: any three
+ * (see lessonGoal). A row of markers counts up to that; then a button reveals
+ * the lesson. On a scenario ending it also lists the scenarios and, until the
+ * lesson is unlocked, links to the next one not finished yet.
  */
 export function SharedLesson({
-  section,
-  stories,
+  scenarios,
   moral,
   finished,
   current,
 }: {
-  section: SectionId
-  /** Every scenario of the section, in list order. */
-  stories: readonly Story[]
+  /** Every scenario, in list order. */
+  scenarios: readonly LessonScenario[]
   moral: ScenarioMoral
   /** Ids of the scenarios with an ending found. */
   finished: ReadonlySet<string>
@@ -38,11 +38,21 @@ export function SharedLesson({
   const titleRef = useRef<HTMLHeadingElement>(null)
   const [revealed, setRevealed] = useState(readMoralRevealed)
   const [justRevealed, setJustRevealed] = useState(false)
-  const done = stories.filter((s) => finished.has(s.id)).length
-  const total = stories.length
-  const allDone = done === total
+  const total = scenarios.length
+  const goal = lessonGoal(total)
+  const done = scenarios.filter((s) => finished.has(s.story.id)).length
+  /** The counter stops at the goal, even when every scenario is finished. */
+  const counted = Math.min(done, goal)
+  const unlocked = done >= goal
   const onEnding = current !== undefined
-  const next = onEnding ? stories.find((s) => !finished.has(s.id)) : undefined
+  /** While the lesson is locked: the next scenario after this one not finished yet, wrapping round. */
+  const at = scenarios.findIndex((s) => s.story.id === current)
+  const next =
+    onEnding && !unlocked
+      ? [...scenarios.slice(at + 1), ...scenarios.slice(0, at + 1)].find(
+          (s) => !finished.has(s.story.id),
+        )
+      : undefined
 
   useEffect(() => {
     if (justRevealed) focusElement(titleRef.current)
@@ -59,12 +69,23 @@ export function SharedLesson({
       <h2 id={headingId} className={styles.endingsHeading}>
         {t('moral.title')}
         <span className="visually-hidden">: </span>
-        <span className={styles.endingsCount}>{t('moral.count', { done, total })}</span>
+        <span className={styles.endingsCount}>
+          {t('moral.count', { done: counted, total: goal })}
+        </span>
       </h2>
+
+      {/* The same count as markers: one for each scenario needed. */}
+      <div className={styles.pips} aria-hidden="true" data-testid="lesson-counter">
+        {Array.from({ length: goal }, (_, i) => (
+          <span key={i} className={styles.pip} data-filled={i < counted || undefined}>
+            {i < counted && <Icon name="check" size={18} />}
+          </span>
+        ))}
+      </div>
 
       {onEnding && (
         <ul className={styles.badges}>
-          {stories.map((s) => {
+          {scenarios.map(({ story: s }) => {
             const isDone = finished.has(s.id)
             return (
               <li key={s.id} className={styles.badge} data-found={isDone || undefined}>
@@ -84,22 +105,25 @@ export function SharedLesson({
         </ul>
       )}
 
-      {!allDone && <p className={styles.sharedHint}>{t('moral.locked')}</p>}
+      {!unlocked && <p className={styles.sharedHint}>{t('moral.locked', { goal, total })}</p>}
 
       {next && (
-        <Link to={paths.story(section, next.id)} className={`${styles.choice} ${styles.nextLink}`}>
+        <Link
+          to={paths.story(next.section, next.story.id)}
+          className={`${styles.choice} ${styles.nextLink}`}
+        >
           <span className={styles.nextText}>
             <span className={styles.nextLabel}>{t('moral.next')}</span>
             <span className="visually-hidden">: </span>
-            <span lang={localizedLang(next.title, lang)}>{l(next.title)}</span>
+            <span lang={localizedLang(next.story.title, lang)}>{l(next.story.title)}</span>
           </span>
           <Icon name="arrow-right" size={22} />
         </Link>
       )}
 
-      {allDone && !revealed && (
+      {unlocked && !revealed && (
         <>
-          <p className={styles.sharedHint}>{t('moral.ready')}</p>
+          <p className={styles.sharedHint}>{t('moral.ready', { done })}</p>
           <button type="button" className={styles.primary} onClick={reveal}>
             <Icon name="lightbulb" size={20} />
             {t('moral.reveal')}
@@ -107,7 +131,7 @@ export function SharedLesson({
         </>
       )}
 
-      {allDone && revealed && (
+      {unlocked && revealed && (
         <div className={styles.moral} data-just-revealed={justRevealed || undefined}>
           {moral.image ? (
             <ContentImage

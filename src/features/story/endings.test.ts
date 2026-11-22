@@ -1,10 +1,12 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import type { Story } from '../../content/schemas'
 import {
-  ENDINGS_FOUND_KEY,
-  MORAL_REVEALED_KEY,
   choicesTaken,
+  ENDINGS_FOUND_KEY,
   isFinished,
+  LESSON_GOAL,
+  lessonGoal,
+  MORAL_REVEALED_KEY,
   reachableEndings,
   readEndingsFound,
   readFinished,
@@ -116,6 +118,14 @@ describe('scenarios finished and the shared lesson', () => {
     expect(isFinished(story, [])).toBe(false)
     expect(isFinished(story, ['orphan'])).toBe(false)
     expect(isFinished(story, ['rested'])).toBe(true)
+  })
+
+  it('asks for any three scenarios, or all of them when there are fewer', () => {
+    expect(LESSON_GOAL).toBe(3)
+    expect(lessonGoal(4)).toBe(3)
+    expect(lessonGoal(3)).toBe(3)
+    expect(lessonGoal(2)).toBe(2)
+    expect(lessonGoal(0)).toBe(0)
   })
 
   it('reads which scenarios are finished in this tab', () => {

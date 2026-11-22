@@ -9,7 +9,7 @@ import { focusElement } from '../../components/focus'
 import { usePrefersReducedMotion } from '../../components/motion'
 import type { Story, StoryNode } from '../../content/schemas'
 import type { SectionId } from '../../config/sections'
-import { playableStories, scenarioMoral } from '../../content'
+import { lessonScenarios, scenarioMoral } from '../../content'
 import { followedExpectedPath } from './expected'
 import {
   choicesTaken,
@@ -52,9 +52,9 @@ function NodeMedia({ node, placeholder }: { node: StoryNode; placeholder: boolea
 
 /**
  * Plays a validated story. Bhulkao leads with the picture; Yuvako leads with
- * the text, and its endings show the choices taken, which endings have been
- * found in this browser tab and progress towards the lesson all the scenarios
- * share.
+ * the text, and its endings show the choices taken and which endings have been
+ * found in this browser tab. Every ending, in either section, shows progress
+ * towards the lesson the scenarios share.
  */
 export function StoryPlayer({ story, section }: { story: Story; section: SectionId }) {
   const { t, l, lang } = useI18n()
@@ -65,25 +65,24 @@ export function StoryPlayer({ story, section }: { story: Story; section: Section
   const isFirst = useRef(true)
   const headingId = useId()
   const pictureFirst = section === 'bhulkao'
-  const tracksEndings = section === 'yuvako'
+  /** Yuvako endings show the choices taken and the endings found. */
+  const showsEndings = section === 'yuvako'
   const reducedMotion = usePrefersReducedMotion()
   const endings = useMemo(() => reachableEndings(story), [story])
-  const [found, setFound] = useState<readonly string[]>(() =>
-    tracksEndings ? readEndingsFound(story.id) : [],
-  )
-  const moral = tracksEndings ? scenarioMoral() : null
-  const scenarios = useMemo(() => (moral ? playableStories(section) : []), [moral, section])
+  const [found, setFound] = useState<readonly string[]>(() => readEndingsFound(story.id))
+  const moral = scenarioMoral()
+  const scenarios = useMemo(() => (moral ? lessonScenarios() : []), [moral])
 
   /** Scenarios with an ending found, counting this one from state in case storage is off. */
   const finishedScenarios = () => {
-    const finished = readFinished(scenarios)
+    const finished = readFinished(scenarios.map((s) => s.story))
     if (isFinished(story, found)) finished.add(story.id)
     return finished
   }
 
   const choose = (next: string) => {
     dispatch({ type: 'choose', next })
-    if (tracksEndings && nodes.get(next)?.ending && !found.includes(next)) {
+    if (nodes.get(next)?.ending && !found.includes(next)) {
       const updated = [...found, next]
       setFound(updated)
       writeEndingsFound(story.id, updated)
@@ -153,20 +152,19 @@ export function StoryPlayer({ story, section }: { story: Story; section: Section
             <p className={styles.outcome} lang={localizedLang(node.ending.outcome, lang)}>
               {l(node.ending.outcome)}
             </p>
-            {tracksEndings && <PathRecap labels={choicesTaken(story, history)} />}
+            {showsEndings && <PathRecap labels={choicesTaken(story, history)} />}
             <LessonBox
               heading={t(section === 'bhulkao' ? 'story.lesson.bhulkao' : 'story.lesson.yuvako')}
             >
               <p lang={localizedLang(node.ending.lesson, lang)}>{l(node.ending.lesson)}</p>
             </LessonBox>
             {section === 'bhulkao' && followedExpectedPath(story, history) && <FirecrackerReward />}
-            {tracksEndings && endings.length > 1 && (
+            {showsEndings && endings.length > 1 && (
               <EndingsFound endings={endings} found={found} current={node.id} />
             )}
             {moral && (
               <SharedLesson
-                section={section}
-                stories={scenarios}
+                scenarios={scenarios}
                 moral={moral}
                 finished={finishedScenarios()}
                 current={story.id}
