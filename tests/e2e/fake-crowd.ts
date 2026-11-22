@@ -40,9 +40,7 @@ export async function fakeCrowd(page: Page, count: number): Promise<FakeCrowd> {
           } catch {
             // ignore
           }
-          window.dispatchEvent(
-            new StorageEvent('storage', { key, newValue: String(next) }),
-          )
+          window.dispatchEvent(new StorageEvent('storage', { key, newValue: String(next) }))
         },
         { key: KEY, next: value },
       )

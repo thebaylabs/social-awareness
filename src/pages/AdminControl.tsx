@@ -77,13 +77,28 @@ export default function AdminControl() {
       </p>
 
       <div className={styles.row} role="group" aria-label={t('admin.adjust')}>
-        <button type="button" className={styles.button} disabled={busy} onClick={() => void write(shown - 1)}>
+        <button
+          type="button"
+          className={styles.button}
+          disabled={busy}
+          onClick={() => void write(shown - 1)}
+        >
           {t('admin.minus1')}
         </button>
-        <button type="button" className={styles.button} disabled={busy} onClick={() => void write(shown + 1)}>
+        <button
+          type="button"
+          className={styles.button}
+          disabled={busy}
+          onClick={() => void write(shown + 1)}
+        >
           {t('admin.plus1')}
         </button>
-        <button type="button" className={styles.button} disabled={busy} onClick={() => void write(shown + 5)}>
+        <button
+          type="button"
+          className={styles.button}
+          disabled={busy}
+          onClick={() => void write(shown + 5)}
+        >
           {t('admin.plus5')}
         </button>
       </div>
@@ -114,7 +129,12 @@ export default function AdminControl() {
         >
           {t('admin.full', { goal: DIYA_GOAL })}
         </button>
-        <button type="button" className={styles.button} disabled={busy} onClick={() => void write(0)}>
+        <button
+          type="button"
+          className={styles.button}
+          disabled={busy}
+          onClick={() => void write(0)}
+        >
           {t('admin.reset')}
         </button>
       </div>
