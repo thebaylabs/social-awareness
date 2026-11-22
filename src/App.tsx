@@ -5,6 +5,7 @@ import { I18nProvider } from './i18n/I18nProvider'
 import { Layout } from './components/Layout'
 import { GAMES, SECTION_LIST, paths, type SectionId } from './config/sections'
 import Intro from './pages/Intro'
+import Diya from './pages/Diya'
 import SectionHome from './pages/SectionHome'
 import HubGames from './pages/HubGames'
 import HubItems from './pages/HubItems'
@@ -38,7 +39,9 @@ export default function App() {
         <Routes>
           <Route element={<Layout />}>
             <Route index element={<Intro />} />
-            {/* Manual progress control. Not linked from the header or footer. */}
+            {/* The inauguration diya. Not linked from the header, footer or home page. */}
+            <Route path={paths.diya().slice(1)} element={<Diya />} />
+            {/* Manual progress control for the diya page. Not linked either. */}
             <Route path="admin" element={<AdminControl />} />
             <Route path="activity" element={<HubGames />} />
             <Route path="scenario" element={<HubItems kind="story" />} />

@@ -3,7 +3,7 @@ import { fakeCrowd, type FakeCrowd } from './fake-crowd'
 import { expectNoAxeViolations } from './helpers'
 
 /**
- * The site plays no opening fade-in or fireworks in an automated browser
+ * The diya is lit on its own page, `/diya`. The site plays no opening fade-in or fireworks in an automated browser
  * (src/components/intro-motion.ts). These tests hide that flag, so the
  * lighting runs as it does for a visitor, fireworks included.
  *
@@ -15,7 +15,7 @@ async function visitAsAPerson(page: Page, count = 100): Promise<FakeCrowd> {
   await page.addInitScript(() => {
     Object.defineProperty(Navigator.prototype, 'webdriver', { get: () => false })
   })
-  await page.goto('/')
+  await page.goto('/diya')
   await expect(page.getByTestId('diya-lighting')).toHaveAttribute('data-lit', 'false')
   // A real visit also plays the opening fade-in; let it finish, as a page
   // mid-fade fails colour-contrast checks.
@@ -43,7 +43,21 @@ function centre(box: { x: number; y: number; width: number; height: number } | n
   return { x: box.x + box.width / 2, y: box.y + box.height / 2 }
 }
 
-test.describe('lighting the intro diya', () => {
+test('the home page shows the welcome and the hubs at once, with no diya to light', async ({
+  page,
+}) => {
+  await page.goto('/')
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Annakut Mahotsav 2026')
+  await expect(page.getByTestId('diya-lighting')).toHaveCount(0)
+  await expect(page.getByRole('button', { name: 'Light the diya' })).toHaveCount(0)
+  for (const hub of ['Games', 'Activities', 'Prasang']) {
+    await expect(page.getByRole('link', { name: new RegExp(`^${hub}`) })).toBeVisible()
+  }
+  // Annakut Darshan is held back until its content is ready.
+  await expect(page.getByRole('link', { name: /Annakut Darshan/ })).toHaveCount(0)
+})
+
+test.describe('lighting the diya', () => {
   test('the page opens on an unlit diya, with no bar and no fireworks yet', async ({ page }) => {
     await visitAsAPerson(page)
     await expect(page.getByRole('button', { name: 'Light the diya' })).toBeVisible()

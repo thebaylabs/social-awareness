@@ -1,28 +1,8 @@
 import { expect, type Page } from '@playwright/test'
 import AxeBuilder from '@axe-core/playwright'
-import { fakeCrowd } from './fake-crowd'
 
 export const LANGS = ['en', 'gu'] as const
 export type Lang = (typeof LANGS)[number]
-
-/**
- * Seed the shared diya count at the goal, allow intro motion, light the diya,
- * and wait until Explore Annakut is revealed. Use before clicking home hubs.
- */
-export async function inaugurateHome(page: Page): Promise<void> {
-  await fakeCrowd(page, 100)
-  await page.addInitScript(() => {
-    Object.defineProperty(Navigator.prototype, 'webdriver', { get: () => false })
-  })
-  await page.goto('/')
-  await expect(page.getByTestId('diya-lighting')).toHaveAttribute('data-lit', 'false')
-  const light = page.getByRole('button', { name: /Light the diya|દીવો પ્રગટાવો/ })
-  await light.focus()
-  await page.keyboard.press('Enter')
-  await page.keyboard.press('Enter')
-  await expect(page.getByTestId('diya-lighting')).toHaveAttribute('data-lit', 'true')
-  await expect(page.getByTestId('explore')).toHaveAttribute('data-revealed', 'true')
-}
 
 /** Set the stored language before any page script runs. */
 export async function useLanguage(page: Page, lang: Lang): Promise<void> {

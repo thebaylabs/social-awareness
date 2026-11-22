@@ -104,7 +104,8 @@ export const SECTIONS: Record<SectionId, SectionConfig> = {
   },
 }
 
-export const SECTION_LIST: SectionConfig[] = [SECTIONS.darshan, SECTIONS.bhulkao, SECTIONS.yuvako]
+/** Active sections. Annakut Darshan is defined above but omitted until content is ready. */
+export const SECTION_LIST: SectionConfig[] = [SECTIONS.bhulkao, SECTIONS.yuvako]
 
 /** Audience sections whose games, scenarios and prasangs are merged on the home hubs. */
 export const AUDIENCE_SECTIONS: SectionId[] = ['bhulkao', 'yuvako']
@@ -156,6 +157,8 @@ export function sectionFromPath(pathname: string): SectionId | null {
 /** Build in-app paths (React Router adds the base path). */
 export const paths = {
   home: () => '/',
+  /** The inauguration page: light a diya together. Not linked from the site. */
+  diya: () => '/diya',
   section: (id: SectionId) => `/${SECTIONS[id].slug}`,
   activity: (id: SectionId) => `/${SECTIONS[id].slug}/activity`,
   game: (id: SectionId, game: GameId) => `/${SECTIONS[id].slug}/activity/${GAMES[game].slug}`,
