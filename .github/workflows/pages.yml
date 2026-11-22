@@ -38,11 +38,6 @@ jobs:
       - run: npm run build
         env:
           BASE_PATH: /${{ github.event.repository.name }}/
-          # Firebase settings for the shared count of lit diyas. Repository
-          # variables (Settings → Secrets and variables → Actions → Variables).
-          # Without them the site has no waiting bar: lighting the diya is enough.
-          API_KEY: ${{ vars.API_KEY }}
-          PROJECT_ID: ${{ vars.PROJECT_ID }}
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:

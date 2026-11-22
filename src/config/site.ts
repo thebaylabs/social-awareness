@@ -45,19 +45,11 @@ export const TRANSLATION_REVIEWED: Record<Lang, boolean> = {
 /** The only keys this site ever writes to localStorage. */
 export const STORAGE_KEYS = {
   lang: 'outreach.lang',
-  /** A random id, so that this device is counted once (src/crowd/crowd.ts). */
-  device: 'outreach.diya.device',
+  /** Shared diya progress (0..DIYA_GOAL), set from `/admin`. */
+  diyaCount: 'outreach.diya.count',
 } as const
 
 /**
- * How many different devices must light their diya before the fireworks and
- * the welcome appear for everyone.
+ * Progress at which the fireworks and the welcome appear. Set from `/admin`.
  */
 export const DIYA_GOAL = 100
-
-/**
- * The name of the current count. Change it to start again from zero (for
- * example after a rehearsal): devices are counted separately for each name.
- * Letters, digits and hyphens only.
- */
-export const DIYA_ROUND = 'annakut-2026'

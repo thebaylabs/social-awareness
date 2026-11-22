@@ -5,15 +5,15 @@ import styles from './CrowdBar.module.css'
 interface CrowdBarProps {
   /** Hidden (but keeping its place) until this device's diya is lit. */
   visible: boolean
-  /** Devices that have lit a diya, or null while the first answer is on its way. */
+  /** Shared progress, or null while the first answer is on its way. */
   count: number | null
   goal: number
   complete: boolean
 }
 
 /**
- * The bar under the diya: it fills as people light their diyas on their own
- * devices, and is full when the goal is reached.
+ * The bar under the diya: it fills as the shared stage-controlled count
+ * rises, and is full when the goal is reached.
  */
 export function CrowdBar({ visible, count, goal, complete }: CrowdBarProps) {
   const { t } = useI18n()

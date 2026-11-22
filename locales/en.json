@@ -22,8 +22,21 @@
   "intro.wait.label": "Let’s wait for others to light their diya",
   "intro.wait.counting": "Counting the diyas…",
   "intro.wait.count": "{count} of {goal} diyas lit",
-  "intro.wait.done": "All {goal} diyas are lit.",
+  "intro.wait.done": "All {goal} diyas are lit. Time to inaugurate Annakut Mahotsav!",
   "notFound.title": "Page not found",
   "notFound.body": "We could not find that page.",
-  "notFound.home": "Go to the home page"
+  "notFound.home": "Go to the home page",
+  "admin.title": "Progress control",
+  "admin.of": "{count} of {goal}",
+  "admin.loading": "Loading…",
+  "admin.adjust": "Adjust progress",
+  "admin.minus1": "−1",
+  "admin.plus1": "+1",
+  "admin.plus5": "+5",
+  "admin.exact": "Exact value",
+  "admin.set": "Set",
+  "admin.full": "Jump to {goal}",
+  "admin.reset": "Reset to 0",
+  "admin.saved": "Saved",
+  "admin.error": "Could not update the count"
 }
