@@ -23,9 +23,19 @@ function formatTime(seconds: number): string {
   return `${m}:${s.toString().padStart(2, '0')}`
 }
 
+/** The words of a subtitle cue, without WebVTT tags or the file's own line breaks. */
+function cueText(cue: TextTrackCue): string {
+  const text = 'text' in cue && typeof cue.text === 'string' ? cue.text : ''
+  return text
+    .replace(/<[^>]*>/g, '')
+    .replace(/\s+/g, ' ')
+    .trim()
+}
+
 /**
  * Prasang video with custom controls (no fullscreen). While playing, the bar
- * fades out like YouTube; a tap brings it back.
+ * fades out like YouTube; a tap brings it back. Subtitles are drawn by this
+ * component, just above the bar; the browser's own would sit under it.
  */
 export function PrasangVideo({ video }: { video: PrasangVideoData }) {
   const { t } = useI18n()
@@ -40,6 +50,8 @@ export function PrasangVideo({ video }: { video: PrasangVideoData }) {
   const controlsUpOnDown = useRef(true)
 
   const [subsOn, setSubsOn] = useState(false)
+  /** The subtitle on screen at this point in the video, whether or not subtitles are on. */
+  const [cue, setCue] = useState('')
   const [playing, setPlaying] = useState(false)
   const [muted, setMuted] = useState(false)
   const [currentTime, setCurrentTime] = useState(0)
@@ -72,15 +84,25 @@ export function PrasangVideo({ video }: { video: PrasangVideoData }) {
   useEffect(() => {
     const el = videoRef.current
     if (!el || !captions) return
-    const apply = () => {
-      for (const track of Array.from(el.textTracks)) {
-        track.mode = subsOn ? 'showing' : 'hidden'
+    const tracks = el.textTracks
+    const read = () => {
+      const active = Array.from(tracks).flatMap((track) => Array.from(track.activeCues ?? []))
+      setCue(active.map(cueText).filter(Boolean).join(' '))
+    }
+    // "hidden" loads the cues and reports each change, but leaves the drawing to us.
+    const watch = () => {
+      for (const track of Array.from(tracks)) {
+        track.mode = 'hidden'
+        track.addEventListener('cuechange', read)
       }
     }
-    apply()
-    el.textTracks.addEventListener('addtrack', apply)
-    return () => el.textTracks.removeEventListener('addtrack', apply)
-  }, [captions, subsOn])
+    watch()
+    tracks.addEventListener('addtrack', watch)
+    return () => {
+      tracks.removeEventListener('addtrack', watch)
+      for (const track of Array.from(tracks)) track.removeEventListener('cuechange', read)
+    }
+  }, [captions])
 
   useEffect(() => {
     const el = videoRef.current
@@ -190,6 +212,12 @@ export function PrasangVideo({ video }: { video: PrasangVideoData }) {
         <source src={src} type="video/mp4" />
         {captions && <track kind="captions" src={captions} srcLang="en" label="English" />}
       </video>
+
+      {subsOn && cue && (
+        <p className={styles.videoCue} lang="en" data-testid="prasang-cue">
+          <span>{cue}</span>
+        </p>
+      )}
 
       <div
         className={styles.videoBar}

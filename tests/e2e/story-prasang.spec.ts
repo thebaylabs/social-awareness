@@ -383,6 +383,13 @@ test.describe('prasang reader', () => {
     await subs.click()
     await expect(subs).toHaveAttribute('aria-pressed', 'true')
     await expect(subs).toHaveAccessibleName('CC subtitles on')
+    // The player draws the subtitles itself, above the bar; the browser draws none.
+    const trackModes = () =>
+      page
+        .getByTestId('prasang-video')
+        .locator('video')
+        .evaluate((video: HTMLVideoElement) => Array.from(video.textTracks, (t) => t.mode))
+    expect(await trackModes()).toEqual(['hidden'])
     const lesson = page.getByRole('complementary', { name: 'Reflect' })
     await lesson.scrollIntoViewIfNeeded()
     await expect(lesson).toBeVisible()
