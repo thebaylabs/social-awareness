@@ -4,3 +4,4 @@ package-lock.json
 test-results
 playwright-report
 docs/BUILD_PLAN.md
+public/games

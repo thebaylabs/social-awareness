@@ -115,12 +115,7 @@ export function TempleArt() {
       <circle cx="60" cy="18" r="3.5" fill="#f4c552" />
       <circle cx="28" cy="58" r="6" fill="#f5d49b" />
       <path d="M22 70 Q22 58 28 56 Q34 58 34 70 Z" fill="#e4572e" />
-      <path
-        d="M34 62 H44"
-        stroke="#e4572e"
-        strokeWidth="3"
-        strokeLinecap="round"
-      />
+      <path d="M34 62 H44" stroke="#e4572e" strokeWidth="3" strokeLinecap="round" />
     </svg>
   )
 }

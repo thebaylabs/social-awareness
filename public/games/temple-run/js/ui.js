@@ -13,6 +13,8 @@ const UI = (() => {
     const btn = {};
     const labels = { left: null, jump: null, right: null };
     let scale = 1;
+    // What a screen reader calls a button while it has no label.
+    const IDLE_NAMES = { left: 'Left button', jump: 'Centre button', right: 'Right button' };
 
     function init(canvasEl) {
         canvas = canvasEl;
@@ -90,6 +92,14 @@ const UI = (() => {
             labels[a] = next[a];
             btn[a].querySelector('.btn-label').textContent = next[a] || '';
             btn[a].classList.toggle('off', !next[a]);
+            // An empty button still needs a name, and should say it does nothing.
+            if (next[a]) {
+                btn[a].removeAttribute('aria-label');
+                btn[a].removeAttribute('aria-disabled');
+            } else {
+                btn[a].setAttribute('aria-label', IDLE_NAMES[a]);
+                btn[a].setAttribute('aria-disabled', 'true');
+            }
         });
     }
 
