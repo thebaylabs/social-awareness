@@ -7,7 +7,7 @@ import type { MessageKey } from '../i18n/messages'
  */
 
 export type SectionId = 'darshan' | 'bhulkao' | 'yuvako'
-export type GameId = 'doodle' | 'pills' | 'words'
+export type GameId = 'doodle' | 'pills' | 'words' | 'temple'
 export type PartId = 'activity' | 'story' | 'prasang'
 
 export interface GameConfig {
@@ -52,6 +52,12 @@ export const GAMES: Record<GameId, GameConfig> = {
   },
   pills: { id: 'pills', slug: 'pills', titleKey: 'game.pills.title', descKey: 'game.pills.desc' },
   words: { id: 'words', slug: 'words', titleKey: 'game.words.title', descKey: 'game.words.desc' },
+  temple: {
+    id: 'temple',
+    slug: 'temple-run',
+    titleKey: 'game.temple.title',
+    descKey: 'game.temple.desc',
+  },
 }
 
 export const SECTIONS: Record<SectionId, SectionConfig> = {
@@ -81,7 +87,7 @@ export const SECTIONS: Record<SectionId, SectionConfig> = {
     storyListTitleKey: 'list.scenario.title',
     activityDescKey: 'part.activity.desc.bhulkao',
     prasangLessonKey: 'prasang.lesson.bhulkao',
-    games: ['doodle'],
+    games: ['doodle', 'temple'],
   },
   yuvako: {
     id: 'yuvako',
@@ -98,8 +104,7 @@ export const SECTIONS: Record<SectionId, SectionConfig> = {
   },
 }
 
-/** Active sections. Annakut Darshan is defined above but omitted until content is ready. */
-export const SECTION_LIST: SectionConfig[] = [SECTIONS.bhulkao, SECTIONS.yuvako]
+export const SECTION_LIST: SectionConfig[] = [SECTIONS.darshan, SECTIONS.bhulkao, SECTIONS.yuvako]
 
 /** Audience sections whose games, scenarios and prasangs are merged on the home hubs. */
 export const AUDIENCE_SECTIONS: SectionId[] = ['bhulkao', 'yuvako']
@@ -114,7 +119,7 @@ export interface HubConfig {
   leadKey: MessageKey
 }
 
-/** Merged Activity / Scenario / Prasang hubs linked from the home page. */
+/** Merged Games / Activities / Prasang hubs linked from the home page. */
 export const HUBS: Record<HubId, HubConfig> = {
   activity: {
     id: 'activity',

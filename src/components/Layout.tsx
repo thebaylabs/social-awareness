@@ -4,7 +4,6 @@ import { useI18n } from '../i18n/context'
 import { sectionFromPath } from '../config/sections'
 import { Header } from './Header'
 import { Footer } from './Footer'
-import { Fireworks } from './Fireworks'
 import { PageContext, type PageInfo } from './page-context'
 import { focusMainHeading } from './focus'
 import { introMotionAllowed } from './intro-motion'
@@ -51,8 +50,6 @@ export function Layout() {
         </PageContext.Provider>
       </main>
       <Footer />
-      {/* A short welcome show, once per page load. */}
-      {intro && <Fireworks rockets={14} />}
     </div>
   )
 }

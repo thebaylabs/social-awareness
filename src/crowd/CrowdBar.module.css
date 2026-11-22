@@ -1,0 +1,61 @@
+/*
+ * The waiting bar under the diya. It keeps its place in the layout while
+ * hidden, so nothing moves when it appears.
+ */
+.crowd {
+  display: grid;
+  justify-items: center;
+  gap: var(--space-2);
+  width: min(100%, 22rem);
+  margin: var(--space-4) auto var(--space-5);
+  transition: opacity 600ms ease;
+}
+
+.crowd[data-visible='false'] {
+  visibility: hidden;
+  opacity: 0;
+}
+
+.label {
+  margin: 0;
+  color: #f0be77;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-align: center;
+}
+
+.track {
+  width: 100%;
+  height: 0.75rem;
+  overflow: hidden;
+  border: 1px solid rgb(237 189 116 / 55%);
+  border-radius: 999px;
+  background: rgb(237 189 116 / 14%);
+}
+
+.fill {
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #f39b3a, #ffd36b);
+  transition: width 700ms ease;
+}
+
+.crowd[data-complete='true'] .fill {
+  background: linear-gradient(90deg, #ffc05b, #fff1d2);
+}
+
+.count {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 0.875rem;
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .crowd,
+  .fill {
+    transition: none;
+  }
+}

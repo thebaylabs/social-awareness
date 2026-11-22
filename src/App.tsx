@@ -9,6 +9,7 @@ import SectionHome from './pages/SectionHome'
 import HubGames from './pages/HubGames'
 import HubItems from './pages/HubItems'
 import GamePage from './pages/GamePage'
+import AdminControl from './pages/AdminControl'
 import NotFound from './pages/NotFound'
 import { useI18n } from './i18n/context'
 
@@ -37,6 +38,8 @@ export default function App() {
         <Routes>
           <Route element={<Layout />}>
             <Route index element={<Intro />} />
+            {/* Manual progress control. Not linked from the header or footer. */}
+            <Route path="admin" element={<AdminControl />} />
             <Route path="activity" element={<HubGames />} />
             <Route path="scenario" element={<HubItems kind="story" />} />
             <Route path="prasang" element={<HubItems kind="prasang" />} />

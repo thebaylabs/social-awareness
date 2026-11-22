@@ -225,5 +225,7 @@ export function Fireworks({ rockets: rocketLimit }: { rockets?: number } = {}) {
   }, [done, rocketLimit])
 
   if (done) return null
-  return <canvas ref={canvasRef} className={styles.canvas} aria-hidden="true" />
+  return (
+    <canvas ref={canvasRef} className={styles.canvas} aria-hidden="true" data-testid="fireworks" />
+  )
 }

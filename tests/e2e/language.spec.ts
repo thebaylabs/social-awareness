@@ -1,7 +1,8 @@
 import { expect, test } from '@playwright/test'
+import { inaugurateHome } from './helpers'
 
 test('language choice survives reload and navigation', async ({ page }) => {
-  await page.goto('/')
+  await inaugurateHome(page)
   await expect(page.locator('html')).toHaveAttribute('lang', 'en')
   await page.getByRole('button', { name: 'ગુજરાતી' }).click()
   await expect(page.locator('html')).toHaveAttribute('lang', 'gu')
@@ -11,10 +12,16 @@ test('language choice survives reload and navigation', async ({ page }) => {
   await expect(page.locator('html')).toHaveAttribute('lang', 'gu')
   await expect(page.getByRole('button', { name: 'ગુજરાતી' })).toHaveAttribute('aria-pressed', 'true')
 
-  await page.getByRole('link', { name: /પ્રવૃત્તિ/ }).click()
-  await expect(page.getByRole('heading', { level: 1 })).toHaveText('પ્રવૃત્તિ')
+  // Reloading resets the diya; inaugurate again so the Explore hubs are clickable.
+  await page.getByRole('button', { name: 'દીવો પ્રગટાવો' }).focus()
+  await page.keyboard.press('Enter')
+  await page.keyboard.press('Enter')
+  await expect(page.getByTestId('explore')).toHaveAttribute('data-revealed', 'true')
+
+  await page.getByRole('link', { name: /પ્રવૃત્તિઓ/ }).click()
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('પ્રવૃત્તિઓ')
   await page.getByRole('button', { name: 'English' }).click()
-  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Activity')
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Activities')
   await page.goto('/bhulkao')
   await expect(page.locator('html')).toHaveAttribute('lang', 'en')
 })

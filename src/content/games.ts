@@ -59,5 +59,7 @@ export function gameIsPlaceholder(id: GameId): boolean {
       return !WORDS.data || WORDS.data.words.some((w) => w.placeholder)
     case 'doodle':
       return !DOODLE.data || DOODLE.data.items.some((i) => i.placeholder)
+    case 'temple':
+      return false
   }
 }

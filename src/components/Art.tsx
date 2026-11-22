@@ -104,6 +104,22 @@ export function GameArt() {
   )
 }
 
+/** A small mandir silhouette with a running path — for Temple Run. */
+export function TempleArt() {
+  return (
+    <svg {...common}>
+      <path d="M12 70 H108" stroke="#f5d49b" strokeWidth="2" strokeLinecap="round" opacity="0.45" />
+      <path d="M48 70 V42 H72 V70 Z" fill="#b5651d" />
+      <path d="M42 42 H78 L60 22 Z" fill="#e4572e" />
+      <rect x="56" y="48" width="8" height="14" rx="1" fill="#f4c552" />
+      <circle cx="60" cy="18" r="3.5" fill="#f4c552" />
+      <circle cx="28" cy="58" r="6" fill="#f5d49b" />
+      <path d="M22 70 Q22 58 28 56 Q34 58 34 70 Z" fill="#e4572e" />
+      <path d="M34 62 H44" stroke="#e4572e" strokeWidth="3" strokeLinecap="round" />
+    </svg>
+  )
+}
+
 /**
  * A capsule centred on (cx, cy), tilted by `angle` degrees: one half in the
  * pill's colour (on the `side` given), the other cream, with a shine on top.

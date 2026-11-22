@@ -1,0 +1,127 @@
+.stage {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: var(--space-3);
+  width: min(100%, 22rem);
+  margin: 0 auto;
+  min-height: clamp(190px, 38vw, 280px);
+}
+
+/*
+ * Visible-screen play area (portaled to body). Fixed to the viewport so the
+ * fuljadi can pop above “harmony” and be waved anywhere on screen.
+ */
+.playfield {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  width: 100%;
+  height: 100%;
+  height: 100dvh;
+  pointer-events: none;
+  /* Keep sparks/stem from painting a scrollable overflow. */
+  overflow: visible;
+}
+
+.diyaWrap {
+  position: relative;
+  z-index: 1;
+  width: auto;
+  height: clamp(150px, 30vw, 230px);
+  touch-action: none;
+}
+
+.diyaWrap > svg {
+  width: auto;
+  height: 100%;
+}
+
+/*
+ * Invisible hit target on the black vaat (wick stem) only —
+ * center of the oil bowl in the diya SVG.
+ */
+.wickHit {
+  position: absolute;
+  top: 55%;
+  left: 50%;
+  width: 12%;
+  height: 14%;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.hint {
+  margin: 0;
+  color: #f0be77;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-align: center;
+}
+
+.lightBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.75rem;
+  padding: 0.55rem 1.15rem;
+  border: 1px solid rgb(237 189 116 / 55%);
+  border-radius: var(--radius-small);
+  background: rgb(237 189 116 / 16%);
+  color: var(--brand-cream);
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background-color var(--transition),
+    border-color var(--transition);
+}
+
+.lightBtn:hover {
+  border-color: var(--brand-gold);
+  background: rgb(237 189 116 / 28%);
+}
+
+.lightBtn:focus-visible {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 3px;
+}
+
+.dragHint {
+  margin: 0;
+  max-width: 16rem;
+  color: var(--color-muted);
+  font-size: 0.875rem;
+  text-align: center;
+}
+
+.litNote {
+  margin: 0;
+  color: var(--brand-gold-light);
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  font-style: italic;
+  text-align: center;
+  animation: noteIn 700ms ease both;
+}
+
+@keyframes noteIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .litNote {
+    animation: none;
+  }
+}

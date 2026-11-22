@@ -2,7 +2,7 @@ import type { ComponentType } from 'react'
 import { useI18n } from '../i18n/context'
 import { usePage } from '../components/page-context'
 import { Card, CardItem, CardList } from '../components/Card'
-import { GameArt, PillsArt, WordsArt } from '../components/Art'
+import { GameArt, PillsArt, TempleArt, WordsArt } from '../components/Art'
 import { AUDIENCE_SECTIONS, GAMES, HUBS, SECTIONS, paths, type GameId } from '../config/sections'
 import { gameIsPlaceholder } from '../content/games'
 
@@ -10,6 +10,7 @@ const GAME_ART: Record<GameId, ComponentType> = {
   doodle: GameArt,
   pills: PillsArt,
   words: WordsArt,
+  temple: TempleArt,
 }
 
 /** All games from Bhulkao and Yuvako, listed together. */

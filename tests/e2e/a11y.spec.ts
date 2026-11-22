@@ -1,5 +1,10 @@
 import { expect, test, type Page } from '@playwright/test'
-import { expectNoAxeViolations, expectNoHorizontalOverflow, skipAudio } from './helpers'
+import {
+  expectNoAxeViolations,
+  expectNoHorizontalOverflow,
+  inaugurateHome,
+  skipAudio,
+} from './helpers'
 
 /** Every visible link and button on the page must be at least this tall (and 24px wide). */
 async function expectTapTargets(page: Page, minHeight: number) {
@@ -26,6 +31,7 @@ test.describe('tap targets', () => {
     '/bhulkao/scenario/homework-time',
     '/bhulkao/prasang/sparrows-and-the-sea',
     '/bhulkao/activity/doodle',
+    '/bhulkao/activity/temple-run',
   ]) {
     test(`Bhulkao ${path}: 56px or more`, async ({ page }) => {
       await skipAudio(page)
@@ -36,6 +42,7 @@ test.describe('tap targets', () => {
   }
   for (const path of [
     '/',
+    '/annakut-darshan',
     '/activity',
     '/scenario',
     '/prasang',
@@ -59,18 +66,19 @@ test.describe('tap targets', () => {
 
 test('every game, story and prasang is within three taps of the intro page', async ({ page }) => {
   const journeys: [string, string, RegExp][] = [
-    ['Activity', 'Doodle Catcher', /\/bhulkao\/activity\/doodle$/],
-    ['Scenario', 'Homework Time', /\/bhulkao\/scenario\/homework-time$/],
+    ['Games', 'Doodle Catcher', /\/bhulkao\/activity\/doodle$/],
+    ['Activities', 'Homework Time', /\/bhulkao\/scenario\/homework-time$/],
     ['Prasang', 'The Sparrows', /\/bhulkao\/prasang\/sparrows-and-the-sea$/],
-    ['Activity', 'Choose your reality', /\/yuvako\/activity\/pills$/],
-    ['Activity', 'Wordle', /\/yuvako\/activity\/words$/],
-    ['Scenario', '1 a.m.', /\/yuvako\/scenario\/one-am-exam$/],
-    ['Scenario', 'The Group Chat', /\/yuvako\/scenario\/group-chat-joke$/],
-    ['Scenario', 'The Extra Change', /\/yuvako\/scenario\/extra-change$/],
+    ['Games', 'Choose your reality', /\/yuvako\/activity\/pills$/],
+    ['Games', 'Wordle', /\/yuvako\/activity\/words$/],
+    ['Games', 'Temple Run', /\/bhulkao\/activity\/temple-run$/],
+    ['Activities', '1 a.m.', /\/yuvako\/scenario\/one-am-exam$/],
+    ['Activities', 'The Group Chat', /\/yuvako\/scenario\/group-chat-joke$/],
+    ['Activities', 'The Extra Change', /\/yuvako\/scenario\/extra-change$/],
     ['Prasang', "Einstein's Prayer", /\/yuvako\/prasang\/einstein-prayer$/],
   ]
   for (const [hub, item, target] of journeys) {
-    await page.goto('/')
+    await inaugurateHome(page)
     await page.getByRole('link', { name: new RegExp(`^${hub}`) }).click()
     await page.getByRole('link', { name: new RegExp(`^${item}`) }).click()
     await expect(page).toHaveURL(target)

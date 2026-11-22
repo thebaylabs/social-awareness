@@ -48,7 +48,14 @@ export const STORAGE_KEYS = {
   wordsDaily: 'outreach.words.daily',
   doodleBest: 'outreach.doodle.best',
   doodleName: 'outreach.doodle.name',
+  /** Shared diya progress (0..DIYA_GOAL), set from `/admin`. */
+  diyaCount: 'outreach.diya.count',
 } as const
+
+/**
+ * Progress at which the fireworks and the welcome appear. Set from `/admin`.
+ */
+export const DIYA_GOAL = 100
 
 /**
  * The only cookie this site sets: a Shabd Khoj player's random id and name,

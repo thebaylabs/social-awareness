@@ -140,7 +140,7 @@ test.describe('story player', () => {
     const cards = page.getByRole('main').getByRole('list').first().getByRole('link')
 
     await page.goto('/scenario')
-    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Scenario')
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Activities')
     // The scenarios and their lesson are no longer marked as placeholder.
     await expect(page.getByRole('main')).not.toContainText('Placeholder')
     await expect(cards).toHaveText([
@@ -309,11 +309,12 @@ test('placeholder content is marked unmistakably', async ({ page }) => {
   // The Yuvako games, scenarios and prasang are all final, so no part carries a badge.
   await expect(page.getByRole('link', { name: /Prasang/ })).toBeVisible()
   await expect(page.getByRole('link', { name: /Prasang.*Placeholder/ })).toHaveCount(0)
-  await expect(page.getByRole('link', { name: /Activity/ })).toBeVisible()
-  await expect(page.getByRole('link', { name: /Activity.*Placeholder/ })).toHaveCount(0)
-  await expect(page.getByRole('link', { name: /Scenario/ })).toBeVisible()
-  await expect(page.getByRole('link', { name: /Scenario.*Placeholder/ })).toHaveCount(0)
-  await page.goto('/yuvako/activity')
+  await expect(page.getByRole('link', { name: /Games/ })).toBeVisible()
+  await expect(page.getByRole('link', { name: /Games.*Placeholder/ })).toHaveCount(0)
+  await expect(page.getByRole('link', { name: /Activities/ })).toBeVisible()
+  await expect(page.getByRole('link', { name: /Activities.*Placeholder/ })).toHaveCount(0)
+  await page.goto('/activity')
   await expect(page.getByRole('link', { name: /Wordle/ })).toBeVisible()
+  await expect(page.getByRole('link', { name: /Temple Run/ })).toBeVisible()
   await expect(page.getByRole('link', { name: /Placeholder/ })).toHaveCount(0)
 })
