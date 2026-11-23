@@ -8,7 +8,8 @@
   margin-top: -6px; /* tuck up into the empty space under the logo row */
   background: url('../assets/brand/toran.webp') left top / auto 100% repeat-x;
   pointer-events: none;
-  filter: drop-shadow(0 5px 6px rgb(22 11 22 / 50%));
+  /* A light warm tone so the photo sits in the site palette without losing its colour. */
+  filter: saturate(0.94) sepia(0.06) brightness(0.98) drop-shadow(0 5px 6px rgb(22 11 22 / 50%));
 }
 
 @media (max-width: 40rem) {
