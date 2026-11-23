@@ -135,12 +135,12 @@ test.describe('story player', () => {
     await expect(shared).toHaveAccessibleName(/^The lesson they share\s*:\s*1 of 3 finished$/)
     await expect(shared.getByRole('listitem')).toHaveText([
       'Homework Time, Finished',
-      '1 a.m., Exam Tomorrow, Not finished yet',
+      "It's Late Night, Exam Tomorrow, Not finished yet",
       'The Group Chat Joke, Not finished yet',
       'The Extra Change, Not finished yet',
     ])
     await expect(
-      shared.getByRole('link', { name: /^Next scenario\s*:\s*1 a\.m\., Exam Tomorrow$/ }),
+      shared.getByRole('link', { name: /^Next scenario\s*:\s*It's Late Night, Exam Tomorrow$/ }),
     ).toBeVisible()
   })
 
@@ -158,7 +158,7 @@ test.describe('story player', () => {
     await expect(page.getByRole('main')).not.toContainText('Placeholder')
     await expect(cards).toHaveText([
       /^Homework Time\s*Curated for Kids\s*Not finished yet/,
-      /^1 a\.m\., Exam Tomorrow\s*Not finished yet/,
+      /^It's Late Night, Exam Tomorrow\s*Not finished yet/,
       /^The Group Chat Joke\s*Not finished yet/,
       /^The Extra Change\s*Not finished yet/,
     ])
@@ -169,8 +169,8 @@ test.describe('story player', () => {
     await expect(ticks).toHaveCount(0)
     await expect(shared.getByRole('button')).toHaveCount(0)
 
-    // 1. The 1 a.m. exam.
-    await page.getByRole('link', { name: /^1 a\.m\., Exam Tomorrow/ }).click()
+    // 1. The late-night exam.
+    await page.getByRole('link', { name: /^It's Late Night, Exam Tomorrow/ }).click()
     await expect(page.getByTestId('placeholder-notice')).toHaveCount(0)
     await page.getByRole('button', { name: 'Put the phone away now' }).click()
     await page.getByRole('button', { name: 'Sit quietly and take ten slow breaths' }).click()
@@ -178,7 +178,7 @@ test.describe('story player', () => {
     await expect(ticks).toHaveCount(1)
     await expect(shared.getByRole('listitem')).toHaveText([
       'Homework Time, Not finished yet',
-      '1 a.m., Exam Tomorrow, Finished',
+      "It's Late Night, Exam Tomorrow, Finished",
       'The Group Chat Joke, Not finished yet',
       'The Extra Change, Not finished yet',
     ])
@@ -320,7 +320,7 @@ test.describe('story player', () => {
     await expect(shared).toHaveAccessibleName(/^The lesson they share\s*:\s*3 of 3 finished$/)
     await expect(shared.getByRole('listitem')).toHaveText([
       'Homework Time, Finished',
-      '1 a.m., Exam Tomorrow, Finished',
+      "It's Late Night, Exam Tomorrow, Finished",
       'The Group Chat Joke, Not finished yet',
       'The Extra Change, Finished',
     ])

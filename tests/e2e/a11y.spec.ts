@@ -68,7 +68,7 @@ test('every game, story and prasang is within three taps of the intro page', asy
     ['Games', 'Choose your reality', /\/yuvako\/activity\/pills$/],
     ['Games', 'Wordle', /\/yuvako\/activity\/words$/],
     ['Games', 'Temple Run', /\/bhulkao\/activity\/temple-run$/],
-    ['Activities', '1 a.m.', /\/yuvako\/scenario\/one-am-exam$/],
+    ['Activities', "It's Late Night", /\/yuvako\/scenario\/one-am-exam$/],
     ['Activities', 'The Group Chat', /\/yuvako\/scenario\/group-chat-joke$/],
     ['Activities', 'The Extra Change', /\/yuvako\/scenario\/extra-change$/],
     ['Prasang', "Einstein's Prayer", /\/yuvako\/prasang\/einstein-prayer$/],
