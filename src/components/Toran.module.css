@@ -4,7 +4,7 @@
    * mango-leaf toran: ten orange/yellow pairs cut between flowers, so copies
    * join without a visible seam and it repeats across any width.
    */
-  height: 64px;
+  height: 76px;
   margin-top: -6px; /* tuck up into the empty space under the logo row */
   background: url('../assets/brand/toran.webp') left top / auto 100% repeat-x;
   pointer-events: none;
@@ -13,7 +13,7 @@
 
 @media (max-width: 40rem) {
   .toran {
-    height: 48px;
+    height: 56px;
   }
 }
 
