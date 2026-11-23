@@ -22,7 +22,7 @@
   gap: var(--space-3);
 }
 
-/* Small versions of the two item shapes: round for good habits, spiky for distractions. */
+/* A small version of the falling item: the same round shape for good habits and distractions. */
 .shape {
   flex: none;
   width: 28px;
@@ -34,28 +34,6 @@
   border-radius: 50%;
   background: var(--doodle-good);
   box-shadow: 0 0 0 2px var(--doodle-good);
-}
-
-.spiky {
-  background: var(--doodle-bad);
-  clip-path: polygon(
-    50% 0%,
-    61% 25%,
-    85% 15%,
-    76% 40%,
-    100% 50%,
-    76% 60%,
-    85% 85%,
-    61% 75%,
-    50% 100%,
-    39% 75%,
-    15% 85%,
-    24% 60%,
-    0% 50%,
-    24% 40%,
-    15% 15%,
-    39% 25%
-  );
 }
 
 .controls {

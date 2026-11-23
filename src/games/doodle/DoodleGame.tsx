@@ -129,10 +129,7 @@ export function DoodleGameView({ content }: { content: DoodleContent }) {
       icons,
       labels,
       font: `700 13px ${FONT_STACK[lang]}`,
-      palette: {
-        good: cssColour('--doodle-good', '#ff8a3d'),
-        bad: cssColour('--doodle-bad', '#1a1a1a'),
-      },
+      palette: { item: cssColour('--doodle-good', '#ff8a3d') },
     })
   }, [icons, labels, lang])
 
@@ -321,7 +318,7 @@ export function DoodleGameView({ content }: { content: DoodleContent }) {
           {t('doodle.legend.good')}
         </li>
         <li>
-          <span className={`${styles.shape} ${styles.spiky}`} aria-hidden="true" />
+          <span className={`${styles.shape} ${styles.round}`} aria-hidden="true" />
           {t('doodle.legend.bad')}
         </li>
       </ul>
@@ -426,7 +423,7 @@ export function DoodleGameView({ content }: { content: DoodleContent }) {
             {isNewBest && <p>{t('doodle.newBest')}</p>}
             {hitItem && (
               <div className={styles.hit}>
-                <span className={`${styles.shape} ${styles.spiky}`} aria-hidden="true" />
+                <span className={`${styles.shape} ${styles.round}`} aria-hidden="true" />
                 <div>
                   <p className={styles.hitLabel} lang={localizedLang(hitItem.label, lang)}>
                     {t('doodle.hit', { label: l(hitItem.label) })}
