@@ -1,76 +1,14 @@
 .toran {
-  display: flex;
-  justify-content: space-around;
-  gap: 8px;
-  overflow: hidden;
+  /* toran.webp is 641×132; the height sets the tile size and the image repeats across. */
+  height: 64px;
   border-top: 1px solid rgb(212 171 104 / 67%);
+  background: url('../assets/brand/toran.webp') center top / auto 100% repeat-x;
   pointer-events: none;
   filter: drop-shadow(0 5px 6px rgb(22 11 22 / 50%));
 }
 
-.toran > span {
-  display: flex;
-  flex: none;
-  align-items: flex-start;
-  gap: 6px;
-  transform: rotate(-4deg);
-  transform-origin: center top;
-  animation: sway 5s ease-in-out infinite;
-}
-
-.toran > span:nth-child(2n) {
-  transform: rotate(4deg);
-  animation-delay: -2.5s;
-}
-
-.toran i {
-  width: 18px;
-  height: 30px;
-  border-radius: 0 0 90%;
-  background: linear-gradient(135deg, var(--brand-leaf), var(--brand-leaf-deep));
-  transform: rotate(-16deg);
-}
-
-.toran i:last-child {
-  transform: scaleX(-1) rotate(-16deg);
-}
-
-.toran b {
-  width: 22px;
-  height: 39px;
-  border-radius: 0 0 45% 45%;
-  background: repeating-radial-gradient(
-    circle at 50% 12%,
-    var(--brand-marigold) 0 4px,
-    var(--brand-marigold-deep) 5px 8px,
-    #f6ac3e 9px 12px
-  );
-  box-shadow: 0 3px 13px rgb(253 189 69 / 13%);
-}
-
-@keyframes sway {
-  0%,
-  100% {
-    rotate: 0deg;
-  }
-
-  50% {
-    rotate: 2deg;
-  }
-}
-
 @media (max-width: 40rem) {
-  .toran > span:nth-child(2n) {
-    display: none;
-  }
-
-  .toran b {
-    width: 18px;
-    height: 28px;
-  }
-
-  .toran i {
-    width: 14px;
-    height: 23px;
+  .toran {
+    height: 46px;
   }
 }
