@@ -35,8 +35,8 @@ function iconPath(name: string): Path2D {
 }
 
 export interface Palette {
-  good: string
-  bad: string
+  /** One fill for every falling item; good habits and distractions differ by shape. */
+  item: string
 }
 
 export interface DrawInput {
@@ -59,14 +59,13 @@ function drawIcon(ctx: CanvasRenderingContext2D, name: string, x: number, y: num
   ctx.restore()
 }
 
-/** Good items: smooth circles. Distractions: jagged stars. Shape differs as well as colour. */
+/** Good items: smooth circles. Distractions: jagged stars. Same colour, so the shape and label tell them apart. */
 function drawItem(ctx: CanvasRenderingContext2D, it: FallingItem, input: DrawInput) {
   const r = ITEM_RADIUS
   ctx.save()
   ctx.beginPath()
   if (it.kind === 'positive') {
     ctx.arc(it.x, it.y, r, 0, Math.PI * 2)
-    ctx.fillStyle = input.palette.good
   } else {
     const spikes = 10
     for (let i = 0; i <= spikes * 2; i++) {
@@ -78,8 +77,8 @@ function drawItem(ctx: CanvasRenderingContext2D, it: FallingItem, input: DrawInp
       else ctx.lineTo(px, py)
     }
     ctx.closePath()
-    ctx.fillStyle = input.palette.bad
   }
+  ctx.fillStyle = input.palette.item
   ctx.fill()
   ctx.lineWidth = 3
   ctx.strokeStyle = '#ffffff'

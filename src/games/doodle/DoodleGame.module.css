@@ -22,7 +22,7 @@
   gap: var(--space-3);
 }
 
-/* Small versions of the two item shapes: round for good habits, spiky for distractions. */
+/* Small versions of the two item shapes: round for good habits, spiky for distractions. Same colour. */
 .shape {
   flex: none;
   width: 28px;
@@ -37,7 +37,7 @@
 }
 
 .spiky {
-  background: var(--doodle-bad);
+  background: var(--doodle-good);
   clip-path: polygon(
     50% 0%,
     61% 25%,

@@ -129,10 +129,7 @@ export function DoodleGameView({ content }: { content: DoodleContent }) {
       icons,
       labels,
       font: `700 13px ${FONT_STACK[lang]}`,
-      palette: {
-        good: cssColour('--doodle-good', '#ff8a3d'),
-        bad: cssColour('--doodle-bad', '#1a1a1a'),
-      },
+      palette: { item: cssColour('--doodle-good', '#ff8a3d') },
     })
   }, [icons, labels, lang])
 
