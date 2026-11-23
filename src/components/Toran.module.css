@@ -1,14 +1,15 @@
 .toran {
-  /* toran.webp is 927×192 (3× the desktop height); the height sets the tile size and the image repeats across. */
-  height: 64px;
+  /*
+   * toran.webp is 927×192. On narrow screens the height (width × 192/927) makes
+   * one garland span the full width; once it reaches 96px, whole garlands repeat
+   * ("round" stretches them slightly so none is cut off at the edges).
+   */
+  height: min(20.7vw, 96px);
   border-top: 1px solid rgb(212 171 104 / 67%);
-  background: url('../assets/brand/toran.webp') center top / auto 100% repeat-x;
+  background-image: url('../assets/brand/toran.webp');
+  background-position: center top;
+  background-size: auto 100%;
+  background-repeat: round no-repeat;
   pointer-events: none;
   filter: drop-shadow(0 5px 6px rgb(22 11 22 / 50%));
-}
-
-@media (max-width: 40rem) {
-  .toran {
-    height: 46px;
-  }
 }
