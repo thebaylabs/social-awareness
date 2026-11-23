@@ -41,6 +41,7 @@ test.describe('tap targets', () => {
     '/activity',
     '/scenario',
     '/prasang',
+    '/annakut-darshan',
     // The audience list pages now redirect to the shared hubs above.
     '/bhulkao/activity',
     '/yuvako',

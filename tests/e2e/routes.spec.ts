@@ -14,6 +14,7 @@ const ROUTES = [
   '/activity',
   '/scenario',
   '/prasang',
+  '/annakut-darshan',
   '/bhulkao',
   '/yuvako',
   '/bhulkao/activity',

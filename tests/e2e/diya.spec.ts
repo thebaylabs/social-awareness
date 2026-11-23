@@ -53,8 +53,7 @@ test('the home page shows the welcome and the hubs at once, with no diya to ligh
   for (const hub of ['Games', 'Activities', 'Prasang']) {
     await expect(page.getByRole('link', { name: new RegExp(`^${hub}`) })).toBeVisible()
   }
-  // Annakut Darshan is held back until its content is ready.
-  await expect(page.getByRole('link', { name: /Annakut Darshan/ })).toHaveCount(0)
+  await expect(page.getByRole('link', { name: /^Annakut Darshan/ })).toBeVisible()
 })
 
 test.describe('lighting the diya', () => {

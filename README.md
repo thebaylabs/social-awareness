@@ -40,6 +40,7 @@ Gujarati.
 | Scenario player                                                   | `/bhulkao/scenario/<id>`, `/yuvako/scenario/<id>` |
 | Prasang list (same rule)                                          | `/bhulkao/prasang`, `/yuvako/prasang`             |
 | Prasang reader                                                    | `/bhulkao/prasang/<id>`, `/yuvako/prasang/<id>`   |
+| Annakut Darshan (the display in 3D: full view and walk view)      | `/annakut-darshan`                                |
 | Not found                                                         | any other address                                 |
 
 Every game, story and prasang is at most three taps from the intro page.
@@ -63,7 +64,8 @@ Every game, story and prasang is at most three taps from the intro page.
   sets one cookie, only when a Shabd Khoj player saves that name (see
   [Shabd Khoj streak leaderboard](#shabd-khoj-streak-leaderboard)). The
   browser's local storage keeps only the language choice, today's word-game
-  guesses, the doodle best score and the doodle player's name. Session
+  guesses, the doodle best score, the doodle player's name and the picture
+  quality level of the Annakut Darshan 3D view. Session
   storage keeps only which Yuvako scenario endings were found and whether the
   shared lesson was revealed, until the tab is closed. Every link that leaves the site first shows "You are leaving
   this site".
@@ -569,6 +571,7 @@ src/components/ layout, header, footer, cards, placeholder marking, lesson box, 
 src/pages/      intro, section home, games list, item list, story, prasang, not found
 src/features/   story engine (validate, state, player), prasang reader
 src/games/      pills/, words/, doodle/ (each with pure logic and unit tests), firebase.ts
+public/         games/temple-run (Temple Run), darshan-3d (the 3D viewer and its scene)
 tests/e2e/      Playwright tests
 ```
 
@@ -579,7 +582,26 @@ tests/e2e/      Playwright tests
 - Game logic is pure and unit-tested (`games/*/machine.ts`, `logic.ts`,
   `sim.ts`); components only render and wire up input.
 - localStorage holds only the keys in `STORAGE_KEYS`; the one cookie is in
-  `COOKIES` (`src/config/site.ts`).
+  `COOKIES` (`src/config/site.ts`). The one exception is `quality`, written by
+  the 3D viewer in `public/darshan-3d` (see below).
+
+### Annakut Darshan (the 3D view)
+
+`/annakut-darshan` (`src/pages/DarshanPage.tsx`) shows the Annakut display as
+a 3D scene. The viewer is a plain static page in `public/darshan-3d/`, shown in
+an iframe the same way Temple Run is; nothing in that folder goes through the
+build, the linter or Prettier. Its `README.md` says what each file is, how the
+page and the viewer talk to each other, and how to put a new scene in.
+
+- The scene is about 34 MB, so the page shows a picture and a "Load the 3D
+  view" button, and fetches nothing of the scene until that button is used.
+- The viewer needs WebGPU or WebGL 2. Where neither works it shows its own
+  message, and the page announces it.
+- The viewer makes no request to any other website and uses the fonts on the
+  visitor's device.
+- "Fill the screen" is plain CSS (`position: fixed`), not the browser's
+  full-screen mode, so it also works on an iPhone. It depends on `main` not
+  being transformed: see the note in `src/components/Layout.module.css`.
 
 ### Tests
 
@@ -595,7 +617,12 @@ tests/e2e/      Playwright tests
   lesson box; each game's main flow by touch and by keyboard; placeholder
   marking; tap-target sizes; three-tap reachability; the skip link; the CSP
   tag; the "leaving this site" step; the Shabd Khoj streak leaderboard (name
-  dialog, cookie, board). The leaderboard tests use a second build with
+  dialog, cookie, board); Annakut Darshan (nothing of the scene is fetched
+  until asked for, the viewer inside the page, "Fill the screen", and, where
+  the test browser can draw 3D, full view, walk view and the language switch;
+  that last test skips itself where it cannot, and is left out on CI unless
+  `E2E_DARSHAN_3D=1` is set, because drawing the scene without a graphics card
+  is slow and has not been tried there). The leaderboard tests use a second build with
   made-up Firebase settings on port 4180 (or `E2E_FIREBASE_PORT`), whose
   Firestore requests are answered inside the test by
   `tests/e2e/fake-firestore.ts`. That server is never reused, so if the port

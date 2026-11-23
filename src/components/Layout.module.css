@@ -13,8 +13,13 @@
   animation: intro-fade 700ms ease-out both;
 }
 
+/*
+ * "backwards", not "both": once the rise has played, main must stop counting
+ * as transformed, or a position: fixed element inside it (the Annakut Darshan
+ * viewer when it fills the screen) is placed against main, not the window.
+ */
 .app[data-intro='play'] > main {
-  animation: intro-rise 900ms cubic-bezier(0.2, 0.7, 0.2, 1) 200ms both;
+  animation: intro-rise 900ms cubic-bezier(0.2, 0.7, 0.2, 1) 200ms backwards;
 }
 
 .app[data-intro='play'] > footer {

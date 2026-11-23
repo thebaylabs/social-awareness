@@ -42,7 +42,11 @@ export const TRANSLATION_REVIEWED: Record<Lang, boolean> = {
   gu: false,
 }
 
-/** The only keys this site ever writes to localStorage. */
+/**
+ * The only keys this site ever writes to localStorage. The 3D viewer in
+ * public/darshan-3d, which is not part of this build, writes one more:
+ * "quality", the picture quality level of the Annakut Darshan 3D view.
+ */
 export const STORAGE_KEYS = {
   lang: 'outreach.lang',
   wordsDaily: 'outreach.words.daily',
