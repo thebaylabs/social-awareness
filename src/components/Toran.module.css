@@ -5,7 +5,6 @@
    * join without a visible seam and it repeats across any width.
    */
   height: 64px;
-  border-top: 1px solid rgb(212 171 104 / 67%);
   background: url('../assets/brand/toran.webp') left top / auto 100% repeat-x;
   pointer-events: none;
   filter: drop-shadow(0 5px 6px rgb(22 11 22 / 50%));
