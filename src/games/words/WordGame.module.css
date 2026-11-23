@@ -186,9 +186,9 @@
 }
 
 /*
- * Keys take the hint colour once a letter is found: right place or wrong place.
+ * Keys take the same colour as their tiles once a letter has been guessed:
+ * right place, wrong place, or not in the word.
  * These must come after .key, which would otherwise win with the same specificity.
- * "Not in the word" keys keep the plain key colour (with their dash mark).
  */
 .key.correct {
   border-color: var(--tile-correct-bg);
@@ -200,6 +200,12 @@
   border-color: #a8780a;
   background: var(--tile-present-bg);
   color: var(--tile-present-text);
+}
+
+.key.absent {
+  border-color: var(--tile-absent-bg);
+  background: var(--tile-absent-bg);
+  color: var(--tile-absent-text);
 }
 
 .keyMark {
