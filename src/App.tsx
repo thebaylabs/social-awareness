@@ -3,7 +3,7 @@ import { BrowserRouter, Navigate, Route, Routes, useParams } from 'react-router'
 import { Analytics } from '@vercel/analytics/react'
 import { I18nProvider } from './i18n/I18nProvider'
 import { Layout } from './components/Layout'
-import { GAMES, SECTION_LIST, paths, type SectionId } from './config/sections'
+import { GAMES, SECTIONS, SECTION_LIST, paths, type SectionId } from './config/sections'
 import Intro from './pages/Intro'
 import Diya from './pages/Diya'
 import SectionHome from './pages/SectionHome'
@@ -17,6 +17,8 @@ import { useI18n } from './i18n/context'
 // Story and prasang pages load on demand (the prasang reader brings in the markdown renderer).
 const StoryPage = lazy(() => import('./pages/StoryPage'))
 const PrasangPage = lazy(() => import('./pages/PrasangPage'))
+// Annakut Darshan (the 3D view) is its own chunk too.
+const DarshanPage = lazy(() => import('./pages/DarshanPage'))
 
 function Loading() {
   const { t } = useI18n()
@@ -46,6 +48,15 @@ export default function App() {
             <Route path="activity" element={<HubGames />} />
             <Route path="scenario" element={<HubItems kind="story" />} />
             <Route path="prasang" element={<HubItems kind="prasang" />} />
+            {/* Annakut Darshan: the 3D view. One page, not an audience section. */}
+            <Route
+              path={SECTIONS.darshan.slug}
+              element={
+                <Suspense fallback={<Loading />}>
+                  <DarshanPage />
+                </Suspense>
+              }
+            />
             {SECTION_LIST.map((s) => (
               <Route key={s.id} path={s.slug}>
                 <Route index element={<SectionHome section={s.id} />} />

@@ -148,6 +148,11 @@
   display: flex;
 }
 
+/* Annakut Darshan spans the row, above the three hubs. */
+.sections > .feature {
+  grid-column: 1 / -1;
+}
+
 @media (min-width: 40rem) {
   .sections {
     grid-template-columns: 1fr 1fr;

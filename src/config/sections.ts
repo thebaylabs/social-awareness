@@ -73,7 +73,6 @@ export const SECTIONS: Record<SectionId, SectionConfig> = {
     activityDescKey: 'part.activity.desc.darshan',
     prasangLessonKey: 'prasang.lesson.darshan',
     games: [],
-    placeholder: true,
   },
   bhulkao: {
     id: 'bhulkao',
@@ -104,7 +103,11 @@ export const SECTIONS: Record<SectionId, SectionConfig> = {
   },
 }
 
-/** Active sections. Annakut Darshan is defined above but omitted until content is ready. */
+/**
+ * Audience sections, each with games, scenarios and prasangs. Annakut Darshan
+ * is not one of them: it is a single page, the 3D view (src/pages/DarshanPage.tsx),
+ * with its own route in src/App.tsx.
+ */
 export const SECTION_LIST: SectionConfig[] = [SECTIONS.bhulkao, SECTIONS.yuvako]
 
 /** Audience sections whose games, scenarios and prasangs are merged on the home hubs. */

@@ -36,7 +36,8 @@ const noHardcodedText = {
 }
 
 export default defineConfig([
-  globalIgnores(['dist', 'node_modules', 'test-results', 'playwright-report']),
+  // public/darshan-3d holds a vendored 3D viewer (see its README.md), not this project's code.
+  globalIgnores(['dist', 'node_modules', 'test-results', 'playwright-report', 'public/darshan-3d']),
   {
     files: ['**/*.{ts,tsx}'],
     extends: [js.configs.recommended, tseslint.configs.recommended],
