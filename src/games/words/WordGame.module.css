@@ -185,6 +185,23 @@
   font-size: 0.8125rem;
 }
 
+/*
+ * Keys take the hint colour once a letter is found: right place or wrong place.
+ * These must come after .key, which would otherwise win with the same specificity.
+ * "Not in the word" keys keep the plain key colour (with their dash mark).
+ */
+.key.correct {
+  border-color: var(--tile-correct-bg);
+  background: var(--tile-correct-bg);
+  color: var(--tile-correct-text);
+}
+
+.key.present {
+  border-color: #a8780a;
+  background: var(--tile-present-bg);
+  color: var(--tile-present-text);
+}
+
 .keyMark {
   position: absolute;
   top: 2px;
