@@ -1,15 +1,18 @@
 .toran {
   /*
-   * toran.webp is 927×192. On narrow screens the height (width × 192/927) makes
-   * one garland span the full width; once it reaches 96px, whole garlands repeat
-   * ("round" stretches them slightly so none is cut off at the edges).
+   * toran.webp (1140×169) is a seamless section of a straight marigold and
+   * mango-leaf toran: ten orange/yellow pairs cut between flowers, so copies
+   * join without a visible seam and it repeats across any width.
    */
-  height: min(20.7vw, 96px);
+  height: 64px;
   border-top: 1px solid rgb(212 171 104 / 67%);
-  background-image: url('../assets/brand/toran.webp');
-  background-position: center top;
-  background-size: auto 100%;
-  background-repeat: round no-repeat;
+  background: url('../assets/brand/toran.webp') left top / auto 100% repeat-x;
   pointer-events: none;
   filter: drop-shadow(0 5px 6px rgb(22 11 22 / 50%));
+}
+
+@media (max-width: 40rem) {
+  .toran {
+    height: 48px;
+  }
 }
