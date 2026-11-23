@@ -5,6 +5,7 @@
    * join without a visible seam and it repeats across any width.
    */
   height: 64px;
+  margin-top: -6px; /* tuck up into the empty space under the logo row */
   background: url('../assets/brand/toran.webp') left top / auto 100% repeat-x;
   pointer-events: none;
   filter: drop-shadow(0 5px 6px rgb(22 11 22 / 50%));
@@ -13,5 +14,12 @@
 @media (max-width: 40rem) {
   .toran {
     height: 48px;
+  }
+}
+
+/* Phones use a smaller logo (Header.module.css), leaving more room to tuck up. */
+@media (max-width: 30rem) {
+  .toran {
+    margin-top: -12px;
   }
 }
