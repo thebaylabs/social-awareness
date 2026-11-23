@@ -82,8 +82,12 @@ Both sides ignore messages from any other origin.
   `vercel.json` tells browsers to keep everything in a `scene-…/` folder for a
   year without asking again. That is why a new scene needs a new folder name
   (see below): a browser that has the old files will not look for changes to
-  them. The viewer in `vendor/` and the other files here are not covered; they
-  are checked on every visit.
+  them. The same holds for a file that is missing: an address inside a
+  `scene-…/` folder with no file behind it answers with the site's home page,
+  and a browser keeps that answer for a year too. So publish a scene folder
+  complete, and if a file was left out, publish the scene again under a new
+  folder name instead of adding the file. The viewer in `vendor/` and the other
+  files here are not covered; they are checked on every visit.
 
 ## Putting a new scene in
 
