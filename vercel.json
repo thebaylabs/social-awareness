@@ -4,5 +4,11 @@
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
   "git": { "deploymentEnabled": true },
-  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
+  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }],
+  "headers": [
+    {
+      "source": "/darshan-3d/:scene(scene-[^/]+)/:file*",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }]
+    }
+  ]
 }

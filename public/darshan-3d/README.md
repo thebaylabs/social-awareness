@@ -78,8 +78,12 @@ Both sides ignore messages from any other origin.
   an inline import map (`script-src 'self' 'unsafe-inline'`), WebAssembly
   (`'wasm-unsafe-eval'`), and workers and fetches from `blob:` addresses.
 - **Caching.** `app.js` fetches the scene description with `cache: 'no-cache'`.
-  The scene's own files are plain static files; a host that sends them with a
-  long cache time needs a new folder name for a new scene (see below).
+  The scene's own files never change once published, so the site's
+  `vercel.json` tells browsers to keep everything in a `scene-…/` folder for a
+  year without asking again. That is why a new scene needs a new folder name
+  (see below): a browser that has the old files will not look for changes to
+  them. The viewer in `vendor/` and the other files here are not covered; they
+  are checked on every visit.
 
 ## Putting a new scene in
 
