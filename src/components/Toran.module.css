@@ -1,5 +1,5 @@
 .toran {
-  /* toran.webp is 641×132; the height sets the tile size and the image repeats across. */
+  /* toran.webp is 927×192 (3× the desktop height); the height sets the tile size and the image repeats across. */
   height: 64px;
   border-top: 1px solid rgb(212 171 104 / 67%);
   background: url('../assets/brand/toran.webp') center top / auto 100% repeat-x;
